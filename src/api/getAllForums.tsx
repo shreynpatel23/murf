@@ -1,9 +1,9 @@
 import axios from "./axios";
 
-function getAllPosts() {
+function getAllForums() {
   return new Promise((resolve, reject) => {
     try {
-      const response = axios.get("/posts");
+      const response = axios.get("/forums");
       return resolve(response);
     } catch (err) {
       return reject(err);
@@ -11,4 +11,4 @@ function getAllPosts() {
   });
 }
 
-export default getAllPosts;
+export default getAllForums;
