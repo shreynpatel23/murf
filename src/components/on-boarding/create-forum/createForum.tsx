@@ -5,12 +5,19 @@ import createForumImageSRC from "../../../assets/images/createForum.png";
 import Input from "../../../shared/input/input";
 import Button from "../../../shared/button/button";
 import { primaryButtonStyle } from "../../../shared/buttonStyles";
+import AddNweForum from "../../../api/addNewForum";
 
 function CreateForum() {
   const [forumName, setForumName] = useState("");
 
   function handleAddNewForum() {
-    console.log(forumName);
+    AddNweForum(forumName)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
   }
   return (
     <div className={`${Styles.background}`}>
