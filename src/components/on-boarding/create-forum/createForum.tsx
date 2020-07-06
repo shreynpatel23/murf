@@ -5,19 +5,14 @@ import createForumImageSRC from "../../../assets/images/createForum.png";
 import Input from "../../../shared/input/input";
 import Button from "../../../shared/button/button";
 import { primaryButtonStyle } from "../../../shared/buttonStyles";
-import AddNweForum from "../../../api/addNewForum";
+import { useHistory } from "react-router-dom";
 
 function CreateForum() {
+  let history = useHistory();
   const [forumName, setForumName] = useState("");
 
-  function handleAddNewForum() {
-    AddNweForum(forumName)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
+  function handleForumName() {
+    history.push("/setup-forum", { name: forumName });
   }
   return (
     <div className={`${Styles.background}`}>
@@ -52,7 +47,7 @@ function CreateForum() {
                 <Button
                   style={primaryButtonStyle}
                   disabled={forumName === ""}
-                  onClick={handleAddNewForum}
+                  onClick={handleForumName}
                 >
                   Setup your forum
                 </Button>

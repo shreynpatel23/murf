@@ -19,7 +19,7 @@ function Auth() {
     try {
       register(name, email, data.url)
         .then((response: any) => {
-          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("@user", JSON.stringify(response.data));
           history.replace("/create-forum");
         })
         .catch((err) => {
@@ -34,7 +34,7 @@ function Auth() {
     try {
       register(name, email, imageUrl)
         .then((response: any) => {
-          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("@user", JSON.stringify(response.data));
           history.replace("/create-forum");
         })
         .catch((err) => {
@@ -77,7 +77,7 @@ function Auth() {
               appId={FACEBOOK_APP_ID}
               fields="name,email,picture"
               callback={handleFaceBookSignIn}
-              cssClass={Styles.faceBookLoginButton}
+              cssClass={`${Styles.faceBookLoginButton} px-4 py-3`}
             />
           </div>
         </div>
