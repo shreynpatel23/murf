@@ -1,12 +1,11 @@
 import React from "react";
 import Styles from "./button.module.scss";
 
-function Button({ disabled, style, ...props }) {
+function Button({ style, ...props }) {
   return (
     <button
-      className={`${Styles.btn} ${props}`}
+      className={`${Styles.btn} px-4 py-3 ${props}`}
       style={style}
-      disabled={disabled}
       {...props}
     >
       <p

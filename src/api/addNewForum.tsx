@@ -1,14 +1,18 @@
 import axios from "./axios";
 
-function AddNweForum(name) {
+function AddNweForum(forumName, userName, theme) {
+  const user = JSON.parse(localStorage.getItem("@user"));
   return new Promise((resolve, reject) => {
     try {
       const response = axios.post(
         "/forums/new-forum",
         {
-          forumName: name,
+          forumName: forumName,
+          userName: userName,
+          theme: theme,
+          userId: user.id,
         },
-        { headers: { authToken: localStorage.getItem("token") } }
+        { headers: { authToken: user.token } }
       );
       resolve(response);
     } catch (err) {

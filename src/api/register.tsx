@@ -3,7 +3,7 @@ import axios from "./axios";
 function register(name, email, imageUrl) {
   return new Promise((resolve, reject) => {
     try {
-      const response = axios.post("/auth/register", {
+      const response = axios.post("/register", {
         name,
         email,
         imageUrl,
