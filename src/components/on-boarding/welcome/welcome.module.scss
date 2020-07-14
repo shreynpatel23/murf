@@ -4,3 +4,18 @@
   height: 100vh;
   background: $backgroundColor;
 }
+
+.forumName {
+  font-size: $font-24;
+  font-weight: 500;
+  line-height: 1.34;
+  text-align: center;
+  color: $primaryColor;
+}
+
+.createdBy {
+  font-size: 18px;
+  line-height: 1.33;
+  text-align: center;
+  color: $secondaryColor;
+}

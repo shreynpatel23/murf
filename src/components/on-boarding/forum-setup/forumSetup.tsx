@@ -23,7 +23,8 @@ function ForumSetup() {
   function handleAddNewForum() {
     setLoading(true);
     AddNweForum(forumName, userName, forumTheme)
-      .then(() => {
+      .then((response: any) => {
+        localStorage.setItem("forum_id", response.data._id);
         setLoading(false);
         history.push("/welcome");
       })
