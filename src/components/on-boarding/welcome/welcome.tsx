@@ -4,9 +4,11 @@ import getForumById from "../../../api/getForumById";
 import welcomeIllustration from "../../../assets/images/welcome-illustration.svg";
 import Button from "../../../shared/button/button";
 import { primaryButtonStyle } from "../../../shared/buttonStyles";
+import { useHistory } from "react-router-dom";
 
 function Welcome() {
   const forumId = localStorage.getItem("forum_id");
+  let history = useHistory();
   const [forum, setForum] = useState({
     forumName: "",
     createdAt: "",
@@ -48,7 +50,7 @@ function Welcome() {
         <div className="py-3" style={{ width: "250px", margin: "0 auto" }}>
           <Button
             style={primaryButtonStyle}
-            onClick={() => console.log("manage your forum")}
+            onClick={() => history.push("/forum")}
           >
             Manage your forum
           </Button>

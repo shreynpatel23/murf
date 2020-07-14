@@ -9,6 +9,7 @@ import Auth from "./components/auth/auth";
 import CreateForum from "./components/on-boarding/create-forum/createForum";
 import ForumSetup from "./components/on-boarding/forum-setup/forumSetup";
 import Welcome from "./components/on-boarding/welcome/welcome";
+import Forum from "./components/forum/forum";
 
 class MurfdRouter extends React.Component {
   render() {
@@ -20,6 +21,7 @@ class MurfdRouter extends React.Component {
           <Route path={"/create-forum"} component={CreateForum} />
           <Route path={"/setup-forum"} component={ForumSetup} />
           <Route path={"/welcome"} component={Welcome} />
+          <Route path={"/forum"} component={Forum} />
         </Switch>
       </Router>
     );

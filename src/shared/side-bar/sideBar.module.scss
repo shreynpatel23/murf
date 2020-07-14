@@ -1,0 +1,35 @@
+@import "../../assets/scss/variables.scss";
+
+.activeTab {
+  background: rgba($accentColor, 0.15);
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.nonActiveTab {
+  background: transparent;
+  width: 100%;
+  cursor: pointer;
+}
+
+.nonActiveTab:hover {
+  background: rgba($accentColor, 0.1);
+  border-radius: 8px;
+  .nonActiveTabText {
+    color: $accentColor;
+    font-weight: 500;
+  }
+}
+
+.activeTabText {
+  font-weight: 500;
+  text-align: left;
+  color: $accentColor;
+}
+
+.nonActiveTabText {
+  font-weight: normal;
+  text-align: left;
+  color: $secondaryColor;
+}
