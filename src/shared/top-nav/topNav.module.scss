@@ -1,0 +1,20 @@
+@import '../../assets/scss/variables.scss';
+
+.background {
+    width: 100%;
+    background: $white;
+    box-shadow: 0 5px 15px 0 rgba(230, 230, 230, 0.16);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+.communityName {
+    font-weight: bold;
+    line-height: 1.33;
+    letter-spacing: normal;
+    text-align: left;
+    color: $primaryColor;
+}
+.profilePicture {
+    width: 55px;
+    border-radius: 50%;
+}
