@@ -11,12 +11,15 @@ function SideBar() {
     history.push(`/forum/${value.toLowerCase()}`);
   }
   return (
-    <div className="py-2 px-4">
+    <div
+      className="py-2 px-4 sticky-top"
+      style={{ height: "75vh", top: "80px" }}
+    >
       {sideBarItems.map((sideBarItem) => {
         return (
           <div key={sideBarItem}>
             <div
-              className={`px-4 py-3 ${
+              className={`px-4 py-3 m-2 ${
                 strArr.includes(sideBarItem.toLowerCase())
                   ? Styles.activeTab
                   : Styles.nonActiveTab
