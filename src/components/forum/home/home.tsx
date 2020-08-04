@@ -4,7 +4,10 @@ import welcomeSRC from "../../../assets/images/welcome illustration.png";
 
 function Home() {
   return (
-    <div style={{ height: "100%" }} className="d-flex align-items-center">
+    <div
+      style={{ minHeight: "80vh", height: "100%" }}
+      className="d-flex align-items-center"
+    >
       <div>
         <div className="py-2">
           <img src={welcomeSRC} alt="welcome" height="150px" />

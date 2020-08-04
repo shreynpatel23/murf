@@ -1,10 +1,11 @@
 $backgroundColor: #fafafa;
-$accentColor: #0092ca;
+$accentColor: #00ca6d;
 $white: #ffffff;
-$accentBackgroundcolor: rgba(#0092ca, 0.15);
+$accentBackgroundcolor: rgba($accentColor, 0.15);
 $inputBorderColor: #adadad;
 $primaryColor: #4d4848;
 $secondaryColor: #6e828a;
+$success: #12eb00;
 
 $font-12: 12px;
 $font-14: 14px;
