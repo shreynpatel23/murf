@@ -2,7 +2,6 @@ import React from "react";
 import Styles from "./auth.module.scss";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
-import register from "../../api/register";
 import { GOOGLE_CLIENT_ID, FACEBOOK_APP_ID } from "../../config";
 import { primaryButtonStyle } from "../../shared/buttonStyles";
 import Button from "../../shared/button/button";
@@ -16,33 +15,12 @@ function Auth() {
       email,
       picture: { data },
     } = response;
-    try {
-      register(name, email, data.url)
-        .then((response: any) => {
-          localStorage.setItem("@user", JSON.stringify(response.data));
-          history.replace("/create-forum");
-        })
-        .catch((err) => {
-          console.log(err.response.data);
-        });
-    } catch (err) {
-      console.log(err.response.data);
-    }
+    let imageUrl = data.url;
+    history.replace("/add-username", { name, email, imageUrl });
   }
   function handleSignInUsingGoogle(response) {
     const { email, name, imageUrl } = response.profileObj;
-    try {
-      register(name, email, imageUrl)
-        .then((response: any) => {
-          localStorage.setItem("@user", JSON.stringify(response.data));
-          history.replace("/create-forum");
-        })
-        .catch((err) => {
-          console.log(err.response.data);
-        });
-    } catch (err) {
-      console.log(err.response.data);
-    }
+    history.replace("/add-username", { name, email, imageUrl });
   }
   function handleError() {}
   return (

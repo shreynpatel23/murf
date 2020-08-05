@@ -1,0 +1,11 @@
+@import "../../../assets/scss/variables.scss";
+
+.newPostCard {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  background: $white;
+  border-radius: 8px;
+  height: 20%;
+  padding: 20px;
+}

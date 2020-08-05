@@ -6,23 +6,20 @@ import Styles from "./forumSetup.module.scss";
 import setupForumIllustration from "../../../assets/images/setup-forum-illustration.png";
 import Input from "../../../shared/input/input";
 import { Colors } from "../../../shared/colors";
-import { useLocation, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import AddNweForum from "../../../api/addNewForum";
 import { Theme } from "../../../constants/theme";
 
 function ForumSetup() {
-  const {
-    state: { name: forumName },
-  } = useLocation();
   let history = useHistory();
   const user = JSON.parse(localStorage.getItem("@user"));
-  const [userName, setUsername] = React.useState("");
+  const [forumName, setForumName] = React.useState("");
   const [toggleSecondStep, setToggleSecondStep] = React.useState(false);
   const [forumTheme, setForumTheme] = React.useState(Theme[0]);
   const [loading, setLoading] = React.useState(false);
   function handleAddNewForum() {
     setLoading(true);
-    AddNweForum(forumName, userName, forumTheme)
+    AddNweForum(forumName, forumTheme)
       .then((response: any) => {
         localStorage.setItem("forum_id", response.data._id);
         setLoading(false);
@@ -59,26 +56,25 @@ function ForumSetup() {
                 <div>
                   <div className="py-3">
                     <p className={`mb-0 ${Styles.headingText}`}>
-                      1. Set a username for your forum so people know where to
-                      find you.
+                      1. Set a Name for your forum
                     </p>
                   </div>
                   <div className="py-2">
                     <Input
                       type="text"
-                      name="userName"
-                      id="userName"
+                      name="forumName"
+                      id="forumName"
                       autoComplete="off"
-                      placeholder="Enter your username"
+                      placeholder="Enter your ForumName"
                       onChange={(event) => {
-                        setUsername(event.target.value);
+                        setForumName(event.target.value);
                       }}
                     />
                   </div>
                   <div className="py-3" style={{ width: "150px" }}>
                     <Button
                       style={primaryButtonStyle}
-                      disabled={userName === ""}
+                      disabled={forumName === ""}
                       onClick={() => setToggleSecondStep(true)}
                     >
                       Next
@@ -114,7 +110,7 @@ function ForumSetup() {
                     <div className="py-3" style={{ width: "150px" }}>
                       <Button
                         style={primaryButtonStyle}
-                        disabled={userName === ""}
+                        disabled={forumName === ""}
                         onClick={handleAddNewForum}
                       >
                         Next
