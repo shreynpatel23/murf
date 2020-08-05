@@ -1,9 +1,9 @@
 import React from "react";
 import Styles from "./discussionCard.module.scss";
+import moment from "moment";
 import { Colors } from "../../../../shared/colors";
 
 function DiscussionCard({ discussion, categoryColor }) {
-  const user = JSON.parse(localStorage.getItem("@user"));
   const headerText =
     discussion.headerText.length > 100
       ? discussion.headerText.substr(0, 100) + "..."
@@ -13,23 +13,31 @@ function DiscussionCard({ discussion, categoryColor }) {
       ? discussion.bodyText.substr(0, 200) + "..."
       : discussion.bodyText;
 
-  let context = discussion.liked.isLiked
+  let likedSvgProperties = discussion.liked.isLiked
     ? { fill: Colors.accentColor, stroke: "none" }
     : { fill: "none", stroke: Colors.secondaryColor, strokeWidth: "2px" };
   return (
     <div className={Styles.cardBg} style={{ position: "relative" }}>
       <div className="py-1 d-flex align-items-center">
         <div className="px-2">
-          <img src={user.imageUrl} alt="url" className={Styles.imgContainer} />
+          <img
+            src={discussion.userId.imageUrl}
+            alt="url"
+            className={Styles.imgContainer}
+          />
         </div>
-        <div className="px-2">
+        <div className="px-1">
           <p className={`mb-0 ${Styles.createdBy}`}>
             Posted by{" "}
-            <span className={Styles.userName}>{discussion.userId.name}</span>
+            <span className={`${Styles.userName} px-2`}>
+              {discussion.userId.userName}
+            </span>
           </p>
         </div>
         <div className="ml-auto px-2">
-          <p className={`mb-0 ${Styles.postedOn}`}>2 days ago</p>
+          <p className={`mb-0 ${Styles.postedOn}`}>
+            {moment(discussion.createdAt).fromNow()}
+          </p>
         </div>
         <div className="px-2">{/* more option will come here  */}</div>
       </div>
@@ -98,7 +106,7 @@ function DiscussionCard({ discussion, categoryColor }) {
                 />
                 <path
                   id="prefix__Path_229"
-                  {...context}
+                  {...likedSvgProperties}
                   d="M11.9 21.174l-1.436-1.307C5.367 15.242 2 12.191 2 8.447A5.394 5.394 0 0 1 7.447 3 5.931 5.931 0 0 1 11.9 5.07 5.931 5.931 0 0 1 16.361 3a5.394 5.394 0 0 1 5.447 5.447c0 3.744-3.367 6.794-8.468 11.43z"
                   data-name="Path 229"
                   transform="translate(-.019 -.029)"

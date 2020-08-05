@@ -1,6 +1,6 @@
 import axios from "./axios";
 
-function AddNweForum(forumName, userName, theme) {
+function AddNweForum(forumName, theme) {
   const user = JSON.parse(localStorage.getItem("@user"));
   return new Promise((resolve, reject) => {
     try {
@@ -8,7 +8,6 @@ function AddNweForum(forumName, userName, theme) {
         "/forums/new-forum",
         {
           forumName: forumName,
-          userName: userName,
           theme: theme,
           userId: user.id,
         },

@@ -10,6 +10,7 @@ import CreateForum from "./components/on-boarding/create-forum/createForum";
 import ForumSetup from "./components/on-boarding/forum-setup/forumSetup";
 import Welcome from "./components/on-boarding/welcome/welcome";
 import Forum from "./components/forum/forum";
+import AddUsername from "./components/on-boarding/add-username/addUsername";
 
 class MurfdRouter extends React.Component {
   render() {
@@ -18,6 +19,7 @@ class MurfdRouter extends React.Component {
         <Switch>
           <Route path={"/"} exact component={() => <Redirect to={"/auth"} />} />
           <Route path={"/auth"} component={Auth} />
+          <Route path={"/add-username"} component={AddUsername} />
           <Route path={"/create-forum"} component={CreateForum} />
           <Route path={"/setup-forum"} component={ForumSetup} />
           <Route path={"/welcome"} component={Welcome} />

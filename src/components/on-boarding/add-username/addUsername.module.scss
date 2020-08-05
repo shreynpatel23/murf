@@ -1,0 +1,17 @@
+@import "../../../assets/scss/variables.scss";
+.background {
+  height: 100vh;
+  background: $backgroundColor;
+}
+
+.formWrapper {
+  width: 500px;
+}
+
+.headingText {
+  font-size: $font-24;
+  font-weight: 500;
+  line-height: 1.34;
+  text-align: center;
+  color: $primaryColor;
+}
