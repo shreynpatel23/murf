@@ -2,7 +2,6 @@ import React from "react";
 import Styles from "./auth.module.scss";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
-import register from "../../api/register";
 import { GOOGLE_CLIENT_ID, FACEBOOK_APP_ID } from "../../config";
 import { primaryButtonStyle } from "../../shared/buttonStyles";
 import Button from "../../shared/button/button";

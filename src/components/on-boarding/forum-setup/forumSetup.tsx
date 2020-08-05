@@ -6,7 +6,7 @@ import Styles from "./forumSetup.module.scss";
 import setupForumIllustration from "../../../assets/images/setup-forum-illustration.png";
 import Input from "../../../shared/input/input";
 import { Colors } from "../../../shared/colors";
-import { useLocation, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import AddNweForum from "../../../api/addNewForum";
 import { Theme } from "../../../constants/theme";
 
