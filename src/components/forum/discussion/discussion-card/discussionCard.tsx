@@ -2,8 +2,10 @@ import React from "react";
 import Styles from "./discussionCard.module.scss";
 import moment from "moment";
 import { Colors } from "../../../../shared/colors";
+import { useHistory } from "react-router-dom";
 
 function DiscussionCard({ discussion, categoryColor }) {
+  const history = useHistory();
   const headerText =
     discussion.headerText.length > 100
       ? discussion.headerText.substr(0, 100) + "..."
@@ -17,7 +19,13 @@ function DiscussionCard({ discussion, categoryColor }) {
     ? { fill: Colors.accentColor, stroke: "none" }
     : { fill: "none", stroke: Colors.secondaryColor, strokeWidth: "2px" };
   return (
-    <div className={Styles.cardBg} style={{ position: "relative" }}>
+    <div
+      className={Styles.cardBg}
+      style={{ position: "relative" }}
+      onClick={() => {
+        history.push(`/forum/discussion/${discussion._id}`, { discussion });
+      }}
+    >
       <div className="py-1 d-flex align-items-center">
         <div className="px-2">
           <img
@@ -48,20 +56,21 @@ function DiscussionCard({ discussion, categoryColor }) {
             <p className={`mb-0 ${Styles.bodyText}`}>{bodyText}</p>
             <div className="py-4">
               <div className="d-flex align-items-cneter">
-                {discussion.tags.map((tag) => {
-                  return (
-                    <div className="pr-3" key={tag}>
-                      <div className={`px-3 py-1 ${Styles.tagBg}`}>
-                        <p
-                          className={`mb-0 ${Styles.tagText}`}
-                          style={{ fontSize: "14px" }}
-                        >
-                          {tag}
-                        </p>
+                {discussion.tags &&
+                  discussion.tags.map((tag) => {
+                    return (
+                      <div className="pr-3" key={tag}>
+                        <div className={`px-3 py-1 ${Styles.tagBg}`}>
+                          <p
+                            className={`mb-0 ${Styles.tagText}`}
+                            style={{ fontSize: "14px" }}
+                          >
+                            {tag}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
             </div>
           </div>
