@@ -6,8 +6,10 @@ import DiscussionCard from "./discussion-card/discussionCard";
 import Button from "../../../shared/button/button";
 import { primaryButtonStyle } from "../../../shared/buttonStyles";
 import { categoryArray } from "../../../constants/categary";
+import { useHistory } from "react-router-dom";
 
 function Discussion() {
+  let history = useHistory();
   const [discussions, setDiscussions] = useState([]);
   let categoryColor = {};
   useEffect(() => {
@@ -45,7 +47,14 @@ function Discussion() {
                 </p>
               </div>
               <div className="col-3">
-                <Button style={primaryButtonStyle}>New Post</Button>
+                <Button
+                  style={primaryButtonStyle}
+                  onClick={() => {
+                    history.push("/forum/add-discussion");
+                  }}
+                >
+                  New Post
+                </Button>
               </div>
             </div>
           </div>
