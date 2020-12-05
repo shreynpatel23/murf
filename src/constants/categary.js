@@ -4,6 +4,8 @@ const ANNOUNCEMENT = "Announcement";
 const NEWS = "News";
 const ALGORITHM = "Algorithm";
 
+export const categories = [GENERAL, TECH, ANNOUNCEMENT, NEWS, ALGORITHM];
+
 export const categoryArray = [
   {
     colour: "#ffb01c",

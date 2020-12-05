@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Styles from "./forum.module.scss";
 import TopNav from "../../shared/top-nav/topNav";
 import SideBar from "../../shared/side-bar/sideBar";
@@ -9,12 +9,32 @@ import Members from "./members/members";
 import Settings from "./settings/settings";
 import Saved from "./saved/saved";
 import CategoryContextProvider from "../../context/categoryContext";
+import getForumById from "../../api/getForumById";
 
 function Forum() {
   let location = useLocation();
+  const forum_id = localStorage.getItem("forum_id");
+  const [forum, setForum] = React.useState({
+    forumName: "",
+    user: {},
+  });
+  useEffect(() => {
+    getForumById(forum_id)
+      .then((response: any) => {
+        const { forumName, userId } = response.data;
+        setForum((forum) => ({
+          ...forum,
+          forumName: forumName,
+          user: userId,
+        }));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [forum_id]);
   return (
     <div className={Styles.background}>
-      <TopNav />
+      <TopNav data={forum} />
       <div className="container-fluid">
         <div className="row px-3">
           <CategoryContextProvider>

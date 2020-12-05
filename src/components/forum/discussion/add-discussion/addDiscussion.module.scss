@@ -2,17 +2,39 @@
 
 .background {
   width: 100%;
-  min-height: 100vh;
-  height: 100%;
+  height: 100vh;
   background: $backgroundColor;
 }
 
-.addDiscussionCard {
-  margin: 0 auto;
-  height: 100vh;
+.header:empty:before {
+  content: attr(placeholder);
+  pointer-events: none;
+  display: block; /* For Firefox */
+  color: #999;
+  font-size: 24px;
 }
 
-.editor {
-  border-radius: 5px;
-  height: 90%;
+.header {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.header:focus,
+.bodyText:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.bodyText:empty::before {
+  content: attr(placeholder);
+  pointer-events: none;
+  display: block; /* For Firefox */
+  color: #999;
+  font-size: 18px;
+}
+
+.bodyText {
+  font-size: 18px;
+  color: #333;
 }
