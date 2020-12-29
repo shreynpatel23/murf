@@ -12,15 +12,16 @@ function Discussion() {
   let history = useHistory();
   const [discussions, setDiscussions] = useState([]);
   let categoryColor = {};
+  const forumId = localStorage.getItem("forum_id");
   useEffect(() => {
-    getAllPosts()
+    getAllPosts(forumId)
       .then((response: any) => {
         setDiscussions(response.data.sort(compare));
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [forumId]);
   function compare(a) {
     //  we are using this variable to enter number so that we can sort based upon the number
     let comparison = 0;
@@ -50,7 +51,10 @@ function Discussion() {
                 <Button
                   style={primaryButtonStyle}
                   onClick={() => {
-                    history.push("/forum/add-discussion");
+                    history.push("/forum/add-discussion", {
+                      headingRef: null,
+                      bodyRef: null,
+                    });
                   }}
                 >
                   New Post

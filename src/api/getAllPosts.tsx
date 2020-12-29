@@ -1,10 +1,10 @@
 import axios from "./axios";
 
-function getAllPosts() {
+function getAllPosts(forumId) {
   const user = JSON.parse(localStorage.getItem("@user"));
   return new Promise((resolve, reject) => {
     try {
-      const response = axios.get("/posts", {
+      const response = axios.get(`forums/${forumId}/posts`, {
         headers: { authToken: user.token },
       });
       return resolve(response);

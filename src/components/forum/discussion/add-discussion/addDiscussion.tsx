@@ -1,18 +1,26 @@
 // import React, { useState, useRef, useEffect } from "react";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Styles from "./addDiscussion.module.scss";
 import Button from "../../../../shared/button/button";
 import { primaryButtonStyle } from "../../../../shared/buttonStyles";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import addNewPost from "../../../../api/addNewPost";
 function AddDiscussion() {
+  const {
+    state: { headingRef: postHeaderRef, bodyRef: postBodyRef },
+  }: any = useLocation();
   const history = useHistory();
   const headingRef: any = useRef(null);
   const bodyRef: any = useRef(null);
   const [error, setError] = useState("");
   console.log(error);
   let formatType = "";
-
+  useEffect(() => {
+    if (postHeaderRef !== null && postBodyRef !== null) {
+      headingRef.current.innerHTML = postHeaderRef;
+      bodyRef.current.innerHTML = postBodyRef;
+    }
+  }, [postHeaderRef, postBodyRef]);
   // use this function for creating a new post
   const handleAddPost = async () => {
     const headingTextRef = headingRef?.current;
@@ -30,8 +38,6 @@ function AddDiscussion() {
       count: 0,
       isLiked: false,
     };
-    bodyHTML = JSON.stringify(bodyHTML);
-    console.log(bodyHTML);
     const discussion: any = await addNewPost({
       headerText,
       bodyText,
