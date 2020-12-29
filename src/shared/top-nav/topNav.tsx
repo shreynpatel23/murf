@@ -7,14 +7,20 @@ function TopNav({ data }: any) {
       style={{ zIndex: 2 }}
     >
       <div className="px-2">
-        <p className={`mb-0 ${Styles.communityName}`}>{data.forumName}</p>
+        <p className={`mb-0 ${Styles.communityName}`}>
+          {data.forumName ? data.forumName : "Loading ..."}
+        </p>
       </div>
       <div className="px-3 ml-auto">notifi</div>
-      <img
-        src={data.user.imageUrl}
-        alt="url"
-        className={`px-2 ${Styles.profilePicture}`}
-      />
+      {data.user.imageUrl ? (
+        <img
+          src={data.user.imageUrl}
+          alt="url"
+          className={`px-2 ${Styles.profilePicture}`}
+        />
+      ) : (
+        "Loading ..."
+      )}
     </div>
   );
 }
