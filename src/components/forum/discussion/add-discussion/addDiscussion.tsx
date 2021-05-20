@@ -2,14 +2,18 @@
 import React, { useRef, useState, useEffect } from "react";
 import Styles from "./addDiscussion.module.scss";
 import Button from "../../../../shared/button/button";
-import { primaryButtonStyle } from "../../../../shared/buttonStyles";
-import { useHistory, useLocation } from "react-router-dom";
+import {
+  primaryButtonStyle,
+  borderButtonStyle,
+} from "../../../../shared/buttonStyles";
+import { useLocation, useParams } from "react-router-dom";
 import addNewPost from "../../../../api/addNewPost";
+import { buttonSize } from "../../../../constants/button-size";
 function AddDiscussion() {
   const {
     state: { headingRef: postHeaderRef, bodyRef: postBodyRef },
   }: any = useLocation();
-  const history = useHistory();
+  const { id }: any = useParams();
   const headingRef: any = useRef(null);
   const bodyRef: any = useRef(null);
   const [error, setError] = useState("");
@@ -49,12 +53,14 @@ function AddDiscussion() {
       pinned,
       saved,
       liked,
+      forumId: id,
     }).catch((err) => {
       console.log(err);
     });
-    history.push(`/forum/discussion/${discussion.data._id}`, {
-      discussion: discussion.data,
-    });
+    console.log(discussion);
+    // history.push(`/forum/discussion/${discussion.data._id}`, {
+    //   discussion: discussion.data,
+    // });
   };
 
   // use this function to create a list ordered as well as unordered.
@@ -188,7 +194,12 @@ function AddDiscussion() {
         className="d-flex align-items-center justify-content-end"
       >
         <div style={{ width: "150px" }}>
-          <Button style={primaryButtonStyle} onClick={() => handleAddPost()}>
+          <Button
+            hoverStyle={borderButtonStyle}
+            size={buttonSize.MEDIUM}
+            style={primaryButtonStyle}
+            onClick={() => handleAddPost()}
+          >
             Add Post
           </Button>
         </div>

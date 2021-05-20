@@ -3,11 +3,17 @@ import Styles from "./welcome.module.scss";
 import getForumById from "../../../api/getForumById";
 import welcomeIllustration from "../../../assets/images/welcome-illustration.svg";
 import Button from "../../../shared/button/button";
-import { primaryButtonStyle } from "../../../shared/buttonStyles";
-import { useHistory } from "react-router-dom";
+import {
+  primaryButtonStyle,
+  borderButtonStyle,
+} from "../../../shared/buttonStyles";
+import { useHistory, useLocation } from "react-router-dom";
+import { buttonSize } from "../../../constants/button-size";
 
 function Welcome() {
-  const forumId = localStorage.getItem("forum_id");
+  const {
+    state: { forumId },
+  }: any = useLocation();
   let history = useHistory();
   const [forum, setForum] = useState({
     forumName: "",
@@ -49,8 +55,10 @@ function Welcome() {
         </div>
         <div className="py-3" style={{ width: "250px", margin: "0 auto" }}>
           <Button
+            hoverStyle={borderButtonStyle}
+            size={buttonSize.LARGE}
             style={primaryButtonStyle}
-            onClick={() => history.push("/forum")}
+            onClick={() => history.push(`/forum/${forumId}`)}
           >
             Manage your forum
           </Button>

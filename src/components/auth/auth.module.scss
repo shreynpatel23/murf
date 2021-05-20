@@ -4,11 +4,12 @@
   background: $backgroundColor;
 }
 .faceBookLoginButton {
-  width: 100%;
-  background: $accentColor;
-  color: $white;
-  border-radius: 8px;
-  border: 0;
+  width: 300px;
+  height: 40px;
+  border: 2px solid $accentColor;
+  background: $white;
+  color: $accentColor;
+  border-radius: 5px;
   font-size: $font-14;
   font-weight: 500;
 }
@@ -18,5 +19,8 @@
 }
 
 .faceBookLoginButton:hover {
-  box-shadow: 0 4px 10px 0 rgba(0, 146, 202, 0.35);
+  box-shadow: 0 4px 10px 0 rgba($accentColor, 0.15);
+  background: $accentColor;
+  transition: background 0.3s;
+  color: $white;
 }

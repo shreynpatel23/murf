@@ -4,24 +4,28 @@ import { CategoryContext } from "../../../context/categoryContext";
 import getAllPosts from "../../../api/getAllPosts";
 import DiscussionCard from "./discussion-card/discussionCard";
 import Button from "../../../shared/button/button";
-import { primaryButtonStyle } from "../../../shared/buttonStyles";
+import {
+  primaryButtonStyle,
+  borderButtonStyle,
+} from "../../../shared/buttonStyles";
 import { categoryArray } from "../../../constants/categary";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import { buttonSize } from "../../../constants/button-size";
 
 function Discussion() {
   let history = useHistory();
   const [discussions, setDiscussions] = useState([]);
   let categoryColor = {};
-  const forumId = localStorage.getItem("forum_id");
+  const { id }: any = useParams();
   useEffect(() => {
-    getAllPosts(forumId)
+    getAllPosts(id)
       .then((response: any) => {
         setDiscussions(response.data.sort(compare));
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [forumId]);
+  }, [id]);
   function compare(a) {
     //  we are using this variable to enter number so that we can sort based upon the number
     let comparison = 0;
@@ -49,9 +53,11 @@ function Discussion() {
               </div>
               <div className="col-3">
                 <Button
+                  hoverStyle={borderButtonStyle}
+                  size={buttonSize.MEDIUM}
                   style={primaryButtonStyle}
                   onClick={() => {
-                    history.push("/forum/add-discussion", {
+                    history.push(`/forum/${id}/add-discussion`, {
                       headingRef: null,
                       bodyRef: null,
                     });

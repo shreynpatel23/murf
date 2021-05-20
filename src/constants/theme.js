@@ -1,6 +1,6 @@
-const GREEN = "green";
-const BLUE = "blue";
-const ORANGE = "orange";
-const GREY = "grey";
+const GREEN = "Green";
+const BLUE = "Blue";
+const ORANGE = "Orange";
+const GREY = "Grey";
 
 export const Theme = [GREEN, BLUE, ORANGE, GREY];

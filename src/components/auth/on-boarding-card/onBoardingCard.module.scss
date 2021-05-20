@@ -1,0 +1,20 @@
+@import "../../../assets/scss/variables.scss";
+
+.loginCard {
+  width: 500px;
+  height: 100%;
+  background: $white;
+  border-radius: 15px;
+  box-shadow: $boxShadow;
+}
+.headerText {
+  font-size: $font-24;
+  text-align: center;
+  color: $secondaryColor;
+}
+.helperText {
+  width: 300px;
+  font-size: $font-14;
+  text-align: center;
+  color: $secondaryColor;
+}
