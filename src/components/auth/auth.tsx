@@ -17,21 +17,16 @@ function Auth() {
   let history = useHistory();
   async function registerNewUser(name, email, imageUrl) {
     try {
-      register(name, email, imageUrl)
-        .then((response: any) => {
-          const { data } = response;
-          const forumId = data?.forumId;
-          if (forumId) {
-            localStorage.setItem("@user", JSON.stringify(data));
-            history.push(`/forum/${forumId}`);
-            return;
-          }
-          localStorage.setItem("@user", JSON.stringify(response.data));
-          history.push("/create-forum");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      const user: any = await register(name, email, imageUrl);
+      const { error, data }: any = user.data;
+      const forumId = data?.forumId;
+      if (error !== "") {
+        localStorage.setItem("@user", JSON.stringify(data));
+        history.push(`/forum/${forumId}`);
+        return;
+      }
+      localStorage.setItem("@user", JSON.stringify(data));
+      history.push("/create-forum");
     } catch (err) {
       console.log(err.response.data);
     }

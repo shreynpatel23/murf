@@ -14,12 +14,11 @@ function AddNewPost(post) {
     liked,
     forumId,
   } = post;
-  console.log(forumId);
   const user = JSON.parse(localStorage.getItem("@user"));
   return new Promise((resolve, reject) => {
     try {
       const response = axios.post(
-        "/posts/new-post",
+        `forums/${forumId}/posts/new-post`,
         {
           forumId: forumId,
           headerText: headerText,
@@ -32,7 +31,7 @@ function AddNewPost(post) {
           pinned: pinned,
           saved: saved,
           liked: liked,
-          userId: user.id,
+          userId: user._id,
         },
         { headers: { authToken: user.token } }
       );

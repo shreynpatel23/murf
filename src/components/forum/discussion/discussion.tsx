@@ -9,14 +9,15 @@ import {
   borderButtonStyle,
 } from "../../../shared/buttonStyles";
 import { categoryArray } from "../../../constants/categary";
-import { useHistory, useParams } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { buttonSize } from "../../../constants/button-size";
 
 function Discussion() {
   let history = useHistory();
   const [discussions, setDiscussions] = useState([]);
   let categoryColor = {};
-  const { id }: any = useParams();
+  const { pathname } = useLocation();
+  const id = pathname.split("/")[2];
   useEffect(() => {
     getAllPosts(id)
       .then((response: any) => {
@@ -85,6 +86,7 @@ function Discussion() {
           return (
             <div className="py-3" key={index}>
               <DiscussionCard
+                forum_id={id}
                 discussion={discussion}
                 categoryColor={categoryColor}
               />
