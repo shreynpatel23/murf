@@ -1,72 +1,200 @@
 import React, { useState } from "react";
 import Styles from "./createForum.module.scss";
-import OnboardingSideBar from "../../../shared/on-boarding-side-bar/onBoardingSideBar";
-import createForumImageSRC from "../../../assets/images/createForum.png";
 import Input from "../../../shared/input/input";
 import Button from "../../../shared/button/button";
-import { primaryButtonStyle } from "../../../shared/buttonStyles";
+import {
+  primaryButtonStyle,
+  borderButtonStyle,
+} from "../../../shared/buttonStyles";
+import { buttonSize } from "../../../constants/button-size";
+import OnBoardingCard from "../../auth/on-boarding-card/onBoardingCard";
+import { Theme } from "../../../constants/theme";
+import RadioButton from "../../../shared/radio-button/radioButton";
+import AddNweForum from "../../../api/addNewForum";
+import { Colors } from "../../../shared/colors";
+import TickSvg from "../../../shared/svg/tickSvg";
 import { useHistory } from "react-router-dom";
 
 function CreateForum() {
   let history = useHistory();
   const [forumName, setForumName] = useState("");
-
-  function handleForumName() {
-    history.push("/setup-forum", { name: forumName });
+  const [forumTheme, setForumTheme] = React.useState("");
+  const [currentOpenAccordion, setCurrentOpenAccordion] = React.useState(1);
+  function handleAddNewForum() {
+    AddNweForum(forumName, forumTheme)
+      .then((response: any) => {
+        const forumId = response.data._id;
+        history.push("/welcome", { forumId });
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
   }
   return (
-    <div className={`${Styles.background}`}>
-      <div className="container-fluid p-0">
-        <div className="row no-gutters">
-          <div
-            className="col-xl-7 col-lg-12 d-flex align-items-center justify-content-center"
-            style={{ height: "100vh" }}
-          >
-            <div className={Styles.formWrapper}>
-              <div className="py-3">
-                <p className={`mb-0 ${Styles.headingText}`}>
-                  Give your forum a name
-                </p>
-              </div>
-              <div className="py-2">
-                <Input
-                  type="text"
-                  name="forumName"
-                  id="forumName"
-                  autoComplete="off"
-                  placeholder="Enter Forum Name"
-                  onChange={(event) => {
-                    setForumName(event.target.value);
-                  }}
-                />
-              </div>
-              <div
-                className="py-3"
-                style={{ width: "200px", margin: "0 auto" }}
-              >
-                <Button
-                  style={primaryButtonStyle}
-                  disabled={forumName === ""}
-                  onClick={handleForumName}
-                >
-                  Setup your forum
-                </Button>
+    <div className={`${Styles.background} p-3 d-flex justify-content-end`}>
+      <OnBoardingCard
+        headerText="Create your Forum"
+        subText="Create your forun in two simple steps"
+      >
+        <div style={{ height: "80%" }}>
+          <div style={{ height: "80%" }}>
+            <div className={`${Styles.stepsWrapper}`}>
+              <div id="accordion">
+                <div className="py-2">
+                  <div
+                    className="d-flex align-items-center py-2"
+                    id="stepOne"
+                    data-toggle="collapse"
+                    data-target="#forumName"
+                    aria-expanded="true"
+                    aria-controls="forumName"
+                  >
+                    <div style={{ width: "15%" }}>
+                      <div
+                        className={`${Styles.stepNumberWrapper} d-flex align-items-center justify-content-center`}
+                        style={{
+                          border: `2px solid ${
+                            forumName !== ""
+                              ? Colors.accentColor
+                              : Colors.secondaryColor
+                          }`,
+                        }}
+                      >
+                        {forumName !== "" ? (
+                          <TickSvg width="25" height="15" />
+                        ) : (
+                          <p className={`mb-0 ${Styles.stepNumber}`}>01</p>
+                        )}
+                      </div>
+                    </div>
+                    <div style={{ width: "85%" }} className="px-2">
+                      <p className={`mb-0 ${Styles.stepDescription}`}>
+                        Enter Name of Forum
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    id="forumName"
+                    className={`collapse ${
+                      currentOpenAccordion === 1 ? "show" : ""
+                    }`}
+                    aria-labelledby="stepOne"
+                    data-parent="#accordion"
+                  >
+                    <div className="d-flex align-items-centere">
+                      <div style={{ width: "15%" }}></div>
+                      <div style={{ width: "85%" }} className="px-2">
+                        <div className="py-3">
+                          <Input
+                            type="text"
+                            name="name"
+                            id="name"
+                            autoComplete="off"
+                            placeholder="Enter Forum Name"
+                            onChange={(event) => {
+                              setForumName(event.target.value);
+                            }}
+                          />
+                        </div>
+                        <div className="pt-1">
+                          <Button
+                            hoverStyle={borderButtonStyle}
+                            size={buttonSize.MEDIUM}
+                            style={primaryButtonStyle}
+                            disabled={forumName === ""}
+                            onClick={() => setCurrentOpenAccordion(2)}
+                          >
+                            Next
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="py-2">
+                  <div
+                    className="d-flex align-items-center py-2"
+                    id="stepTwo"
+                    data-toggle="collapse"
+                    data-target="#forumTheme"
+                    aria-expanded="false"
+                    aria-controls="forumTheme"
+                  >
+                    <div style={{ width: "15%" }}>
+                      <div
+                        className={`${Styles.stepNumberWrapper} d-flex align-items-center justify-content-center`}
+                        style={{
+                          border: `2px solid ${
+                            forumTheme !== ""
+                              ? Colors.accentColor
+                              : Colors.secondaryColor
+                          }`,
+                        }}
+                      >
+                        {forumTheme !== "" ? (
+                          <TickSvg width="25" height="15" />
+                        ) : (
+                          <p className={`mb-0 ${Styles.stepNumber}`}>02</p>
+                        )}
+                      </div>
+                    </div>
+                    <div style={{ width: "85%" }} className="px-2">
+                      <p className={`mb-0 ${Styles.stepDescription}`}>
+                        Select a Theme for the forum
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    id="forumTheme"
+                    className={`collapse ${
+                      currentOpenAccordion === 2 ? "show" : ""
+                    }`}
+                    aria-labelledby="stepTwo"
+                    data-parent="#accordion"
+                  >
+                    <div className="d-flex align-items-centere">
+                      <div style={{ width: "15%" }}></div>
+                      <div style={{ width: "85%" }} className="px-2">
+                        <div className="py-2 row">
+                          {Theme.map((theme) => {
+                            return (
+                              <div className="col-6 py-2" key={theme}>
+                                <RadioButton
+                                  type="radio"
+                                  name="radio"
+                                  change={() => setForumTheme(theme)}
+                                  checked={forumTheme === theme}
+                                  value={theme}
+                                />
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div className="col-xl-5 d-none d-xl-block">
-            <OnboardingSideBar
-              img={
-                <img
-                  src={createForumImageSRC}
-                  alt="create-forum"
-                  height="500px"
-                />
-              }
-            />
+          <div
+            style={{ height: "20%" }}
+            className="d-flex align-items-start justify-content-center"
+          >
+            <Button
+              disabled={forumName === "" || forumTheme === ""}
+              hoverStyle={borderButtonStyle}
+              style={primaryButtonStyle}
+              size={buttonSize.LARGE}
+              onClick={handleAddNewForum}
+            >
+              Create Forum
+            </Button>
           </div>
         </div>
-      </div>
+      </OnBoardingCard>
     </div>
   );
 }

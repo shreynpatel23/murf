@@ -2,7 +2,13 @@ import React, { useEffect } from "react";
 import Styles from "./forum.module.scss";
 import TopNav from "../../shared/top-nav/topNav";
 import SideBar from "../../shared/side-bar/sideBar";
-import { useLocation, Switch, Route, Redirect } from "react-router-dom";
+import {
+  useLocation,
+  Switch,
+  Route,
+  Redirect,
+  useParams,
+} from "react-router-dom";
 import Discussion from "./discussion/discussion";
 import Home from "./home/home";
 import Members from "./members/members";
@@ -13,13 +19,13 @@ import getForumById from "../../api/getForumById";
 
 function Forum() {
   let location = useLocation();
-  const forum_id = localStorage.getItem("forum_id");
+  const { id }: any = useParams();
   const [forum, setForum] = React.useState({
     forumName: "",
     user: {},
   });
   useEffect(() => {
-    getForumById(forum_id)
+    getForumById(id)
       .then((response: any) => {
         const { forumName, userId } = response.data;
         setForum((forum) => ({
@@ -31,7 +37,7 @@ function Forum() {
       .catch((err) => {
         console.log(err);
       });
-  }, [forum_id]);
+  }, [id]);
   return (
     <div className={Styles.background}>
       <TopNav data={forum} />
@@ -47,19 +53,27 @@ function Forum() {
             >
               <Switch location={location}>
                 <Route
-                  path={"/forum"}
+                  path={`/forum/${id}`}
                   exact
-                  component={() => <Redirect to="/forum/home" />}
+                  component={() => <Redirect to={`/forum/${id}/home`} />}
                 />
-                <Route path={"/forum/home"} exact component={Home} />
+                <Route path={`/forum/${id}/home`} exact component={Home} />
                 <Route
-                  path={"/forum/discussion"}
+                  path={`/forum/${id}/discussion`}
                   exact
                   component={Discussion}
                 />
-                <Route path={"/forum/members"} exact component={Members} />
-                <Route path={"/forum/settings"} exact component={Settings} />
-                <Route path={"/forum/saved"} exact component={Saved} />
+                <Route
+                  path={`/forum/${id}/members`}
+                  exact
+                  component={Members}
+                />
+                <Route
+                  path={`/forum/${id}/settings`}
+                  exact
+                  component={Settings}
+                />
+                <Route path={`/forum/${id}/saved`} exact component={Saved} />
               </Switch>
             </div>
           </CategoryContextProvider>

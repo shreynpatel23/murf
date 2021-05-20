@@ -1,6 +1,8 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import Styles from "./topNav.module.scss";
 function TopNav({ data }: any) {
+  const history = useHistory();
   return (
     <div
       className={`py-3 px-2 d-flex align-items-center sticky-top ${Styles.background}`}
@@ -11,7 +13,15 @@ function TopNav({ data }: any) {
           {data.forumName ? data.forumName : "Loading ..."}
         </p>
       </div>
-      <div className="px-3 ml-auto">notifi</div>
+      <div
+        className="px-3 ml-auto"
+        onClick={() => {
+          localStorage.removeItem("@user");
+          history.push("/auth");
+        }}
+      >
+        Logout
+      </div>
       {data.user.imageUrl ? (
         <img
           src={data.user.imageUrl}

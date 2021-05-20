@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Styles from "./sideBar.module.scss";
 import { sideBarItems, DISCUSSION } from "../../constants/sideBar";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory, useParams } from "react-router-dom";
 import { categoryArray } from "../../constants/categary";
 import { CategoryContext } from "../../context/categoryContext";
 import { Colors } from "../colors";
@@ -9,6 +9,7 @@ import { Colors } from "../colors";
 function SideBar() {
   let location = useLocation();
   let history = useHistory();
+  const { id }: any = useParams();
 
   const strArr = location.pathname.split("/");
   const [categoryFilter, setCategoryFilter] = useState("");
@@ -18,7 +19,7 @@ function SideBar() {
 
   // use this function to change the navigation.
   function navigateTo(value) {
-    history.push(`/forum/${value.toLowerCase()}`);
+    history.push(`/forum/${id}/${value.toLowerCase()}`);
   }
   return (
     <div className="py-2 px-4 sticky-top" style={{ top: "80px", zIndex: 2 }}>

@@ -5,7 +5,6 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.js";
-import "react-quill/dist/quill.snow.css"; // ES6
 
 ReactDOM.render(
   <React.StrictMode>

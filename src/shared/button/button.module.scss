@@ -1,9 +1,16 @@
 @import "../../assets/scss/variables.scss";
 
-.btn {
-  width: 100%;
+.button {
+  height: 40px;
   text-align: center;
   transition: box-shadow 0.2s ease-in;
+}
+
+.largeButton {
+  width: 300px;
+}
+.mediumButton {
+  width: 150px;
 }
 
 .btnText {
@@ -11,18 +18,18 @@
   font-weight: 500;
 }
 
-.btn:focus {
+.button:focus {
   outline: none;
 }
 
-.btn:disabled {
+.button:disabled {
   opacity: 0.5;
 }
 
-.btn:disabled:hover {
+.button:disabled:hover {
   box-shadow: none;
 }
 
-.btn:hover {
+.button:hover {
   box-shadow: 0 4px 10px 0 rgba($accentColor, 0.15);
 }

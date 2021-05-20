@@ -7,10 +7,8 @@ import {
 } from "react-router-dom";
 import Auth from "./components/auth/auth";
 import CreateForum from "./components/on-boarding/create-forum/createForum";
-import ForumSetup from "./components/on-boarding/forum-setup/forumSetup";
 import Welcome from "./components/on-boarding/welcome/welcome";
 import Forum from "./components/forum/forum";
-import AddUsername from "./components/on-boarding/add-username/addUsername";
 import AddDiscussion from "./components/forum/discussion/add-discussion/addDiscussion";
 import DiscussionInfo from "./components/forum/discussion/discussion-info/discussionInfo";
 
@@ -21,13 +19,14 @@ class MurfdRouter extends React.Component {
         <Switch>
           <Route path={"/"} exact component={() => <Redirect to={"/auth"} />} />
           <Route path={"/auth"} component={Auth} />
-          <Route path={"/add-username"} component={AddUsername} />
           <Route path={"/create-forum"} component={CreateForum} />
-          <Route path={"/setup-forum"} component={ForumSetup} />
           <Route path={"/welcome"} component={Welcome} />
-          <Route path={"/forum/add-discussion"} component={AddDiscussion} />
-          <Route path={"/forum/discussion/:id"} component={DiscussionInfo} />
-          <Route path={"/forum"} component={Forum} />
+          <Route path={"/forum/:id/add-discussion"} component={AddDiscussion} />
+          <Route
+            path={"/forum/:id/discussion/:id"}
+            component={DiscussionInfo}
+          />
+          <Route path={"/forum/:id"} component={Forum} />
         </Switch>
       </Router>
     );

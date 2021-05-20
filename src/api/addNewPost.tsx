@@ -12,9 +12,10 @@ function AddNewPost(post) {
     pinned,
     saved,
     liked,
+    forumId,
   } = post;
+  console.log(forumId);
   const user = JSON.parse(localStorage.getItem("@user"));
-  const forumId = localStorage.getItem("forum_id");
   return new Promise((resolve, reject) => {
     try {
       const response = axios.post(
