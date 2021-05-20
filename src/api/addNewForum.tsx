@@ -9,7 +9,7 @@ function AddNweForum(forumName, theme) {
         {
           forumName: forumName,
           theme: theme,
-          userId: user.id,
+          userId: user._id,
         },
         { headers: { authToken: user.token } }
       );
