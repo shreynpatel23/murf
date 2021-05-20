@@ -6,7 +6,7 @@ import {
   primaryButtonStyle,
   borderButtonStyle,
 } from "../../../../shared/buttonStyles";
-import { useLocation, useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import addNewPost from "../../../../api/addNewPost";
 import { buttonSize } from "../../../../constants/button-size";
 function AddDiscussion() {
@@ -14,10 +14,10 @@ function AddDiscussion() {
     state: { headingRef: postHeaderRef, bodyRef: postBodyRef },
   }: any = useLocation();
   const { id }: any = useParams();
+  const history = useHistory();
   const headingRef: any = useRef(null);
   const bodyRef: any = useRef(null);
   const [error, setError] = useState("");
-  console.log(error);
   let formatType = "";
   useEffect(() => {
     if (postHeaderRef !== null && postBodyRef !== null) {
@@ -57,10 +57,9 @@ function AddDiscussion() {
     }).catch((err) => {
       console.log(err);
     });
-    console.log(discussion);
-    // history.push(`/forum/discussion/${discussion.data._id}`, {
-    //   discussion: discussion.data,
-    // });
+    history.push(`/forum/${id}/discussion/${discussion.data._id}`, {
+      discussion: discussion.data,
+    });
   };
 
   // use this function to create a list ordered as well as unordered.

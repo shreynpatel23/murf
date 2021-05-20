@@ -19,7 +19,7 @@ function AddNewPost(post) {
   return new Promise((resolve, reject) => {
     try {
       const response = axios.post(
-        "/posts/new-post",
+        `forums/${forumId}/posts/new-post`,
         {
           forumId: forumId,
           headerText: headerText,

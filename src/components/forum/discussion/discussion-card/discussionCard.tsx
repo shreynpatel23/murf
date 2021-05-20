@@ -4,7 +4,7 @@ import moment from "moment";
 import { Colors } from "../../../../shared/colors";
 import { useHistory } from "react-router-dom";
 
-function DiscussionCard({ discussion, categoryColor }) {
+function DiscussionCard({ discussion, categoryColor, forum_id }) {
   const history = useHistory();
   const headerText =
     discussion.headerText.length > 100
@@ -23,7 +23,9 @@ function DiscussionCard({ discussion, categoryColor }) {
       className={Styles.cardBg}
       style={{ position: "relative" }}
       onClick={() => {
-        history.push(`/forum/discussion/${discussion._id}`, { discussion });
+        history.push(`/forum/${forum_id}/discussion/${discussion._id}`, {
+          discussion,
+        });
       }}
     >
       <div className="py-1 d-flex align-items-center">
