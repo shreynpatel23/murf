@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory, useParams } from "react-router-dom";
 import { buttonSize } from "../../../../constants/button-size";
 import Button from "../../../../shared/button/button";
 import {
@@ -11,6 +11,7 @@ function DiscussionInfo() {
   const {
     state: { discussion },
   }: any = useLocation();
+  const { id }: any = useParams();
   const history = useHistory();
   const postHeaderRef = useRef();
   const postBodyRef = useRef();
@@ -27,7 +28,7 @@ function DiscussionInfo() {
         size={buttonSize.LARGE}
         style={primaryButtonStyle}
         onClick={() => {
-          history.push("/forum/add-discussion", {
+          history.push(`/forum/${id}/add-discussion`, {
             headingRef: discussion.headerHTML,
             bodyRef: discussion.bodyHTML,
           });

@@ -1,0 +1,30 @@
+@import "../../assets/scss/variables.scss";
+
+.toast_back {
+  margin: 20px;
+  padding: 20px;
+  max-width: 400px;
+  width: 100%;
+  background-color: $white;
+  border: 1px solid $primaryColor;
+  border-radius: 7px;
+  position: fixed;
+  top: 50px;
+  right: 50px;
+  animation: slide 10s ease-in forwards;
+}
+
+@keyframes slide {
+  0% {
+    right: -500px;
+  }
+  10% {
+    right: 50px;
+  }
+  90% {
+    right: 50px;
+  }
+  100% {
+    right: -500px;
+  }
+}

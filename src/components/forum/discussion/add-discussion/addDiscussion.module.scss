@@ -1,9 +1,47 @@
 @import "../../../../assets/scss/variables.scss";
 
 .background {
-  width: 100%;
   height: 100vh;
   background: $backgroundColor;
+}
+
+.writing_container {
+  width: 80vw;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.actions {
+  width: 6vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action_back {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: $white;
+  cursor: pointer;
+  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.15);
+}
+
+.action_back:hover {
+  background-color: #ddd;
+  transition: background-color 0.3s;
+}
+
+.header_wrapper {
+  height: 10%;
+  overflow: auto;
 }
 
 .header:empty:before {
@@ -37,4 +75,9 @@
 .bodyText {
   font-size: 18px;
   color: #333;
+}
+
+.button {
+  background: none;
+  border: 0;
 }
