@@ -9,6 +9,13 @@ import {
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import addNewPost from "../../../../api/addNewPost";
 import { buttonSize } from "../../../../constants/button-size";
+import Bold from "../../../../shared/svg/bold";
+import Italic from "../../../../shared/svg/italic";
+import Underline from "../../../../shared/svg/underline";
+import StrikeThrough from "../../../../shared/svg/strikeThrough";
+import UnorderList from "../../../../shared/svg/unorderList";
+import OrderList from "../../../../shared/svg/orderList";
+import Toast from "../../../../shared/toast/toast";
 function AddDiscussion() {
   const {
     state: { headingRef: postHeaderRef, bodyRef: postBodyRef },
@@ -18,9 +25,12 @@ function AddDiscussion() {
   const headingRef: any = useRef(null);
   const bodyRef: any = useRef(null);
   const [error, setError] = useState("");
+  // const [selectedCategory, setSelectedCategory] = React.useState("");
+  const [viewOnlyPost, setViewOnlyPost] = React.useState(false);
   let formatType = "";
   useEffect(() => {
     if (postHeaderRef !== null && postBodyRef !== null) {
+      setViewOnlyPost(true);
       headingRef.current.innerHTML = postHeaderRef;
       bodyRef.current.innerHTML = postBodyRef;
     }
@@ -29,6 +39,14 @@ function AddDiscussion() {
   const handleAddPost = async () => {
     const headingTextRef = headingRef?.current;
     const bodyTextRef = bodyRef?.current;
+    if (headingTextRef.innerText === "") {
+      setError("Please provide a valid header for the post");
+      return;
+    }
+    if (bodyTextRef.innerText === "") {
+      setError("Please provide a valid description for the post");
+      return;
+    }
     const headerText = headingTextRef.innerText;
     const bodyText = bodyTextRef.innerText;
     const headerHTML = headingTextRef.innerHTML;
@@ -94,114 +112,125 @@ function AddDiscussion() {
       console.log("empty string");
     }
   };
-
-  const uploadFile = (file: any) => {
-    // added check for the file type
-    if (
-      file.name.includes("jpeg") ||
-      file.name.includes("jpg") ||
-      file.name.includes("png")
-    ) {
-      // added basic check for the comparing the file size. if it is less than 2MB.
-      if (file.size < 2000000) {
-        const reader = new FileReader();
-        // converting the image name into base64 url
-        reader.readAsDataURL(file);
-        reader.onload = (event: any) => {
-          let image = document.createElement(`img`);
-          image.src = event.target.result;
-          image.alt = "uploaded_image";
-          image.style.padding = "20px";
-          image.style.width = "50%";
-          image.style.height = "50%";
-          image.height = 200;
-          bodyRef?.current.appendChild(image);
-          setError("");
-        };
-      } else {
-        setError("file should be less than 2 MB");
-        return;
-      }
-    } else {
-      // throw error that we only support png and jpeg files.
-      setError("Image should be in png or jpeg format");
-      return;
-    }
-  };
-
   return (
-    <div className={`${Styles.background} px-4 py-5`}>
-      <div style={{ height: "10%" }} className="d-flex align-items-center">
-        <div
-          className={Styles.header}
-          placeholder="Type something Heading text"
-          contentEditable="true"
-          ref={headingRef}
-        ></div>
-      </div>
-      <div style={{ height: "5%" }}>
-        <div
-          style={{ display: "flex", padding: "10px 0", alignItems: "center" }}
-        >
-          <button onClick={() => handleTextFormat("bold")}>bold</button>
-          <button onClick={() => handleTextFormat("italic")}>Italic</button>
-          <button onClick={() => handleTextFormat("underline")}>
-            UnderLine
-          </button>
-          <button onClick={() => handleTextFormat("strikeThrough")}>
-            strike through
-          </button>
-          <button onClick={() => addListStyle("unorder")}>UL</button>
-          <button onClick={() => addListStyle("order")}>LI</button>
-          <button>
-            <label htmlFor="uploadImage">
-              upload image
-              <input
-                id="uploadImage"
-                accept="image/png, image/jpeg"
-                type="file"
-                onChange={(e: any) => {
-                  uploadFile(e.target.files[0]);
-                }}
-                style={{ visibility: "hidden", display: "none" }}
-              />
-            </label>
-          </button>
-        </div>
-      </div>
-      <div style={{ height: "80%", overflow: "auto", padding: "20px" }}>
+    <div className={`${Styles.background} p-4`}>
+      {error && <Toast>{error}</Toast>}
+      {viewOnlyPost && (
         <p
-          className={Styles.bodyText}
-          placeholder="Type something body text"
-          contentEditable="true"
-          ref={bodyRef}
-          onDrop={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            uploadFile(e.dataTransfer.files[0]);
+          className="mb-0"
+          onClick={() => {
+            history.goBack();
           }}
-          onDragOver={(e) => {
-            e.preventDefault();
-          }}
-          onDragLeave={(e) => {
-            e.preventDefault();
-          }}
-        ></p>
-      </div>
-      <div
-        style={{ height: "5%" }}
-        className="d-flex align-items-center justify-content-end"
-      >
-        <div style={{ width: "150px" }}>
-          <Button
-            hoverStyle={borderButtonStyle}
-            size={buttonSize.MEDIUM}
-            style={primaryButtonStyle}
-            onClick={() => handleAddPost()}
-          >
-            Add Post
-          </Button>
+        >
+          Back
+        </p>
+      )}
+      <div className={`${Styles.writing_container}`}>
+        <div className={Styles.header_wrapper}>
+          <div
+            className={Styles.header}
+            placeholder="Type something Heading text"
+            contentEditable="true"
+            ref={headingRef}
+          ></div>
         </div>
+        <div
+          style={{
+            height: viewOnlyPost ? "85%" : "80%",
+            overflow: "auto",
+            padding: "20px",
+          }}
+        >
+          <p
+            className={Styles.bodyText}
+            placeholder="Type something body text"
+            contentEditable="true"
+            ref={bodyRef}
+          ></p>
+        </div>
+        {!viewOnlyPost && (
+          <div className={Styles.actions}>
+            <div>
+              <div className="p-2">
+                <div
+                  className={Styles.action_back}
+                  onClick={() => handleTextFormat("bold")}
+                >
+                  <button className={Styles.button}>
+                    <Bold width="15" height="15" />
+                  </button>
+                </div>
+              </div>
+              <div className="p-2">
+                <div
+                  className={Styles.action_back}
+                  onClick={() => handleTextFormat("italic")}
+                >
+                  <button className={Styles.button}>
+                    <Italic width="15" height="15" />
+                  </button>
+                </div>
+              </div>
+              <div className="p-2">
+                <div
+                  className={Styles.action_back}
+                  onClick={() => handleTextFormat("underline")}
+                >
+                  <button className={Styles.button}>
+                    <Underline width="15" height="15" />
+                  </button>
+                </div>
+              </div>
+              <div className="p-2">
+                <div
+                  className={Styles.action_back}
+                  onClick={() => handleTextFormat("strikeThrough")}
+                >
+                  <button className={Styles.button}>
+                    <StrikeThrough width="15" height="15" />
+                  </button>
+                </div>
+              </div>
+              <div className="p-2">
+                <div
+                  className={Styles.action_back}
+                  onClick={() => addListStyle("unorder")}
+                >
+                  <button className={Styles.button}>
+                    <UnorderList width="15" height="15" />
+                  </button>
+                </div>
+              </div>
+              <div className="p-2">
+                <div
+                  className={Styles.action_back}
+                  onClick={() => addListStyle("order")}
+                >
+                  <button className={Styles.button}>
+                    <OrderList width="15" height="15" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {!viewOnlyPost && (
+          <div
+            style={{ height: "10%" }}
+            className="d-flex align-items-center justify-content-end"
+          >
+            <div style={{ width: "150px" }}>
+              <Button
+                hoverStyle={borderButtonStyle}
+                size={buttonSize.MEDIUM}
+                style={primaryButtonStyle}
+                onClick={() => handleAddPost()}
+              >
+                Add Post
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
