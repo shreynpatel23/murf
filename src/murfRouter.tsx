@@ -12,7 +12,7 @@ import Forum from "./components/forum/forum";
 import AddDiscussion from "./components/forum/discussion/add-discussion/addDiscussion";
 import DiscussionInfo from "./components/forum/discussion/discussion-info/discussionInfo";
 
-class MurfdRouter extends React.Component {
+class MurfRouter extends React.Component {
   render() {
     return (
       <Router>
@@ -33,4 +33,4 @@ class MurfdRouter extends React.Component {
   }
 }
 
-export default MurfdRouter;
+export default MurfRouter;

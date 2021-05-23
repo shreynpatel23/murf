@@ -32,13 +32,15 @@ function Auth() {
     }
   }
   function handleFaceBookSignIn(response) {
-    const {
-      name,
-      email,
-      picture: { data },
-    } = response;
-    let imageUrl = data.url;
-    registerNewUser(name, email, imageUrl);
+    if(response.status !== "unknown") {
+      const {
+        name,
+        email,
+        picture: { data },
+      } = response;
+      let imageUrl = data.url;
+      registerNewUser(name, email, imageUrl);
+    }
   }
   function handleSignInUsingGoogle(response) {
     const { email, name, imageUrl } = response.profileObj;

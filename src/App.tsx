@@ -1,9 +1,9 @@
 import React from 'react';
-import MurfdRouter from './murfRouter';
+import MurfRouter from './murfRouter';
 
 function App() {
   return (
-    <MurfdRouter />
+    <MurfRouter />
   );
 }
 
