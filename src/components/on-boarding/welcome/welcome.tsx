@@ -17,53 +17,76 @@ function Welcome() {
   let history = useHistory();
   const [forum, setForum] = useState({
     forumName: "",
-    createdAt: "",
-    userName: "",
+    createdAt: new Date(),
   });
+  const [loading, setLoading] = React.useState(false);
   useEffect(() => {
     // get forum by id API will come here
-    getForumById(forumId)
-      .then((response: any) => {
-        setForum(response.data);
-      })
-      .catch((err) => {
+    async function getForumDetails() {
+      setLoading(true);
+      try {
+        const { data }: any = await getForumById(forumId);
+        setForum((forum) => ({
+          ...forum,
+          forumName: data.forumName,
+          createdAt: new Date(data.createdAt),
+        }));
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
         console.log(err);
-      });
-  }, [setForum, forumId]);
+      }
+    }
+
+    getForumDetails();
+  }, []);
   return (
     <div className={`${Styles.background}`}>
       <div
-        style={{
-          objectFit: "cover",
-          overflow: "hidden",
-          width: "100%",
-          opacity: "0.4",
-        }}
-        className="pb-5
-        "
+        style={{ height: "100%" }}
+        className="d-flex align-items-center justify-content-center"
       >
-        <img src={welcomeIllustration} alt="welcomeIllustration" />
-      </div>
-      <div className="py-5 text-center">
-        <div className="py-2">
-          <p className={`mb-0 ${Styles.forumName}`}>{forum.forumName}</p>
-          <div className="py-1">
-            <p className={`mb-0 ${Styles.createdBy}`}>
-              created by @{forum.userName} at {forum.createdAt}
-            </p>
-          </div>
+        <div className={Styles.card_wrapper}>
+          {loading ? (
+            <p>Loading....</p>
+          ) : (
+            <div className="text-center">
+              <img
+                src={welcomeIllustration}
+                alt="welcome"
+                className={`py-3 ${Styles.welcome_image}`}
+              />
+              <div className="py-2">
+                <p className={`mb-0 ${Styles.heading_text} py-2`}>
+                  Congratulations
+                </p>
+                <p className={`mb-0 ${Styles.body_text} py-2`}>
+                  You have successfully created your forum{" "}
+                  <span className={Styles.forum_name}>{forum.forumName}</span>{" "}
+                  <br /> on{" "}
+                  <span
+                    className={Styles.created_by}
+                  >{`${forum.createdAt.getDate()}/${
+                    forum.createdAt.getMonth() + 1
+                  }/${forum.createdAt.getFullYear()}`}</span>
+                  . Go ahead and create your first post in the forum
+                </p>
+              </div>
+              <div className="pt-4 d-flex justify-content-center">
+                <Button
+                  hoverStyle={primaryButtonHoverStyle}
+                  size={buttonSize.LARGE}
+                  style={primaryButtonStyle}
+                  onClick={() => history.push(`/forum/${forumId}`)}
+                >
+                  Manage your forum
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
-        <div className="py-3" style={{ width: "250px", margin: "0 auto" }}>
-          <Button
-            hoverStyle={primaryButtonHoverStyle}
-            size={buttonSize.LARGE}
-            style={primaryButtonStyle}
-            onClick={() => history.push(`/forum/${forumId}`)}
-          >
-            Manage your forum
-          </Button>
-        </div>
       </div>
+      <div className={Styles.card_container}></div>
     </div>
   );
 }
