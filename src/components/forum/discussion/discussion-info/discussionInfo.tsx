@@ -4,7 +4,7 @@ import { buttonSize } from "../../../../constants/button-size";
 import Button from "../../../../shared/button/button";
 import {
   primaryButtonStyle,
-  borderButtonStyle,
+  primaryButtonHoverStyle,
 } from "../../../../shared/buttonStyles";
 
 function DiscussionInfo() {
@@ -24,7 +24,7 @@ function DiscussionInfo() {
   return (
     <div>
       <Button
-        hoverStyle={borderButtonStyle}
+        hoverStyle={primaryButtonHoverStyle}
         size={buttonSize.LARGE}
         style={primaryButtonStyle}
         onClick={() => {

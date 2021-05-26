@@ -6,7 +6,7 @@ import DiscussionCard from "./discussion-card/discussionCard";
 import Button from "../../../shared/button/button";
 import {
   primaryButtonStyle,
-  borderButtonStyle,
+  primaryButtonHoverStyle,
 } from "../../../shared/buttonStyles";
 import { categoryArray } from "../../../constants/categary";
 import { useLocation, useHistory } from "react-router-dom";
@@ -54,7 +54,7 @@ function Discussion() {
               </div>
               <div className="col-3">
                 <Button
-                  hoverStyle={borderButtonStyle}
+                  hoverStyle={primaryButtonHoverStyle}
                   size={buttonSize.MEDIUM}
                   style={primaryButtonStyle}
                   onClick={() => {

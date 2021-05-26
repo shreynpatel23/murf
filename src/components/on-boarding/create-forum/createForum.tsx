@@ -4,7 +4,7 @@ import Input from "../../../shared/input/input";
 import Button from "../../../shared/button/button";
 import {
   primaryButtonStyle,
-  borderButtonStyle,
+  primaryButtonHoverStyle,
 } from "../../../shared/buttonStyles";
 import { buttonSize } from "../../../constants/button-size";
 import OnBoardingCard from "../../auth/on-boarding-card/onBoardingCard";
@@ -99,7 +99,7 @@ function CreateForum() {
                         </div>
                         <div className="pt-1">
                           <Button
-                            hoverStyle={borderButtonStyle}
+                            hoverStyle={primaryButtonHoverStyle}
                             size={buttonSize.MEDIUM}
                             style={primaryButtonStyle}
                             disabled={forumName === ""}
@@ -185,7 +185,7 @@ function CreateForum() {
           >
             <Button
               disabled={forumName === "" || forumTheme === ""}
-              hoverStyle={borderButtonStyle}
+              hoverStyle={primaryButtonHoverStyle}
               style={primaryButtonStyle}
               size={buttonSize.LARGE}
               onClick={handleAddNewForum}

@@ -4,7 +4,9 @@ import Styles from "./addDiscussion.module.scss";
 import Button from "../../../../shared/button/button";
 import {
   primaryButtonStyle,
-  borderButtonStyle,
+  primaryButtonHoverStyle,
+  secondaryButtonHoverStyle,
+  secondaryButtonStyle,
 } from "../../../../shared/buttonStyles";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import addNewPost from "../../../../api/addNewPost";
@@ -50,7 +52,7 @@ function AddDiscussion() {
     const headerText = headingTextRef.innerText;
     const bodyText = bodyTextRef.innerText;
     const headerHTML = headingTextRef.innerHTML;
-    let bodyHTML = bodyTextRef.innerHTML;
+    const bodyHTML = bodyTextRef.innerHTML;
     const tags = [];
     const category = "Tech";
     const comments = [];
@@ -78,6 +80,19 @@ function AddDiscussion() {
     history.push(`/forum/${id}/discussion/${discussion.data._id}`, {
       discussion: discussion.data,
     });
+  };
+
+  const handleUpdatePost = async () => {
+    const headingTextRef = headingRef?.current;
+    const bodyTextRef = bodyRef?.current;
+    const headerText = headingTextRef.innerText;
+    const bodyText = bodyTextRef.innerText;
+    const headerHTML = headingTextRef.innerHTML;
+    const bodyHTML = bodyTextRef.innerHTML;
+    console.log(headerText);
+    console.log(bodyText);
+    // console.log();
+    // console.log();
   };
 
   // use this function to create a list ordered as well as unordered.
@@ -112,19 +127,10 @@ function AddDiscussion() {
       console.log("empty string");
     }
   };
+
   return (
     <div className={`${Styles.background} p-4`}>
       {error && <Toast>{error}</Toast>}
-      {viewOnlyPost && (
-        <p
-          className="mb-0"
-          onClick={() => {
-            history.goBack();
-          }}
-        >
-          Back
-        </p>
-      )}
       <div className={`${Styles.writing_container}`}>
         <div className={Styles.header_wrapper}>
           <div
@@ -136,7 +142,7 @@ function AddDiscussion() {
         </div>
         <div
           style={{
-            height: viewOnlyPost ? "85%" : "80%",
+            height: "80%",
             overflow: "auto",
             padding: "20px",
           }}
@@ -148,80 +154,78 @@ function AddDiscussion() {
             ref={bodyRef}
           ></p>
         </div>
-        {!viewOnlyPost && (
-          <div className={Styles.actions}>
-            <div>
-              <div className="p-2">
-                <div
-                  className={Styles.action_back}
-                  onClick={() => handleTextFormat("bold")}
-                >
-                  <button className={Styles.button}>
-                    <Bold width="15" height="15" />
-                  </button>
-                </div>
+        <div className={Styles.actions}>
+          <div>
+            <div className="p-2">
+              <div
+                className={Styles.action_back}
+                onClick={() => handleTextFormat("bold")}
+              >
+                <button className={Styles.button}>
+                  <Bold width="15" height="15" />
+                </button>
               </div>
-              <div className="p-2">
-                <div
-                  className={Styles.action_back}
-                  onClick={() => handleTextFormat("italic")}
-                >
-                  <button className={Styles.button}>
-                    <Italic width="15" height="15" />
-                  </button>
-                </div>
+            </div>
+            <div className="p-2">
+              <div
+                className={Styles.action_back}
+                onClick={() => handleTextFormat("italic")}
+              >
+                <button className={Styles.button}>
+                  <Italic width="15" height="15" />
+                </button>
               </div>
-              <div className="p-2">
-                <div
-                  className={Styles.action_back}
-                  onClick={() => handleTextFormat("underline")}
-                >
-                  <button className={Styles.button}>
-                    <Underline width="15" height="15" />
-                  </button>
-                </div>
+            </div>
+            <div className="p-2">
+              <div
+                className={Styles.action_back}
+                onClick={() => handleTextFormat("underline")}
+              >
+                <button className={Styles.button}>
+                  <Underline width="15" height="15" />
+                </button>
               </div>
-              <div className="p-2">
-                <div
-                  className={Styles.action_back}
-                  onClick={() => handleTextFormat("strikeThrough")}
-                >
-                  <button className={Styles.button}>
-                    <StrikeThrough width="15" height="15" />
-                  </button>
-                </div>
+            </div>
+            <div className="p-2">
+              <div
+                className={Styles.action_back}
+                onClick={() => handleTextFormat("strikeThrough")}
+              >
+                <button className={Styles.button}>
+                  <StrikeThrough width="15" height="15" />
+                </button>
               </div>
-              <div className="p-2">
-                <div
-                  className={Styles.action_back}
-                  onClick={() => addListStyle("unorder")}
-                >
-                  <button className={Styles.button}>
-                    <UnorderList width="15" height="15" />
-                  </button>
-                </div>
+            </div>
+            <div className="p-2">
+              <div
+                className={Styles.action_back}
+                onClick={() => addListStyle("unorder")}
+              >
+                <button className={Styles.button}>
+                  <UnorderList width="15" height="15" />
+                </button>
               </div>
-              <div className="p-2">
-                <div
-                  className={Styles.action_back}
-                  onClick={() => addListStyle("order")}
-                >
-                  <button className={Styles.button}>
-                    <OrderList width="15" height="15" />
-                  </button>
-                </div>
+            </div>
+            <div className="p-2">
+              <div
+                className={Styles.action_back}
+                onClick={() => addListStyle("order")}
+              >
+                <button className={Styles.button}>
+                  <OrderList width="15" height="15" />
+                </button>
               </div>
             </div>
           </div>
-        )}
-        {!viewOnlyPost && (
-          <div
-            style={{ height: "10%" }}
-            className="d-flex align-items-center justify-content-end"
-          >
+        </div>
+        <div
+          style={{ height: "10%" }}
+          className="d-flex align-items-center justify-content-start"
+        >
+          {!viewOnlyPost ? (
             <div style={{ width: "150px" }}>
               <Button
-                hoverStyle={borderButtonStyle}
+                hoverStyle={primaryButtonHoverStyle}
                 size={buttonSize.MEDIUM}
                 style={primaryButtonStyle}
                 onClick={() => handleAddPost()}
@@ -229,8 +233,37 @@ function AddDiscussion() {
                 Add Post
               </Button>
             </div>
-          </div>
-        )}
+          ) : (
+            <>
+              <div className="pr-3">
+                <div style={{ width: "150px" }}>
+                  <Button
+                    hoverStyle={secondaryButtonHoverStyle}
+                    size={buttonSize.MEDIUM}
+                    style={secondaryButtonStyle}
+                    onClick={() => {
+                      history.goBack();
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+              <div className="pr-3">
+                <div style={{ width: "150px" }}>
+                  <Button
+                    hoverStyle={primaryButtonHoverStyle}
+                    size={buttonSize.MEDIUM}
+                    style={primaryButtonStyle}
+                    onClick={() => handleUpdatePost()}
+                  >
+                    Save
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
