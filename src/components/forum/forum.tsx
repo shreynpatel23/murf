@@ -10,10 +10,8 @@ import {
   useParams,
 } from "react-router-dom";
 import Discussion from "./discussion/discussion";
-import Home from "./home/home";
 import Members from "./members/members";
 import Settings from "./settings/settings";
-import Saved from "./saved/saved";
 import CategoryContextProvider from "../../context/categoryContext";
 import getForumById from "../../api/getForumById";
 
@@ -55,9 +53,8 @@ function Forum() {
                 <Route
                   path={`/forum/${id}`}
                   exact
-                  component={() => <Redirect to={`/forum/${id}/home`} />}
+                  component={() => <Redirect to={`/forum/${id}/discussion`} />}
                 />
-                <Route path={`/forum/${id}/home`} exact component={Home} />
                 <Route
                   path={`/forum/${id}/discussion`}
                   exact
@@ -73,7 +70,6 @@ function Forum() {
                   exact
                   component={Settings}
                 />
-                <Route path={`/forum/${id}/saved`} exact component={Saved} />
               </Switch>
             </div>
           </CategoryContextProvider>
