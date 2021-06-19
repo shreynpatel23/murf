@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Styles from "./button.module.scss";
 import { buttonSize } from "../../constants/button-size";
 
-function Button({ style, hoverStyle, size, ...props }) {
+function Button({ isLoading = false, style, hoverStyle, size, ...props }) {
   const [buttonStyle, setButtonStyle] = useState(style);
   return (
     <button
@@ -14,12 +14,21 @@ function Button({ style, hoverStyle, size, ...props }) {
       onMouseOut={() => setButtonStyle(style)}
       {...props}
     >
-      <p
-        className={`mb-0 ${Styles.btnText}`}
-        style={{ color: buttonStyle.color }}
-      >
-        {props.children}
-      </p>
+      {isLoading ? (
+        <p
+          className={`mb-0 ${Styles.btnText}`}
+          style={{ color: buttonStyle.color }}
+        >
+          Loading...
+        </p>
+      ) : (
+        <p
+          className={`mb-0 ${Styles.btnText}`}
+          style={{ color: buttonStyle.color }}
+        >
+          {props.children}
+        </p>
+      )}
     </button>
   );
 }

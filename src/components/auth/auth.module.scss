@@ -1,31 +1,48 @@
 @import "../../assets/scss/variables.scss";
+
 .background {
   height: 100vh;
   background: $backgroundColor;
 }
-.faceBookLoginButton {
-  width: 300px;
-  height: 40px;
-  border: 2px solid $accentColor;
-  background: $white;
+
+.formWrapper {
+  width: 70%;
+}
+
+.navigationText {
+  font-size: $font-12;
+  text-align: center;
+  color: $secondaryColor;
+}
+
+.navigationLink {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.navigationLink:hover {
   color: $accentColor;
-  border-radius: 5px;
-  font-size: $font-14;
-  font-weight: 500;
+  transition: 0.3s ease;
 }
 
-.faceBookLoginButton:focus {
-  outline: none;
-}
+// .faceBookLoginButton {
+//   width: 300px;
+//   height: 40px;
+//   border: 2px solid $accentColor;
+//   background: $white;
+//   color: $accentColor;
+//   border-radius: 5px;
+//   font-size: $font-14;
+//   font-weight: 500;
+// }
 
-.faceBookLoginButton:hover {
-  box-shadow: 0 4px 10px 0 rgba($accentColor, 0.15);
-  background: $accentColor;
-  transition: background 0.3s;
-  color: $white;
-}
+// .faceBookLoginButton:focus {
+//   outline: none;
+// }
 
-.loadingText {
-  font-size: 24px;
-  color: $accentColor;
-}
+// .faceBookLoginButton:hover {
+//   box-shadow: 0 4px 10px 0 rgba($accentColor, 0.15);
+//   background: $accentColor;
+//   transition: background 0.3s;
+//   color: $white;
+// }

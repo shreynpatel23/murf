@@ -2,18 +2,18 @@ import { Colors } from "./colors";
 
 export const primaryButtonStyle = {
   background: Colors.accentColor,
-  transition: "background 0.3s",
+  transition: "all 0.3s",
   color: Colors.white,
   borderRadius: "5px",
   border: 0,
 };
 
-export const primaryButtonHoverStyle = {
-  background: Colors.white,
-  transition: "background 0.3s",
+export const borderButtonStyle = {
   border: `2px solid ${Colors.accentColor}`,
+  transition: "all 0.3s",
   color: Colors.accentColor,
   borderRadius: "5px",
+  background: "transparent",
 };
 
 export const secondaryButtonStyle = {

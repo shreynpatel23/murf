@@ -4,7 +4,7 @@ import Styles from "./addDiscussion.module.scss";
 import Button from "../../../../shared/button/button";
 import {
   primaryButtonStyle,
-  primaryButtonHoverStyle,
+  borderButtonStyle,
   secondaryButtonHoverStyle,
   secondaryButtonStyle,
 } from "../../../../shared/buttonStyles";
@@ -87,8 +87,8 @@ function AddDiscussion() {
     const bodyTextRef = bodyRef?.current;
     const headerText = headingTextRef.innerText;
     const bodyText = bodyTextRef.innerText;
-    const headerHTML = headingTextRef.innerHTML;
-    const bodyHTML = bodyTextRef.innerHTML;
+    // const headerHTML = headingTextRef.innerHTML;
+    // const bodyHTML = bodyTextRef.innerHTML;
     console.log(headerText);
     console.log(bodyText);
     // console.log();
@@ -225,7 +225,7 @@ function AddDiscussion() {
           {!viewOnlyPost ? (
             <div style={{ width: "150px" }}>
               <Button
-                hoverStyle={primaryButtonHoverStyle}
+                hoverStyle={borderButtonStyle}
                 size={buttonSize.MEDIUM}
                 style={primaryButtonStyle}
                 onClick={() => handleAddPost()}
@@ -252,7 +252,7 @@ function AddDiscussion() {
               <div className="pr-3">
                 <div style={{ width: "150px" }}>
                   <Button
-                    hoverStyle={primaryButtonHoverStyle}
+                    hoverStyle={borderButtonStyle}
                     size={buttonSize.MEDIUM}
                     style={primaryButtonStyle}
                     onClick={() => handleUpdatePost()}

@@ -5,7 +5,7 @@ import welcomeIllustration from "../../../assets/images/welcome-illustration.svg
 import Button from "../../../shared/button/button";
 import {
   primaryButtonStyle,
-  primaryButtonHoverStyle,
+  borderButtonStyle,
 } from "../../../shared/buttonStyles";
 import { useHistory, useLocation } from "react-router-dom";
 import { buttonSize } from "../../../constants/button-size";
@@ -28,7 +28,7 @@ function Welcome() {
         const { data }: any = await getForumById(forumId);
         setForum((forum) => ({
           ...forum,
-          forumName: data.forumName,
+          forumName: data.forum_name,
           createdAt: new Date(data.createdAt),
         }));
         setLoading(false);
@@ -39,7 +39,7 @@ function Welcome() {
     }
 
     getForumDetails();
-  }, []);
+  }, [forumId]);
   return (
     <div className={`${Styles.background}`}>
       <div
@@ -74,7 +74,7 @@ function Welcome() {
               </div>
               <div className="pt-4 d-flex justify-content-center">
                 <Button
-                  hoverStyle={primaryButtonHoverStyle}
+                  hoverStyle={borderButtonStyle}
                   size={buttonSize.LARGE}
                   style={primaryButtonStyle}
                   onClick={() => history.push(`/forum/${forumId}`)}
