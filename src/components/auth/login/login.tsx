@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Styles from "../auth.module.scss";
 import GoogleLogin from "react-google-login";
 // import FacebookLogin from "react-facebook-login";
@@ -8,7 +8,7 @@ import {
   primaryButtonStyle,
 } from "../../../shared/buttonStyles";
 import Button from "../../../shared/button/button";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { buttonSize } from "../../../constants/button-size";
 import OnBoardingCard from "../on-boarding-card/onBoardingCard";
 import Input from "../../../shared/input/input";
@@ -16,26 +16,38 @@ import { callPostApi } from "../../../api/axios";
 
 function Login() {
   let history = useHistory();
-  const [googleLoginLoading, seGoogleLoginLoading] = React.useState(false);
+  const params = useLocation();
+  const [googleLoginLoading, setGoogleLoginLoading] = React.useState(false);
   const [loginLoading, setLoginLoading] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [toggleBanner, setToggleBanner] = React.useState({
+    toggle: false,
+    message: "",
+  });
+
+  useEffect(() => {
+    if (params.search) {
+      const data = new URLSearchParams(params.search).get("data");
+      setToggleBanner((banner) => ({
+        ...banner,
+        toggle: true,
+        message: data,
+      }));
+    }
+  }, [params]);
 
   // use this function to login with google
   async function handleLoginUsingGoogle(response) {
     const { email } = response.profileObj;
-    seGoogleLoginLoading(true);
+    setGoogleLoginLoading(true);
     try {
       const user: any = await callPostApi("/login-using-google", {
         user_email: email,
       });
-      seGoogleLoginLoading(false);
-      const { data }: any = user.data;
-      const { token, isEmailVerified } = data;
-      localStorage.setItem("token", token);
-      console.log(data);
+      handleNavigation(user);
     } catch (err) {
-      seGoogleLoginLoading(false);
+      setGoogleLoginLoading(false);
       const { error } = err.response.data;
       console.log(error);
     }
@@ -50,14 +62,23 @@ function Login() {
         user_email: email,
         password,
       });
-      setLoginLoading(false);
-      const { data }: any = user.data;
-      console.log(data);
+      handleNavigation(user);
     } catch (err) {
       setLoginLoading(false);
       const { error } = err.response.data;
       console.log(error);
     }
+  }
+
+  function handleNavigation(user) {
+    const { data }: any = user.data;
+    const { token, isEmailVerified, forumId } = data;
+    localStorage.setItem("token", token);
+    if (!isEmailVerified) return history.replace("/email-not-verified");
+    if (!forumId) return history.replace("/create-forum");
+    loginLoading && setLoginLoading(false);
+    googleLoginLoading && setGoogleLoginLoading(false);
+    history.replace(`/forum/${forumId}`);
   }
 
   // use this function for sign in using facebook
@@ -81,10 +102,15 @@ function Login() {
         subText="Login to the platform and stay up to date with the current trend of the world!"
       >
         <div
-          style={{ height: "80%" }}
+          style={{ height: "80%", position: "relative" }}
           className="d-flex align-items-center justify-content-center"
         >
           <form className={Styles.formWrapper}>
+            {toggleBanner.toggle && (
+              <div className={`form-group ${Styles.bannerText}`}>
+                {toggleBanner.message} Login now
+              </div>
+            )}
             <div className="form-group">
               <Input
                 labelname="Email"

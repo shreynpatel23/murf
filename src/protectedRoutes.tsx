@@ -4,7 +4,6 @@ import { Redirect } from "react-router-dom";
 function ProtectedRoutes({ ...props }: any) {
   const Component = props.component;
   const token = localStorage.getItem("token");
-  console.log(token);
   return token ? <Component /> : <Redirect to={{ pathname: "/" }} />;
 }
 

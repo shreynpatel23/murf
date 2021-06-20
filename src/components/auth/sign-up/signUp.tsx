@@ -18,26 +18,22 @@ function SignUp() {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [signInUsingGoogleLoading, setSigninUsingGoogleLoading] =
+  const [signInUsingGoogleLoading, setSignInUsingGoogleLoading] =
     React.useState(false);
-  const [signInLoading, setSigninLoading] = React.useState(false);
+  const [signInLoading, setSignInLoading] = React.useState(false);
 
   async function handleSignInUsingGoogle(response) {
     const { email, name, imageUrl } = response.profileObj;
-    setSigninUsingGoogleLoading(true);
+    setSignInUsingGoogleLoading(true);
     try {
       const user: any = await callPostApi("/sign-in-using-google", {
         user_email: email,
         user_name: name,
         imageUrl,
       });
-      setSigninUsingGoogleLoading(false);
-      const { data }: any = user.data;
-      const { token, isEmailVerified } = data;
-      localStorage.setItem("token", token);
-      console.log(data);
+      handleNavigation(user);
     } catch (err) {
-      setSigninUsingGoogleLoading(false);
+      setSignInUsingGoogleLoading(false);
       const { error } = err.response.data;
       console.log(error);
     }
@@ -45,21 +41,29 @@ function SignUp() {
 
   async function handleSignUp(event) {
     event.preventDefault();
-    setSigninLoading(true);
+    setSignInLoading(true);
     try {
       const user: any = await callPostApi("/sign-up", {
         user_name: name,
         user_email: email,
         password: password,
       });
-      setSigninLoading(false);
-      const { data } = user.data;
-      console.log(data);
+      handleNavigation(user);
     } catch (err) {
-      setSigninLoading(false);
+      setSignInLoading(false);
       const { error } = err.response.data;
       console.log(error);
     }
+  }
+
+  function handleNavigation(user) {
+    const { data }: any = user.data;
+    const { token, isEmailVerified } = data;
+    localStorage.setItem("token", token);
+    if (!isEmailVerified) return history.replace("/email-not-verified");
+    signInLoading && setSignInLoading(false);
+    signInUsingGoogleLoading && setSignInUsingGoogleLoading(false);
+    history.replace("/create-forum");
   }
 
   function handleError() {}

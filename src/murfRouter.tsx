@@ -13,6 +13,8 @@ import DiscussionInfo from "./components/forum/discussion/discussion-info/discus
 import ProtectedRoutes from "./protectedRoutes";
 import Login from "./components/auth/login/login";
 import SignUp from "./components/auth/sign-up/signUp";
+import PageNotFound from "./shared/page-not-found/pageNotFound";
+import EmailNotVerified from "./components/auth/email-not-verified/emailNotVerified";
 
 class MurfRouter extends React.Component {
   render() {
@@ -26,6 +28,7 @@ class MurfRouter extends React.Component {
           />
           <Route path={"/login"} component={Login} />
           <Route path={"/sign-up"} component={SignUp} />
+          <Route path={"/email-not-verified"} component={EmailNotVerified} />
           <ProtectedRoutes path={"/create-forum"} component={CreateForum} />
           <ProtectedRoutes path={"/welcome"} component={Welcome} />
           <ProtectedRoutes
@@ -37,6 +40,8 @@ class MurfRouter extends React.Component {
             component={DiscussionInfo}
           />
           <ProtectedRoutes path={"/forum/:id"} component={Forum} />
+          <Route path="/page-not-found" component={PageNotFound} />
+          <Route path="" component={() => <Redirect to="/page-not-found" />} />
         </Switch>
       </Router>
     );

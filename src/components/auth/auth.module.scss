@@ -25,6 +25,29 @@
   transition: 0.3s ease;
 }
 
+.bannerText {
+  position: absolute;
+  top: 10px;
+  width: 70%;
+  background-color: white;
+  border: 1px solid $accentColor;
+  border-radius: 5px;
+  text-align: center;
+  padding: 10px;
+  color: $accentColor;
+}
+
+.cancelText {
+  font-size: $font-14;
+  text-align: center;
+  cursor: pointer;
+  color: $secondaryColor;
+}
+
+.cancelText:hover {
+  color: $primaryColor;
+  transition: color 0.3s ease-in;
+}
 // .faceBookLoginButton {
 //   width: 300px;
 //   height: 40px;
