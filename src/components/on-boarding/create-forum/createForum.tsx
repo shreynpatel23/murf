@@ -22,7 +22,7 @@ function CreateForum() {
   const [loading, setLoading] = React.useState(false);
   const [forumTheme, setForumTheme] = React.useState("");
   const [currentOpenAccordion, setCurrentOpenAccordion] = React.useState(1);
-  async function handleAddNewForum() {
+  async function handleCreateForum() {
     setLoading(true);
     try {
       const response = await callPostApi("/forums/create-forum", {
@@ -34,6 +34,7 @@ function CreateForum() {
       const { data }: any = response;
       history.push("/welcome", { forumId: data._id });
     } catch (err) {
+      setLoading(false);
       console.log(err);
     }
   }
@@ -94,6 +95,7 @@ function CreateForum() {
                       <div style={{ width: "85%" }} className="px-2">
                         <div className="py-3">
                           <Input
+                            labelname="Forum Name"
                             type="text"
                             name="name"
                             id="name"
@@ -196,7 +198,7 @@ function CreateForum() {
               hoverStyle={borderButtonStyle}
               style={primaryButtonStyle}
               size={buttonSize.LARGE}
-              onClick={handleAddNewForum}
+              onClick={handleCreateForum}
             >
               Create Forum
             </Button>

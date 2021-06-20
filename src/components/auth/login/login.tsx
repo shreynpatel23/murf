@@ -73,6 +73,7 @@ function Login() {
   function handleNavigation(user) {
     const { data }: any = user.data;
     const { token, isEmailVerified, forumId } = data;
+    localStorage.setItem("@user", JSON.stringify(data));
     localStorage.setItem("token", token);
     if (!isEmailVerified) return history.replace("/email-not-verified");
     if (!forumId) return history.replace("/create-forum");

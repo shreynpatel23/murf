@@ -59,6 +59,7 @@ function SignUp() {
   function handleNavigation(user) {
     const { data }: any = user.data;
     const { token, isEmailVerified } = data;
+    localStorage.setItem("@user", JSON.stringify(data));
     localStorage.setItem("token", token);
     if (!isEmailVerified) return history.replace("/email-not-verified");
     signInLoading && setSignInLoading(false);
