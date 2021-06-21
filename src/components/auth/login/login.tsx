@@ -10,6 +10,8 @@ import OnBoardingCard from "../on-boarding-card/onBoardingCard";
 import Input from "../../../shared/input/input";
 import { callPostApi } from "../../../api/axios";
 import { buttonTypes } from "../../../shared/buttonTypes";
+import { isInputEmpty, isValidEmail } from "../../../utils/validation";
+import ErrorMessage from "../../../shared/error-message/errorMessage";
 
 function Login() {
   let history = useHistory();
@@ -18,6 +20,10 @@ function Login() {
   const [loginLoading, setLoginLoading] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [error, setError] = React.useState({
+    email_error: "",
+    password_error: "",
+  });
   const [toggleBanner, setToggleBanner] = React.useState({
     toggle: false,
     message: "",
@@ -33,6 +39,35 @@ function Login() {
       }));
     }
   }, [params]);
+
+  function checkEmail() {
+    if (isInputEmpty(email)) {
+      setError((error) => ({
+        ...error,
+        email_error: "Email cannot be empty",
+      }));
+      return false;
+    }
+    if (!isValidEmail(email)) {
+      setError((error) => ({
+        ...error,
+        email_error: "Enter a valid email address",
+      }));
+      return false;
+    }
+    return true;
+  }
+
+  function checkPassword() {
+    if (isInputEmpty(password)) {
+      setError((error) => ({
+        ...error,
+        password_error: "Password cannot be empty",
+      }));
+      return false;
+    }
+    return true;
+  }
 
   // use this function to login with google
   async function handleLoginUsingGoogle(response) {
@@ -53,6 +88,8 @@ function Login() {
   // use this function to login with email and password
   async function handleLogin(event) {
     event.preventDefault();
+    const allChecksPassed = [checkEmail(), checkPassword()].every(Boolean);
+    if (!allChecksPassed) return;
     setLoginLoading(true);
     try {
       const user: any = await callPostApi("/login", {
@@ -120,8 +157,16 @@ function Login() {
                 placeholder="Enter Email"
                 onChange={(event) => {
                   setEmail(event.target.value);
+                  setError((error) => ({
+                    ...error,
+                    email_error: "",
+                  }));
                 }}
+                onBlur={checkEmail}
               />
+              {error.email_error && (
+                <ErrorMessage>{error.email_error}</ErrorMessage>
+              )}
             </div>
             <div className="form-group">
               <Input
@@ -134,8 +179,16 @@ function Login() {
                 placeholder="Enter Password"
                 onChange={(event) => {
                   setPassword(event.target.value);
+                  setError((error) => ({
+                    ...error,
+                    password_error: "",
+                  }));
                 }}
+                onBlur={checkPassword}
               />
+              {error.password_error && (
+                <ErrorMessage>{error.password_error}</ErrorMessage>
+              )}
             </div>
             <div className="py-3">
               <div className="py-3 d-flex justify-content-center">

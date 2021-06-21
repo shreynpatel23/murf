@@ -61,7 +61,7 @@
   border: 2px solid $accentColor;
   transition: "background 0.3s";
   border-radius: 5px;
-  background: transparent;
+  background: $accentBackGroundColor;
 
   .btnText {
     color: $accentColor;

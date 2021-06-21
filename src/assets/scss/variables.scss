@@ -5,15 +5,19 @@
   --primaryColor: #4d4848;
   --secondaryColor: #adadad;
   --success: #00ca6d;
+  --error: #d03939;
+  --accentBackGroundColor: 0, 0, 0;
 }
 $backgroundColor: var(--backgroundColor);
 $accentColor: var(--accentColor);
 $white: var(--white);
-$accentBackGroundColor: rgba(var(--accentColor), 0.15);
+$accentBackGroundColor: var(--accentBackGroundColor);
 $primaryColor: var(--primaryColor);
 $secondaryColor: var(--secondaryColor);
 $success: var(--success);
+$error: var(--error);
 $boxShadow: 0 0 10px rgba(0, 0, 0, 0.15);
+$natoSans: "Noto Sans", sans-serif;
 
 $font-12: 12px;
 $font-14: 14px;

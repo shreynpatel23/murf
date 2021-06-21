@@ -15,6 +15,7 @@ import Settings from "./settings/settings";
 import CategoryContextProvider from "../../context/categoryContext";
 import { callGetApi } from "../../api/axios";
 import { generateTheme } from "../../shared/colors";
+import { hexToRgb } from "../../utils/hexToRgb";
 
 function Forum() {
   let location = useLocation();
@@ -26,9 +27,14 @@ function Forum() {
         const { data }: any = await callGetApi(`/forums/${id}`);
         localStorage.setItem("theme", data.theme);
         const existing_theme = generateTheme(data.theme);
+        const rgb = hexToRgb(existing_theme.accentColor);
         document.documentElement.style.setProperty(
           "--accentColor",
           existing_theme.accentColor
+        );
+        document.documentElement.style.setProperty(
+          "--accentBackGroundColor",
+          `rgba(${rgb.r},${rgb.g},${rgb.b}, 0.15)`
         );
         setForum(data);
       } catch (err) {

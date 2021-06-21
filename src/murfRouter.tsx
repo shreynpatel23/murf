@@ -30,7 +30,9 @@ class MurfRouter extends React.Component {
             />
             <Route path={"/login"} component={Login} />
             <Route path={"/sign-up"} component={SignUp} />
-            <Route path={"/email-not-verified"} component={EmailNotVerified} />
+            <ProtectedRoutes path={"/email-not-verified"}>
+              <EmailNotVerified />
+            </ProtectedRoutes>
             <ProtectedRoutes path={"/create-forum"}>
               <CreateForum />
             </ProtectedRoutes>

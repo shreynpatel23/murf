@@ -21,7 +21,7 @@
 }
 
 .nonActiveTab:hover {
-  background: rgba($accentColor, 0.1);
+  background: $accentBackGroundColor;
   border-radius: 8px;
   .nonActiveTabText {
     font-size: $font-14;
