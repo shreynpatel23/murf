@@ -2,13 +2,10 @@ import React, { useEffect, useState } from "react";
 import Styles from "./welcome.module.scss";
 import welcomeIllustration from "../../../assets/images/welcome-illustration.svg";
 import Button from "../../../shared/button/button";
-import {
-  primaryButtonStyle,
-  borderButtonStyle,
-} from "../../../shared/buttonStyles";
 import { useHistory, useLocation } from "react-router-dom";
 import { buttonSize } from "../../../constants/button-size";
 import { callGetApi } from "../../../api/axios";
+import { buttonTypes } from "../../../shared/buttonTypes";
 
 function Welcome() {
   const {
@@ -67,9 +64,8 @@ function Welcome() {
               </div>
               <div className="pt-4 d-flex justify-content-center">
                 <Button
-                  hoverStyle={borderButtonStyle}
+                  type={buttonTypes.PRIMARY}
                   size={buttonSize.LARGE}
-                  style={primaryButtonStyle}
                   onClick={() => history.replace(`/forum/${forumId}`)}
                 >
                   Manage your forum

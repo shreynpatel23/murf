@@ -18,6 +18,7 @@ function TopNav({ forum_name, user = {} }: any) {
         onClick={() => {
           localStorage.removeItem("@user");
           localStorage.removeItem("token");
+          localStorage.removeItem("theme");
           history.push("/login");
         }}
       >

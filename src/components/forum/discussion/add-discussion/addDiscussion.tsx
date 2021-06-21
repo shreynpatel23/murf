@@ -2,12 +2,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import Styles from "./addDiscussion.module.scss";
 import Button from "../../../../shared/button/button";
-import {
-  primaryButtonStyle,
-  borderButtonStyle,
-  secondaryButtonHoverStyle,
-  secondaryButtonStyle,
-} from "../../../../shared/buttonStyles";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import addNewPost from "../../../../api/addNewPost";
 import { buttonSize } from "../../../../constants/button-size";
@@ -18,6 +12,7 @@ import StrikeThrough from "../../../../shared/svg/strikeThrough";
 import UnorderList from "../../../../shared/svg/unorderList";
 import OrderList from "../../../../shared/svg/orderList";
 import Toast from "../../../../shared/toast/toast";
+import { buttonTypes } from "../../../../shared/buttonTypes";
 function AddDiscussion() {
   const {
     state: { headingRef: postHeaderRef, bodyRef: postBodyRef },
@@ -225,9 +220,8 @@ function AddDiscussion() {
           {!viewOnlyPost ? (
             <div style={{ width: "150px" }}>
               <Button
-                hoverStyle={borderButtonStyle}
+                type={buttonTypes.PRIMARY}
                 size={buttonSize.MEDIUM}
-                style={primaryButtonStyle}
                 onClick={() => handleAddPost()}
               >
                 Add Post
@@ -238,9 +232,8 @@ function AddDiscussion() {
               <div className="pr-3">
                 <div style={{ width: "150px" }}>
                   <Button
-                    hoverStyle={secondaryButtonHoverStyle}
+                    type={buttonTypes.CANCEL}
                     size={buttonSize.MEDIUM}
-                    style={secondaryButtonStyle}
                     onClick={() => {
                       history.goBack();
                     }}
@@ -252,9 +245,8 @@ function AddDiscussion() {
               <div className="pr-3">
                 <div style={{ width: "150px" }}>
                   <Button
-                    hoverStyle={borderButtonStyle}
+                    type={buttonTypes.PRIMARY}
                     size={buttonSize.MEDIUM}
-                    style={primaryButtonStyle}
                     onClick={() => handleUpdatePost()}
                   >
                     Save

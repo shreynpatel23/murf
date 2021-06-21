@@ -2,10 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { useLocation, useHistory, useParams } from "react-router-dom";
 import { buttonSize } from "../../../../constants/button-size";
 import Button from "../../../../shared/button/button";
-import {
-  primaryButtonStyle,
-  borderButtonStyle,
-} from "../../../../shared/buttonStyles";
+import { buttonTypes } from "../../../../shared/buttonTypes";
 
 function DiscussionInfo() {
   const {
@@ -24,9 +21,8 @@ function DiscussionInfo() {
   return (
     <div>
       <Button
-        hoverStyle={borderButtonStyle}
+        type={buttonTypes.PRIMARY}
         size={buttonSize.LARGE}
-        style={primaryButtonStyle}
         onClick={() => {
           history.push(`/forum/${id}/add-discussion`, {
             headingRef: discussion.headerHTML,

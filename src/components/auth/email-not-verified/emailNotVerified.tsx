@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router";
+import { callGetApi } from "../../../api/axios";
 import { buttonSize } from "../../../constants/button-size";
 import Button from "../../../shared/button/button";
-import {
-  borderButtonStyle,
-  primaryButtonStyle,
-} from "../../../shared/buttonStyles";
+import { buttonTypes } from "../../../shared/buttonTypes";
 import Input from "../../../shared/input/input";
 import Styles from "../auth.module.scss";
 
@@ -13,6 +11,7 @@ function EmailNotVerified() {
   const params = useLocation();
   const [err, setErr] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
   const [toggleResendVerificationEmail, setToggleResendVerificationEmail] =
     React.useState(false);
 
@@ -23,6 +22,18 @@ function EmailNotVerified() {
       setErr(err);
     }
   }, [params]);
+
+  async function handleResendLink() {
+    setLoading(true);
+    try {
+      const { data }: any = await callGetApi("");
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      console.log(err.response.data);
+    }
+  }
+
   return (
     <div
       className={`${Styles.background} p-3 d-flex align-items-center justify-content-center`}
@@ -53,9 +64,9 @@ function EmailNotVerified() {
                 <div className="py-3 d-flex justify-content-center">
                   <div>
                     <Button
-                      style={primaryButtonStyle}
-                      hoverStyle={borderButtonStyle}
+                      type={buttonTypes.PRIMARY}
                       size={buttonSize.MEDIUM}
+                      onClick={handleResendLink}
                     >
                       Resend Link
                     </Button>
@@ -73,8 +84,7 @@ function EmailNotVerified() {
             </div>
           ) : (
             <Button
-              style={primaryButtonStyle}
-              hoverStyle={borderButtonStyle}
+              type={buttonTypes.PRIMARY}
               size={buttonSize.LARGE}
               onClick={() => setToggleResendVerificationEmail(true)}
             >

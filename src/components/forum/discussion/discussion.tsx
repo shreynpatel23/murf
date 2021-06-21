@@ -4,13 +4,10 @@ import { CategoryContext } from "../../../context/categoryContext";
 import getAllPosts from "../../../api/getAllPosts";
 import DiscussionCard from "./discussion-card/discussionCard";
 import Button from "../../../shared/button/button";
-import {
-  primaryButtonStyle,
-  borderButtonStyle,
-} from "../../../shared/buttonStyles";
 import { categoryArray } from "../../../constants/categary";
 import { useLocation, useHistory } from "react-router-dom";
 import { buttonSize } from "../../../constants/button-size";
+import { buttonTypes } from "../../../shared/buttonTypes";
 
 function Discussion() {
   let history = useHistory();
@@ -54,9 +51,8 @@ function Discussion() {
               </div>
               <div className="col-3">
                 <Button
-                  hoverStyle={borderButtonStyle}
+                  type={buttonTypes.PRIMARY}
                   size={buttonSize.MEDIUM}
-                  style={primaryButtonStyle}
                   onClick={() => {
                     history.push(`/forum/${id}/add-discussion`, {
                       headingRef: null,

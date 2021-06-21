@@ -1,11 +1,18 @@
-$backgroundColor: #fafafa;
-$accentColor: #00ca6d;
-$white: #ffffff;
-$accentBackgroundcolor: rgba($accentColor, 0.15);
-$inputBorderColor: #adadad;
-$primaryColor: #4d4848;
-$secondaryColor: #adadad;
-$success: #12eb00;
+:root {
+  --backgroundColor: #fafafa;
+  --accentColor: #2190ff;
+  --white: #ffffff;
+  --primaryColor: #4d4848;
+  --secondaryColor: #adadad;
+  --success: #00ca6d;
+}
+$backgroundColor: var(--backgroundColor);
+$accentColor: var(--accentColor);
+$white: var(--white);
+$accentBackGroundColor: rgba(var(--accentColor), 0.15);
+$primaryColor: var(--primaryColor);
+$secondaryColor: var(--secondaryColor);
+$success: var(--success);
 $boxShadow: 0 0 10px rgba(0, 0, 0, 0.15);
 
 $font-12: 12px;
@@ -14,3 +21,7 @@ $font-16: 16px;
 $font-18: 18px;
 $font-20: 20px;
 $font-24: 24px;
+
+div {
+  background-color: var();
+}

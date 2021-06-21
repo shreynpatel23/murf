@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import Styles from "./createForum.module.scss";
 import Input from "../../../shared/input/input";
 import Button from "../../../shared/button/button";
-import {
-  primaryButtonStyle,
-  borderButtonStyle,
-} from "../../../shared/buttonStyles";
 import { buttonSize } from "../../../constants/button-size";
 import OnBoardingCard from "../../auth/on-boarding-card/onBoardingCard";
 import { Theme } from "../../../constants/theme";
@@ -14,6 +10,7 @@ import { Colors } from "../../../shared/colors";
 import TickSvg from "../../../shared/svg/tickSvg";
 import { useHistory } from "react-router-dom";
 import { callPostApi } from "../../../api/axios";
+import { buttonTypes } from "../../../shared/buttonTypes";
 
 function CreateForum() {
   let history = useHistory();
@@ -108,9 +105,8 @@ function CreateForum() {
                         </div>
                         <div className="pt-1">
                           <Button
-                            hoverStyle={borderButtonStyle}
+                            type={buttonTypes.SECONDARY}
                             size={buttonSize.MEDIUM}
-                            style={primaryButtonStyle}
                             disabled={forumName === ""}
                             onClick={() => setCurrentOpenAccordion(2)}
                           >
@@ -195,8 +191,7 @@ function CreateForum() {
             <Button
               isLoading={loading}
               disabled={forumName === "" || forumTheme === "" || loading}
-              hoverStyle={borderButtonStyle}
-              style={primaryButtonStyle}
+              type={buttonTypes.PRIMARY}
               size={buttonSize.LARGE}
               onClick={handleCreateForum}
             >

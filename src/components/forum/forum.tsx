@@ -14,6 +14,7 @@ import Members from "./members/members";
 import Settings from "./settings/settings";
 import CategoryContextProvider from "../../context/categoryContext";
 import { callGetApi } from "../../api/axios";
+import { generateTheme } from "../../shared/colors";
 
 function Forum() {
   let location = useLocation();
@@ -23,12 +24,17 @@ function Forum() {
     async function getForumDetails() {
       try {
         const { data }: any = await callGetApi(`/forums/${id}`);
+        localStorage.setItem("theme", data.theme);
+        const existing_theme = generateTheme(data.theme);
+        document.documentElement.style.setProperty(
+          "--accentColor",
+          existing_theme.accentColor
+        );
         setForum(data);
       } catch (err) {
         console.log(err);
       }
     }
-
     getForumDetails();
   }, [id]);
   return (

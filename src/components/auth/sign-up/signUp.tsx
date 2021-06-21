@@ -5,11 +5,9 @@ import { callPostApi } from "../../../api/axios";
 import { GOOGLE_CLIENT_ID } from "../../../config";
 import { buttonSize } from "../../../constants/button-size";
 import Button from "../../../shared/button/button";
-import {
-  borderButtonStyle,
-  primaryButtonStyle,
-} from "../../../shared/buttonStyles";
+import { buttonTypes } from "../../../shared/buttonTypes";
 import Input from "../../../shared/input/input";
+import { isValidName } from "../../../utils/validation";
 import Styles from "../auth.module.scss";
 import OnBoardingCard from "../on-boarding-card/onBoardingCard";
 
@@ -21,6 +19,12 @@ function SignUp() {
   const [signInUsingGoogleLoading, setSignInUsingGoogleLoading] =
     React.useState(false);
   const [signInLoading, setSignInLoading] = React.useState(false);
+
+  function checkName() {
+    if (!isValidName(name, false)) {
+      console.log("name is not valid");
+    }
+  }
 
   async function handleSignInUsingGoogle(response) {
     const { email, name, imageUrl } = response.profileObj;
@@ -91,6 +95,7 @@ function SignUp() {
                 onChange={(event) => {
                   setName(event.target.value);
                 }}
+                onBlur={checkName}
               />
             </div>
             <div className="form-group">
@@ -125,7 +130,7 @@ function SignUp() {
               <div className="py-3 d-flex justify-content-center">
                 <Button
                   isLoading={signInLoading}
-                  hoverStyle={borderButtonStyle}
+                  type={buttonTypes.PRIMARY}
                   size={buttonSize.LARGE}
                   onClick={handleSignUp}
                   disabled={
@@ -135,7 +140,6 @@ function SignUp() {
                     password === "" ||
                     name === ""
                   }
-                  style={primaryButtonStyle}
                 >
                   Sign up
                 </Button>
@@ -148,7 +152,7 @@ function SignUp() {
                     render={(renderProps) => (
                       <Button
                         isLoading={signInUsingGoogleLoading}
-                        hoverStyle={primaryButtonStyle}
+                        type={buttonTypes.SECONDARY}
                         size={buttonSize.LARGE}
                         onClick={renderProps.onClick}
                         disabled={
@@ -156,7 +160,6 @@ function SignUp() {
                           signInUsingGoogleLoading ||
                           signInLoading
                         }
-                        style={borderButtonStyle}
                       >
                         Sign up using Google
                       </Button>

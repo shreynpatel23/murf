@@ -3,16 +3,13 @@ import Styles from "../auth.module.scss";
 import GoogleLogin from "react-google-login";
 // import FacebookLogin from "react-facebook-login";
 import { GOOGLE_CLIENT_ID } from "../../../config";
-import {
-  borderButtonStyle,
-  primaryButtonStyle,
-} from "../../../shared/buttonStyles";
 import Button from "../../../shared/button/button";
 import { useHistory, useLocation } from "react-router-dom";
 import { buttonSize } from "../../../constants/button-size";
 import OnBoardingCard from "../on-boarding-card/onBoardingCard";
 import Input from "../../../shared/input/input";
 import { callPostApi } from "../../../api/axios";
+import { buttonTypes } from "../../../shared/buttonTypes";
 
 function Login() {
   let history = useHistory();
@@ -144,7 +141,7 @@ function Login() {
               <div className="py-3 d-flex justify-content-center">
                 <Button
                   isLoading={loginLoading}
-                  hoverStyle={borderButtonStyle}
+                  type={buttonTypes.PRIMARY}
                   size={buttonSize.LARGE}
                   onClick={handleLogin}
                   disabled={
@@ -153,7 +150,6 @@ function Login() {
                     email === "" ||
                     password === ""
                   }
-                  style={primaryButtonStyle}
                 >
                   Login
                 </Button>
@@ -166,7 +162,7 @@ function Login() {
                     render={(renderProps) => (
                       <Button
                         isLoading={googleLoginLoading}
-                        hoverStyle={primaryButtonStyle}
+                        type={buttonTypes.SECONDARY}
                         size={buttonSize.LARGE}
                         onClick={renderProps.onClick}
                         disabled={
@@ -174,7 +170,6 @@ function Login() {
                           googleLoginLoading ||
                           loginLoading
                         }
-                        style={borderButtonStyle}
                       >
                         Login using Google
                       </Button>
