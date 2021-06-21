@@ -13,32 +13,27 @@ import Discussion from "./discussion/discussion";
 import Members from "./members/members";
 import Settings from "./settings/settings";
 import CategoryContextProvider from "../../context/categoryContext";
-import getForumById from "../../api/getForumById";
+import { callGetApi } from "../../api/axios";
 
 function Forum() {
   let location = useLocation();
   const { id }: any = useParams();
-  const [forum, setForum] = React.useState({
-    forumName: "",
-    user: {},
-  });
+  const [forum, setForum] = React.useState<any>();
   useEffect(() => {
-    getForumById(id)
-      .then((response: any) => {
-        const { forumName, userId } = response.data;
-        setForum((forum) => ({
-          ...forum,
-          forumName: forumName,
-          user: userId,
-        }));
-      })
-      .catch((err) => {
+    async function getForumDetails() {
+      try {
+        const { data }: any = await callGetApi(`/forums/${id}`);
+        setForum(data);
+      } catch (err) {
         console.log(err);
-      });
+      }
+    }
+
+    getForumDetails();
   }, [id]);
   return (
     <div className={Styles.background}>
-      <TopNav data={forum} />
+      <TopNav forum_name={forum?.forum_name} user={forum?.userId} />
       <div className="container-fluid">
         <div className="row px-3">
           <CategoryContextProvider>
@@ -57,19 +52,10 @@ function Forum() {
                 />
                 <Route
                   path={`/forum/${id}/discussion`}
-                  exact
                   component={Discussion}
                 />
-                <Route
-                  path={`/forum/${id}/members`}
-                  exact
-                  component={Members}
-                />
-                <Route
-                  path={`/forum/${id}/settings`}
-                  exact
-                  component={Settings}
-                />
+                <Route path={`/forum/${id}/members`} component={Members} />
+                <Route path={`/forum/${id}/settings`} component={Settings} />
               </Switch>
             </div>
           </CategoryContextProvider>

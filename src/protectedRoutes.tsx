@@ -1,10 +1,16 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 
-function ProtectedRoutes({ ...props }: any) {
-  const Component = props.component;
+function ProtectedRoutes({ children, ...props }: any) {
   const token = localStorage.getItem("token");
-  return token ? <Component /> : <Redirect to={{ pathname: "/" }} />;
+  return (
+    <Route
+      {...props}
+      render={() => {
+        return token ? children : <Redirect to={{ pathname: "/" }} />;
+      }}
+    />
+  );
 }
 
 export default ProtectedRoutes;

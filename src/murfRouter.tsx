@@ -29,17 +29,21 @@ class MurfRouter extends React.Component {
           <Route path={"/login"} component={Login} />
           <Route path={"/sign-up"} component={SignUp} />
           <Route path={"/email-not-verified"} component={EmailNotVerified} />
-          <ProtectedRoutes path={"/create-forum"} component={CreateForum} />
-          <ProtectedRoutes path={"/welcome"} component={Welcome} />
-          <ProtectedRoutes
-            path={"/forum/:id/add-discussion"}
-            component={AddDiscussion}
-          />
-          <ProtectedRoutes
-            path={"/forum/:id/discussion/:id"}
-            component={DiscussionInfo}
-          />
-          <ProtectedRoutes path={"/forum/:id"} component={Forum} />
+          <ProtectedRoutes path={"/create-forum"}>
+            <CreateForum />
+          </ProtectedRoutes>
+          <ProtectedRoutes path={"/welcome"}>
+            <Welcome />
+          </ProtectedRoutes>
+          <ProtectedRoutes path={"/forum/:id/add-discussion"}>
+            <AddDiscussion />
+          </ProtectedRoutes>
+          <ProtectedRoutes path={"/forum/:id/discussion/:id"}>
+            <DiscussionInfo />
+          </ProtectedRoutes>
+          <ProtectedRoutes path={"/forum/:id"}>
+            <Forum />
+          </ProtectedRoutes>
           <Route path="/page-not-found" component={PageNotFound} />
           <Route path="" component={() => <Redirect to="/page-not-found" />} />
         </Switch>

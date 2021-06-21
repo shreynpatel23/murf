@@ -11,7 +11,7 @@ export function callGetApi(url: string, ...params: any) {
         ...params,
         headers: { authToken: token },
       });
-      return resolve(response.data);
+      return resolve(response);
     } catch (error) {
       return reject(error);
     }
@@ -25,7 +25,7 @@ export function callPutApi(url: string, ...params: any) {
       const response = await axios.put(url, ...params, {
         headers: { authToken: token },
       });
-      return resolve(response.data);
+      return resolve(response);
     } catch (error) {
       return reject(error);
     }
