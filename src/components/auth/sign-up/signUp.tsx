@@ -6,8 +6,13 @@ import { GOOGLE_CLIENT_ID } from "../../../config";
 import { buttonSize } from "../../../constants/button-size";
 import Button from "../../../shared/button/button";
 import { buttonTypes } from "../../../shared/buttonTypes";
+import ErrorMessage from "../../../shared/error-message/errorMessage";
 import Input from "../../../shared/input/input";
-import { isValidName } from "../../../utils/validation";
+import {
+  isInputEmpty,
+  isValidEmail,
+  isValidName,
+} from "../../../utils/validation";
 import Styles from "../auth.module.scss";
 import OnBoardingCard from "../on-boarding-card/onBoardingCard";
 
@@ -19,11 +24,64 @@ function SignUp() {
   const [signInUsingGoogleLoading, setSignInUsingGoogleLoading] =
     React.useState(false);
   const [signInLoading, setSignInLoading] = React.useState(false);
+  const [error, setError] = React.useState({
+    name_error: "",
+    email_error: "",
+    password_error: "",
+  });
 
   function checkName() {
-    if (!isValidName(name, false)) {
-      console.log("name is not valid");
+    if (isInputEmpty(name)) {
+      setError((error) => ({
+        ...error,
+        name_error: "Name cannot be empty",
+      }));
+      return false;
     }
+    if (!isValidName(name, false)) {
+      setError((error) => ({
+        ...error,
+        name_error: "Enter a valid name",
+      }));
+      return false;
+    }
+    return true;
+  }
+
+  function checkEmail() {
+    if (isInputEmpty(email)) {
+      setError((error) => ({
+        ...error,
+        email_error: "Email cannot be empty",
+      }));
+      return false;
+    }
+    if (!isValidEmail(email)) {
+      setError((error) => ({
+        ...error,
+        email_error: "Enter a valid email address",
+      }));
+      return false;
+    }
+    return true;
+  }
+
+  function checkPassword() {
+    if (isInputEmpty(password)) {
+      setError((error) => ({
+        ...error,
+        password_error: "Password cannot be empty",
+      }));
+      return false;
+    }
+    if (password.length < 8) {
+      setError((error) => ({
+        ...error,
+        password_error: "Password should be at least 8 digit long",
+      }));
+      return false;
+    }
+    return true;
   }
 
   async function handleSignInUsingGoogle(response) {
@@ -45,6 +103,10 @@ function SignUp() {
 
   async function handleSignUp(event) {
     event.preventDefault();
+    const allCheckPassed = [checkName(), checkEmail(), checkPassword()].every(
+      Boolean
+    );
+    if (!allCheckPassed) return;
     setSignInLoading(true);
     try {
       const user: any = await callPostApi("/sign-up", {
@@ -94,9 +156,16 @@ function SignUp() {
                 placeholder="Enter Name"
                 onChange={(event) => {
                   setName(event.target.value);
+                  setError((error) => ({
+                    ...error,
+                    name_error: "",
+                  }));
                 }}
                 onBlur={checkName}
               />
+              {error.name_error && (
+                <ErrorMessage>{error.name_error}</ErrorMessage>
+              )}
             </div>
             <div className="form-group">
               <Input
@@ -109,8 +178,16 @@ function SignUp() {
                 placeholder="Enter Email"
                 onChange={(event) => {
                   setEmail(event.target.value);
+                  setError((error) => ({
+                    ...error,
+                    email_error: "",
+                  }));
                 }}
+                onBlur={checkEmail}
               />
+              {error.email_error && (
+                <ErrorMessage>{error.email_error}</ErrorMessage>
+              )}
             </div>
             <div className="form-group">
               <Input
@@ -123,8 +200,16 @@ function SignUp() {
                 placeholder="Enter Password"
                 onChange={(event) => {
                   setPassword(event.target.value);
+                  setError((error) => ({
+                    ...error,
+                    password_error: "",
+                  }));
                 }}
+                onBlur={checkPassword}
               />
+              {error.password_error && (
+                <ErrorMessage>{error.password_error}</ErrorMessage>
+              )}
             </div>
             <div className="py-3">
               <div className="py-3 d-flex justify-content-center">
@@ -138,7 +223,10 @@ function SignUp() {
                     signInLoading ||
                     email === "" ||
                     password === "" ||
-                    name === ""
+                    name === "" ||
+                    error.name_error !== "" ||
+                    error.email_error !== "" ||
+                    error.password_error !== ""
                   }
                 >
                   Sign up
