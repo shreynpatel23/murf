@@ -8,8 +8,8 @@ import {
 import CreateForum from "./components/on-boarding/create-forum/createForum";
 import Welcome from "./components/on-boarding/welcome/welcome";
 import Forum from "./components/forum/forum";
-import AddDiscussion from "./components/forum/discussion/add-discussion/addDiscussion";
-import DiscussionInfo from "./components/forum/discussion/discussion-info/discussionInfo";
+import AddPost from "./components/forum/posts/add-post/addPost";
+import ViewPost from "./components/forum/posts/view-post/viewPost";
 import ProtectedRoutes from "./protectedRoutes";
 import Login from "./components/auth/login/login";
 import SignUp from "./components/auth/sign-up/signUp";
@@ -39,11 +39,11 @@ class MurfRouter extends React.Component {
             <ProtectedRoutes path={"/welcome"}>
               <Welcome />
             </ProtectedRoutes>
-            <ProtectedRoutes path={"/forum/:id/add-discussion"}>
-              <AddDiscussion />
+            <ProtectedRoutes path={"/forum/:id/add-post"}>
+              <AddPost />
             </ProtectedRoutes>
-            <ProtectedRoutes path={"/forum/:id/discussion/:id"}>
-              <DiscussionInfo />
+            <ProtectedRoutes path={"/forum/:id/posts/:id"}>
+              <ViewPost />
             </ProtectedRoutes>
             <ProtectedRoutes path={"/forum/:id"}>
               <Forum />

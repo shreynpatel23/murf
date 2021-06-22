@@ -4,10 +4,11 @@ import { buttonSize } from "../../../../constants/button-size";
 import Button from "../../../../shared/button/button";
 import { buttonTypes } from "../../../../shared/buttonTypes";
 
-function DiscussionInfo() {
+export default function ViewPost() {
   const {
-    state: { discussion },
+    state: { post },
   }: any = useLocation();
+  console.log(post);
   const { id }: any = useParams();
   const history = useHistory();
   const postHeaderRef = useRef();
@@ -15,18 +16,18 @@ function DiscussionInfo() {
   useEffect(() => {
     const headerText: any = postHeaderRef?.current;
     const bodyText: any = postBodyRef?.current;
-    headerText.innerHTML = discussion.headerHTML;
-    bodyText.innerHTML = discussion.bodyHTML;
-  }, [discussion.headerHTML, discussion.bodyHTML]);
+    headerText.innerHTML = post.headerHTML;
+    bodyText.innerHTML = post.bodyHTML;
+  }, [post.headerHTML, post.bodyHTML]);
   return (
     <div>
       <Button
         type={buttonTypes.PRIMARY}
         size={buttonSize.LARGE}
         onClick={() => {
-          history.push(`/forum/${id}/add-discussion`, {
-            headingRef: discussion.headerHTML,
-            bodyRef: discussion.bodyHTML,
+          history.push(`/forum/${id}/add-post`, {
+            headingRef: post.headerHTML,
+            bodyRef: post.bodyHTML,
           });
         }}
       >
@@ -42,5 +43,3 @@ function DiscussionInfo() {
     </div>
   );
 }
-
-export default DiscussionInfo;

@@ -1,21 +1,21 @@
 import React from "react";
-import Styles from "./discussionCard.module.scss";
+import Styles from "./postCard.module.scss";
 import moment from "moment";
 import { Colors } from "../../../../shared/colors";
 import { useHistory } from "react-router-dom";
 
-function DiscussionCard({ discussion, categoryColor, forum_id }) {
+export default function PostCard({ post, forum_id }) {
   const history = useHistory();
   const headerText =
-    discussion.headerText.length > 100
-      ? discussion.headerText.substr(0, 100) + "..."
-      : discussion.headerText;
+    post.headerText.length > 100
+      ? post.headerText.substr(0, 100) + "..."
+      : post.headerText;
   const bodyText =
-    discussion.bodyText.length > 200
-      ? discussion.bodyText.substr(0, 200) + "..."
-      : discussion.bodyText;
+    post.bodyText.length > 200
+      ? post.bodyText.substr(0, 200) + "..."
+      : post.bodyText;
 
-  let likedSvgProperties = discussion.liked.isLiked
+  let likedSvgProperties = post.liked.isLiked
     ? { fill: Colors.accentColor, stroke: "none" }
     : { fill: "none", stroke: Colors.secondaryColor, strokeWidth: "2px" };
   return (
@@ -23,15 +23,15 @@ function DiscussionCard({ discussion, categoryColor, forum_id }) {
       className={Styles.cardBg}
       style={{ position: "relative" }}
       onClick={() => {
-        history.push(`/forum/${forum_id}/discussion/${discussion._id}`, {
-          discussion,
+        history.push(`/forum/${forum_id}/posts/${post._id}`, {
+          post,
         });
       }}
     >
       <div className="py-1 d-flex align-items-center">
         <div className="px-2">
           <img
-            src={discussion.userId.imageUrl}
+            src={post.userId.imageUrl}
             alt="url"
             className={Styles.imgContainer}
           />
@@ -40,13 +40,13 @@ function DiscussionCard({ discussion, categoryColor, forum_id }) {
           <p className={`mb-0 ${Styles.createdBy}`}>
             Posted by{" "}
             <span className={`${Styles.userName} px-2`}>
-              {discussion.userId.userName}
+              {post.userId.userName}
             </span>
           </p>
         </div>
         <div className="ml-auto px-2">
           <p className={`mb-0 ${Styles.postedOn}`}>
-            {moment(discussion.createdAt).fromNow()}
+            {moment(post.createdAt).fromNow()}
           </p>
         </div>
         <div className="px-2">{/* more option will come here  */}</div>
@@ -58,8 +58,8 @@ function DiscussionCard({ discussion, categoryColor, forum_id }) {
             <p className={`mb-0 ${Styles.bodyText}`}>{bodyText}</p>
             <div className="py-4">
               <div className="d-flex align-items-cneter">
-                {discussion.tags &&
-                  discussion.tags.map((tag) => {
+                {post.tags &&
+                  post.tags.map((tag) => {
                     return (
                       <div className="pr-3" key={tag}>
                         <div className={`px-3 py-1 ${Styles.tagBg}`}>
@@ -80,14 +80,14 @@ function DiscussionCard({ discussion, categoryColor, forum_id }) {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-6">
-                  {discussion.pinned ? (
+                  {post.pinned ? (
                     <div className={`${Styles.pinnedBack} px-2 py-1`}>
                       <p className={`mb-0 ${Styles.pinnedText}`}>Pinned</p>
                     </div>
                   ) : null}
                 </div>
                 <div className="col-6">
-                  {discussion.saved ? (
+                  {post.saved ? (
                     <div className={`${Styles.savedBack} px-2 py-1`}>
                       <p className={`mb-0 ${Styles.savedText}`}>Saved</p>
                     </div>
@@ -125,9 +125,7 @@ function DiscussionCard({ discussion, categoryColor, forum_id }) {
               </svg>
             </div>
             <div className="px-1">
-              <p className={`mb-0 ${Styles.likeText}`}>
-                {discussion.liked.count}
-              </p>
+              <p className={`mb-0 ${Styles.likeText}`}>{post.liked.count}</p>
             </div>
           </div>
           <div className="d-flex align-items-center px-2">
@@ -161,13 +159,13 @@ function DiscussionCard({ discussion, categoryColor, forum_id }) {
             </div>
             <div className="px-1">
               <p className={`mb-0 ${Styles.commentText}`}>
-                {discussion.comments.length}
+                {post.comments.length}
               </p>
             </div>
           </div>
         </div>
       </div>
-      <div
+      {/* <div
         className={`px-4 py-1 ${Styles.categoryBack}`}
         style={{
           position: "absolute",
@@ -192,9 +190,7 @@ function DiscussionCard({ discussion, categoryColor, forum_id }) {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
-
-export default DiscussionCard;

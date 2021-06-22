@@ -2,15 +2,9 @@
 
 .activeTab {
   padding: 15px 20px;
-  background: $accentBackGroundColor;
   width: 100%;
   border-radius: 8px;
   cursor: pointer;
-}
-.activeTab:hover {
-  .showCross {
-    display: block;
-  }
 }
 
 .nonActiveTab {
@@ -21,12 +15,11 @@
 }
 
 .nonActiveTab:hover {
-  background: $accentBackGroundColor;
-  border-radius: 8px;
   .nonActiveTabText {
     font-size: $font-14;
     color: $accentColor;
     font-weight: 500;
+    transition: color 0.3s;
   }
 }
 
@@ -44,34 +37,9 @@
   color: $secondaryColor;
 }
 
-.circle {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
-.categoryTab {
-  padding: 15px 20px;
-  background: transparent;
-  width: 100%;
-  cursor: pointer;
-}
-
-.showCross {
-  display: none;
-}
-
 .trendingTopics {
   font-size: $font-16;
   font-weight: 500;
   text-align: left;
   color: $secondaryColor;
-}
-
-.removeFilter {
-  font-size: $font-12;
-  font-weight: 500;
-  text-align: left;
-  color: $accentColor;
-  cursor: pointer;
 }

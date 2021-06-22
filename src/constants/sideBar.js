@@ -1,5 +1,5 @@
-export const DISCUSSION = "Discussion";
+export const POSTS = "Posts";
 export const MEMBERS = "Members";
 export const SETTINGS = "Settings";
 
-export const sideBarItems = [ DISCUSSION, MEMBERS, SETTINGS];
+export const sideBarItems = [POSTS, MEMBERS, SETTINGS];

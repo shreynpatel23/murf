@@ -66,7 +66,7 @@ function Welcome() {
                 <Button
                   type={buttonTypes.PRIMARY}
                   size={buttonSize.LARGE}
-                  onClick={() => history.replace(`/forum/${forumId}`)}
+                  onClick={() => history.replace(`/forum/${forumId}/posts`)}
                 >
                   Manage your forum
                 </Button>

@@ -113,7 +113,7 @@ function Login() {
     if (!forumId) return history.replace("/create-forum");
     loginLoading && setLoginLoading(false);
     googleLoginLoading && setGoogleLoginLoading(false);
-    history.replace(`/forum/${forumId}`);
+    history.replace(`/forum/${forumId}/posts`);
   }
 
   // use this function for sign in using facebook

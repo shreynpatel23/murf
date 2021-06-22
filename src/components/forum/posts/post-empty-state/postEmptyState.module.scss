@@ -1,0 +1,36 @@
+@import "../../../../assets/scss/variables.scss";
+
+.empty_state_back {
+  width: 85%;
+  height: 65vh;
+  margin: 0 auto;
+  background: #eaeaea;
+  border-radius: 10px;
+  border: solid 1px #eaeaea;
+}
+
+.empty_state_header {
+  font-size: $font-20;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.25;
+  letter-spacing: normal;
+  text-align: center;
+  color: $primaryColor;
+}
+
+.channel_name {
+  font-weight: 500;
+}
+
+.empty_state_body_text {
+  font-size: $font-14;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.88;
+  letter-spacing: normal;
+  text-align: center;
+  color: $secondaryColor;
+}

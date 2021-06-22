@@ -8,14 +8,10 @@ function Button({ isLoading = false, type, size, ...props }) {
     <button
       className={`${Styles.button} ${
         size === buttonSize.LARGE ? Styles.largeButton : Styles.mediumButton
+      } ${type === buttonTypes.PRIMARY ? Styles.primaryButtonStyle : ""} ${
+        type === buttonTypes.SECONDARY ? Styles.secondaryButtonStyle : ""
       } ${
-        type === buttonTypes.PRIMARY
-          ? Styles.primaryButtonStyle
-          : buttonTypes.SECONDARY
-          ? Styles.secondaryButtonStyle
-          : buttonTypes.CANCEL
-          ? Styles.cancelButtonStyle
-          : ""
+        type === buttonTypes.CANCEL ? Styles.cancelButtonStyle : ""
       } d-flex align-items-center justify-content-center`}
       {...props}
     >
