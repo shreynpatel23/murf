@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Styles from "./posts.module.scss";
 import PostCard from "./post-card/postCard";
-import Button from "../../../shared/button/button";
-import { useHistory, useParams } from "react-router-dom";
-import { buttonSize } from "../../../constants/button-size";
-import { buttonTypes } from "../../../shared/buttonTypes";
+import { useParams } from "react-router-dom";
 import { callGetApi } from "../../../api/axios";
 import PostEmptyState from "./post-empty-state/postEmptyState";
+import AddPostBanner from "./add-post-banner/addPostBanner";
+import filterSvg from "../../../assets/images/filter.svg";
+import ArrowDown from "../../../shared/svg/arrowDown";
+import { Colors } from "../../../shared/colors";
 
 export default function Posts({ currentSelectedChannel }) {
   const { id }: any = useParams();
-  let history = useHistory();
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     //     setPosts(response.data.sort(compare));
     async function getAllPostOfChannel() {
@@ -52,42 +52,41 @@ export default function Posts({ currentSelectedChannel }) {
         </div>
       ) : posts.length > 0 ? (
         <div className="p-3">
-          <div className={Styles.newPostCard}>
-            <div className="container-fluid">
-              <div className="row align-items-center">
-                <div className="col-9">
-                  <p className="mb-0">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Porro libero velit officiis dignissimos officia unde, modi
-                    omnis quos placeat ab magnam labore culpa, temporibus eos
-                    aliquid ut repellat sed vero?
-                  </p>
+          <AddPostBanner
+            forum_id={id}
+            channel_id={currentSelectedChannel._id}
+          />
+          <div className={`mx-auto ${Styles.post_wrapper}`}>
+            <div className="pt-3 pb-2 d-flex align-items-center justify-content-between">
+              <p className={`mb-0 ${Styles.label}`}>
+                Posts in{" "}
+                <span className={Styles.value}>
+                  {currentSelectedChannel?.channel_name}
+                </span>
+              </p>
+              <div className="d-flex align-items-center">
+                <div className="pr-2">
+                  <img src={filterSvg} alt="filter" width="15" />
                 </div>
-                <div className="col-3">
-                  <Button
-                    type={buttonTypes.PRIMARY}
-                    size={buttonSize.MEDIUM}
-                    onClick={() => {
-                      history.push(`/forum/${id}/add-post`, {
-                        headingRef: null,
-                        bodyRef: null,
-                        channel_id: currentSelectedChannel._id,
-                      });
-                    }}
-                  >
-                    New Post
-                  </Button>
-                </div>
+                <p
+                  className={`mb-0 ${Styles.label}`}
+                  style={{ cursor: "pointer" }}
+                >
+                  Filter Based on <span className={Styles.value}>All</span>{" "}
+                  <span>
+                    <ArrowDown color={Colors.secondaryColor} />
+                  </span>
+                </p>
               </div>
             </div>
+            {posts.map((post: any, index) => {
+              return (
+                <div className="py-3" key={index}>
+                  <PostCard forum_id={id} post={post} />
+                </div>
+              );
+            })}
           </div>
-          {posts.map((post: any, index) => {
-            return (
-              <div className="py-3" key={index}>
-                <PostCard forum_id={id} post={post} />
-              </div>
-            );
-          })}
         </div>
       ) : (
         <PostEmptyState channel={currentSelectedChannel} />

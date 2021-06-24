@@ -1,11 +1,48 @@
 @import "../../../assets/scss/variables.scss";
 
-.newPostCard {
+.new_post_card {
+  width: 90%;
+}
+
+.new_post_content_wrapper {
+  position: absolute;
   width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  background: $white;
-  border-radius: 8px;
-  height: 20%;
-  padding: 20px;
+  height: 90%;
+}
+
+.post_banner_text_placement {
+  position: relative;
+  left: 17%;
+}
+
+.post_banner_text {
+  font-size: $font-16;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: $primaryColor;
+}
+
+.post_wrapper {
+  width: 90%;
+}
+
+.label {
+  font-size: $font-14;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67;
+  letter-spacing: normal;
+  text-align: left;
+  color: $primaryColor;
+}
+
+.value {
+  padding: 0 5px;
+  font-size: $font-16;
+  font-weight: 500;
 }

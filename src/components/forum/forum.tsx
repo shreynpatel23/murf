@@ -9,6 +9,7 @@ import Settings from "./settings/settings";
 import { callGetApi } from "../../api/axios";
 import { generateTheme } from "../../shared/colors";
 import { hexToRgb } from "../../utils/hexToRgb";
+import ViewPost from "./posts/view-post/viewPost";
 
 function Forum() {
   let location = useLocation();
@@ -67,6 +68,12 @@ function Forum() {
               style={{ minHeight: "calc(100vh - 72px)", height: "100%" }}
             >
               <Switch location={location}>
+                <Route
+                  path={`/forum/:id/posts/:id`}
+                  render={() => {
+                    return <ViewPost />;
+                  }}
+                />
                 <Route
                   path={`/forum/:id/posts`}
                   render={() => {

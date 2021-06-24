@@ -2,12 +2,8 @@ import React, { useEffect, useState } from "react";
 import Styles from "./sideBar.module.scss";
 import { sideBarItems, POSTS } from "../../constants/sideBar";
 import { useLocation, useHistory, useParams } from "react-router-dom";
-// import { categoryArray } from "../../constants/categary";
-// import { CategoryContext } from "../../context/categoryContext";
-// import { Colors } from "../colors";
 
 function SideBar({ forum_channels, currentSelectedChannel }) {
-  // console.log(forum_channels);
   let location = useLocation();
   let history = useHistory();
   const { id }: any = useParams();
@@ -16,10 +12,10 @@ function SideBar({ forum_channels, currentSelectedChannel }) {
   const [channels, setChannels] = useState(forum_channels);
   const [currentActiveChannel, setCurrentActiveChannel] = React.useState("");
 
-  // console.log(channels);
   useEffect(() => {
     setCurrentActiveChannel(channels[0]?.channel_name);
     currentSelectedChannel(channels[0]);
+    // eslint-disable-next-line
   }, [channels]);
 
   // use this function to change the navigation.
@@ -74,6 +70,7 @@ function SideBar({ forum_channels, currentSelectedChannel }) {
                 onClick={() => {
                   setCurrentActiveChannel(channel.channel_name);
                   currentSelectedChannel(channel);
+                  history.push(`/forum/${id}/posts`);
                 }}
               >
                 <div className="d-flex align-items-center">

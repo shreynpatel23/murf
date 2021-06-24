@@ -1,43 +1,38 @@
 @import "../../../../assets/scss/variables.scss";
 
-.cardBg {
+.post_card_back {
   width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  background: $white;
-  padding: 20px;
   border-radius: 8px;
-  cursor: pointer;
-  transition: box-shadow 0.2s ease-in;
+  box-shadow: 0 3px 6px 0 rgba(190, 190, 190, 0.2);
+  background-color: $white;
 }
 
-.cardBg:hover {
-  box-shadow: 0 4px 10px 0 rgba($secondaryColor, 0.15);
+.post_header {
+  width: 100%;
+  border-radius: 10px;
+  border: solid 1px rgba(141, 141, 141, 0.15);
+  background-color: $cardHeaderColor;
+}
+
+.post_posted_by {
+  font-size: $font-12;
+  letter-spacing: normal;
+  text-align: left;
+  color: $primaryColor;
+}
+
+.post_posted_on {
+  font-size: $font-10;
+  letter-spacing: normal;
+  text-align: left;
+  color: $secondaryColor;
 }
 
 .imgContainer {
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
-}
-
-.createdBy {
-  font-size: $font-14;
-  text-align: left;
-  color: $secondaryColor;
-}
-
-.userName {
-  font-size: $font-16;
-  font-weight: 500;
-  text-align: left;
-  color: $accentColor;
-}
-
-.postedOn {
-  font-size: $font-14;
-  text-align: right;
-  color: $secondaryColor;
+  margin: 0 5px;
 }
 
 .headingText {
@@ -52,70 +47,14 @@
   color: $secondaryColor;
 }
 
-.categoryBack {
-  background-color: $white;
-  border-radius: 8px;
-}
-
-.categoryText {
-  font-size: $font-16;
-  text-align: center;
-}
-
-.circle {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
 .tagBg {
   border-radius: 8px;
-  background-color: $accentBackGroundColor;
+  border: 1px solid $accentColor;
 }
+
 .tagText {
   font-size: $font-14;
   font-weight: 500;
   text-align: center;
   color: $accentColor;
-}
-
-.pinnedBack {
-  border-radius: 20px;
-  background-color: $accentBackGroundColor;
-}
-
-.pinnedText {
-  font-size: $font-12;
-  font-weight: 500;
-  text-align: center;
-  color: $success;
-}
-
-.savedBack {
-  border-radius: 20px;
-  background-color: $accentBackGroundColor;
-}
-
-.savedText {
-  font-size: $font-12;
-  font-weight: 500;
-  text-align: center;
-  color: $accentColor;
-}
-
-.likeText,
-.commentText {
-  font-size: $font-14;
-  text-align: left;
-  color: $secondaryColor;
-}
-
-.likedState {
-  fill: $accentColor;
-  border: 0;
-}
-
-.unlikedState {
-  fill: none;
-  border: 1px solid $secondaryColor;
 }

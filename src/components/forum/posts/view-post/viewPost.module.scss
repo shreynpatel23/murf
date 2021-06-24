@@ -1,0 +1,42 @@
+@import "../../../../assets/scss/variables.scss";
+
+.view_post_wrapper {
+  width: 90%;
+  margin: 20px auto;
+}
+
+.view_post_back {
+  font-size: $font-14;
+  letter-spacing: normal;
+  text-align: left;
+  color: $primaryColor;
+}
+
+.post_header {
+  font-size: $font-24;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.34;
+  letter-spacing: normal;
+  text-align: left;
+  color: $primaryColor;
+}
+
+.post_body {
+  font-size: $font-16;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.88;
+  letter-spacing: normal;
+  text-align: left;
+  color: $primaryColor;
+}
+
+.number_of_comments {
+  font-size: $font-12;
+  letter-spacing: normal;
+  text-align: left;
+  color: $primaryColor;
+}
