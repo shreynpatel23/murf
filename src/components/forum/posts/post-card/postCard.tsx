@@ -2,6 +2,9 @@ import React from "react";
 import Styles from "./postCard.module.scss";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
+import pinnedSvg from "../../../../assets/images/pin.svg";
+import savedSvg from "../../../../assets/images/save.svg";
+import moreOptionSvg from "../../../../assets/images/more-option.svg";
 
 export default function PostCard({ post, forum_id }) {
   const history = useHistory();
@@ -16,8 +19,8 @@ export default function PostCard({ post, forum_id }) {
   return (
     <div className="py-2">
       <div className={Styles.post_card_back}>
-        <div className={`py-3 d-flex align-items-center ${Styles.post_header}`}>
-          <div className="px-md-3 d-flex align-items-center">
+        <div className={`py-2 d-flex align-items-center ${Styles.post_header}`}>
+          <div className="px-md-3 px-sm-2 d-flex align-items-center my-1">
             <img
               src={post.userId.imageUrl}
               alt="url"
@@ -30,6 +33,28 @@ export default function PostCard({ post, forum_id }) {
               <p className={`mb-0 ${Styles.post_posted_on}`}>
                 {moment(post.createdAt).fromNow()}
               </p>
+            </div>
+          </div>
+          <div className="ml-auto px-2">
+            <div className="d-flex align-items-center">
+              {post?.pinned && (
+                <div className="px-3">
+                  <img src={pinnedSvg} alt="pin" width="20px" />
+                </div>
+              )}
+              {post?.saved && (
+                <div className="px-3">
+                  <img src={savedSvg} alt="save" width="15px" />
+                </div>
+              )}
+              <div className="px-3">
+                <img
+                  src={moreOptionSvg}
+                  alt="option"
+                  width="4px"
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
             </div>
           </div>
         </div>
