@@ -21,11 +21,21 @@ export default function PostCard({ post, forum_id }) {
       <div className={Styles.post_card_back}>
         <div className={`py-2 d-flex align-items-center ${Styles.post_header}`}>
           <div className="px-md-3 px-sm-2 d-flex align-items-center my-1">
-            <img
-              src={post.userId.imageUrl}
-              alt="url"
-              className={Styles.imgContainer}
-            />
+            {post.userId.imageUrl !== "" ? (
+              <img
+                src={post.userId.imageUrl}
+                alt="url"
+                className={Styles.imgContainer}
+              />
+            ) : (
+              <div
+                className={`${Styles.imgContainer} d-flex align-items-center justify-content-center`}
+              >
+                <p className="text-white mb-0">
+                  {post.userId.name[0].toUpperCase()}
+                </p>
+              </div>
+            )}
             <div className="px-1">
               <p className={`mb-0 ${Styles.post_posted_by}`}>
                 Posted by {post?.userId.name}

@@ -78,11 +78,26 @@ export default function ViewPost() {
             {/* Posted by section  */}
             <div className="py-3">
               <div className="d-flex align-items-center">
-                <img
+                {/* <img
                   src={post?.userId.imageUrl}
                   alt="url"
                   className={PostCardStyles.imgContainer}
-                />
+                /> */}
+                {post.userId.imageUrl !== "" ? (
+                  <img
+                    src={post.userId.imageUrl}
+                    alt="url"
+                    className={PostCardStyles.imgContainer}
+                  />
+                ) : (
+                  <div
+                    className={`${PostCardStyles.imgContainer} d-flex align-items-center justify-content-center`}
+                  >
+                    <p className="text-white mb-0">
+                      {post.userId.name[0].toUpperCase()}
+                    </p>
+                  </div>
+                )}
                 <div className="px-1">
                   <p className={`mb-0 ${PostCardStyles.post_posted_by}`}>
                     Posted by {post?.userId.name}
