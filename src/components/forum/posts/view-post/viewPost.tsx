@@ -78,11 +78,6 @@ export default function ViewPost() {
             {/* Posted by section  */}
             <div className="py-3">
               <div className="d-flex align-items-center">
-                {/* <img
-                  src={post?.userId.imageUrl}
-                  alt="url"
-                  className={PostCardStyles.imgContainer}
-                /> */}
                 {post.userId.imageUrl !== "" ? (
                   <img
                     src={post.userId.imageUrl}
