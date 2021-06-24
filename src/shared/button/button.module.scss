@@ -24,8 +24,67 @@
 
 .button:disabled {
   opacity: 0.5;
+  cursor: no-drop;
+  background-color: $secondaryColor;
+  border: 0;
+
+  .btnText {
+    color: $white;
+  }
 }
 
 .button:disabled:hover {
   box-shadow: none;
+  cursor: no-drop;
+  background-color: $secondaryColor;
+  border: 0;
+
+  .btnText {
+    color: $white;
+  }
+}
+
+.primaryButtonStyle,
+.secondaryButtonStyle:hover {
+  background: $accentColor;
+  transition: "background 0.3s";
+  border-radius: 5px;
+  border: 0;
+
+  .btnText {
+    color: $white;
+  }
+}
+
+.primaryButtonStyle:hover,
+.secondaryButtonStyle {
+  border: 2px solid $accentColor;
+  transition: "background 0.3s";
+  border-radius: 5px;
+  background: $accentBackGroundColor;
+
+  .btnText {
+    color: $accentColor;
+  }
+}
+
+.cancelButtonStyle {
+  background: $white;
+  transition: "background 0.3s";
+  border: 2px solid $secondaryColor;
+  border-radius: 5px;
+
+  .btnText {
+    color: $secondaryColor;
+  }
+}
+
+.cancelButtonStyle:hover {
+  background: $secondaryColor;
+  transition: "background 0.3s";
+  border-radius: 5px;
+  border: 0;
+  .btnText {
+    color: $white;
+  }
 }

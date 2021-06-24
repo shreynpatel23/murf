@@ -1,15 +1,8 @@
 // import React, { useState, useRef, useEffect } from "react";
 import React, { useRef, useState, useEffect } from "react";
-import Styles from "./addDiscussion.module.scss";
+import Styles from "./addPost.module.scss";
 import Button from "../../../../shared/button/button";
-import {
-  primaryButtonStyle,
-  primaryButtonHoverStyle,
-  secondaryButtonHoverStyle,
-  secondaryButtonStyle,
-} from "../../../../shared/buttonStyles";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import addNewPost from "../../../../api/addNewPost";
 import { buttonSize } from "../../../../constants/button-size";
 import Bold from "../../../../shared/svg/bold";
 import Italic from "../../../../shared/svg/italic";
@@ -18,10 +11,18 @@ import StrikeThrough from "../../../../shared/svg/strikeThrough";
 import UnorderList from "../../../../shared/svg/unorderList";
 import OrderList from "../../../../shared/svg/orderList";
 import Toast from "../../../../shared/toast/toast";
-function AddDiscussion() {
+import { buttonTypes } from "../../../../shared/buttonTypes";
+import { callPostApi } from "../../../../api/axios";
+export default function AddPost() {
+  const user = JSON.parse(localStorage.getItem("@user") || "{}");
   const {
-    state: { headingRef: postHeaderRef, bodyRef: postBodyRef },
+    state: {
+      headingRef: postHeaderRef,
+      bodyRef: postBodyRef,
+      channel_id: channelId,
+    },
   }: any = useLocation();
+  const [loading, setLoading] = React.useState(false);
   const { id }: any = useParams();
   const history = useHistory();
   const headingRef: any = useRef(null);
@@ -49,12 +50,12 @@ function AddDiscussion() {
       setError("Please provide a valid description for the post");
       return;
     }
+    setLoading(true);
     const headerText = headingTextRef.innerText;
     const bodyText = bodyTextRef.innerText;
     const headerHTML = headingTextRef.innerHTML;
     const bodyHTML = bodyTextRef.innerHTML;
     const tags = [];
-    const category = "Tech";
     const comments = [];
     const pinned = false;
     const saved = false;
@@ -62,24 +63,29 @@ function AddDiscussion() {
       count: 0,
       isLiked: false,
     };
-    const discussion: any = await addNewPost({
-      headerText,
-      bodyText,
-      headerHTML,
-      bodyHTML,
-      tags,
-      category,
-      comments,
-      pinned,
-      saved,
-      liked,
-      forumId: id,
-    }).catch((err) => {
-      console.log(err);
-    });
-    history.push(`/forum/${id}/discussion/${discussion.data._id}`, {
-      discussion: discussion.data,
-    });
+    try {
+      const { data }: any = await callPostApi("posts/create-post", {
+        headerText,
+        headerHTML,
+        bodyText,
+        bodyHTML,
+        tags,
+        comments,
+        pinned,
+        saved,
+        liked,
+        userId: user._id,
+        forumId: id,
+        channelId: channelId,
+      });
+      setLoading(false);
+      history.push(`/forum/${id}/posts/${data._id}`, {
+        post: data,
+      });
+    } catch (err) {
+      setLoading(false);
+      console.log(err.message);
+    }
   };
 
   const handleUpdatePost = async () => {
@@ -87,8 +93,8 @@ function AddDiscussion() {
     const bodyTextRef = bodyRef?.current;
     const headerText = headingTextRef.innerText;
     const bodyText = bodyTextRef.innerText;
-    const headerHTML = headingTextRef.innerHTML;
-    const bodyHTML = bodyTextRef.innerHTML;
+    // const headerHTML = headingTextRef.innerHTML;
+    // const bodyHTML = bodyTextRef.innerHTML;
     console.log(headerText);
     console.log(bodyText);
     // console.log();
@@ -218,48 +224,52 @@ function AddDiscussion() {
             </div>
           </div>
         </div>
-        <div
-          style={{ height: "10%" }}
-          className="d-flex align-items-center justify-content-start"
-        >
+        <div style={{ height: "10%" }} className="d-flex align-items-center">
           {!viewOnlyPost ? (
-            <div style={{ width: "150px" }}>
-              <Button
-                hoverStyle={primaryButtonHoverStyle}
-                size={buttonSize.MEDIUM}
-                style={primaryButtonStyle}
-                onClick={() => handleAddPost()}
-              >
-                Add Post
-              </Button>
-            </div>
+            <>
+              <div className="pl-3">
+                <Button
+                  type={buttonTypes.CANCEL}
+                  size={buttonSize.MEDIUM}
+                  onClick={() => {
+                    history.goBack();
+                  }}
+                >
+                  Cancel
+                </Button>
+              </div>
+              <div className="pl-3 ml-auto">
+                <Button
+                  isLoading={loading}
+                  type={buttonTypes.PRIMARY}
+                  size={buttonSize.MEDIUM}
+                  onClick={() => handleAddPost()}
+                >
+                  Add Post
+                </Button>
+              </div>
+            </>
           ) : (
             <>
-              <div className="pr-3">
-                <div style={{ width: "150px" }}>
-                  <Button
-                    hoverStyle={secondaryButtonHoverStyle}
-                    size={buttonSize.MEDIUM}
-                    style={secondaryButtonStyle}
-                    onClick={() => {
-                      history.goBack();
-                    }}
-                  >
-                    Cancel
-                  </Button>
-                </div>
+              <div className="pl-3">
+                <Button
+                  type={buttonTypes.CANCEL}
+                  size={buttonSize.MEDIUM}
+                  onClick={() => {
+                    history.goBack();
+                  }}
+                >
+                  Cancel
+                </Button>
               </div>
-              <div className="pr-3">
-                <div style={{ width: "150px" }}>
-                  <Button
-                    hoverStyle={primaryButtonHoverStyle}
-                    size={buttonSize.MEDIUM}
-                    style={primaryButtonStyle}
-                    onClick={() => handleUpdatePost()}
-                  >
-                    Save
-                  </Button>
-                </div>
+              <div className="pl-3 ml-auto">
+                <Button
+                  type={buttonTypes.PRIMARY}
+                  size={buttonSize.MEDIUM}
+                  onClick={() => handleUpdatePost()}
+                >
+                  Save
+                </Button>
               </div>
             </>
           )}
@@ -268,5 +278,3 @@ function AddDiscussion() {
     </div>
   );
 }
-
-export default AddDiscussion;

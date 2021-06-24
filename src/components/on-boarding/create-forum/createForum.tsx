@@ -2,33 +2,38 @@ import React, { useState } from "react";
 import Styles from "./createForum.module.scss";
 import Input from "../../../shared/input/input";
 import Button from "../../../shared/button/button";
-import {
-  primaryButtonStyle,
-  primaryButtonHoverStyle,
-} from "../../../shared/buttonStyles";
 import { buttonSize } from "../../../constants/button-size";
 import OnBoardingCard from "../../auth/on-boarding-card/onBoardingCard";
 import { Theme } from "../../../constants/theme";
 import RadioButton from "../../../shared/radio-button/radioButton";
-import AddNweForum from "../../../api/addNewForum";
 import { Colors } from "../../../shared/colors";
 import TickSvg from "../../../shared/svg/tickSvg";
 import { useHistory } from "react-router-dom";
+import { callPostApi } from "../../../api/axios";
+import { buttonTypes } from "../../../shared/buttonTypes";
 
 function CreateForum() {
   let history = useHistory();
+  const user = JSON.parse(localStorage.getItem("@user"));
   const [forumName, setForumName] = useState("");
+  const [loading, setLoading] = React.useState(false);
   const [forumTheme, setForumTheme] = React.useState("");
   const [currentOpenAccordion, setCurrentOpenAccordion] = React.useState(1);
-  function handleAddNewForum() {
-    AddNweForum(forumName, forumTheme)
-      .then((response: any) => {
-        const forumId = response.data._id;
-        history.push("/welcome", { forumId });
-      })
-      .catch((err) => {
-        console.log(err.response.data);
+  async function handleCreateForum() {
+    setLoading(true);
+    try {
+      const response = await callPostApi("/forums/create-forum", {
+        forum_name: forumName,
+        theme: forumTheme,
+        userId: user._id,
       });
+      setLoading(false);
+      const { data }: any = response;
+      history.push("/welcome", { forumId: data._id });
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+    }
   }
   return (
     <div className={`${Styles.background} p-3 d-flex justify-content-end`}>
@@ -87,6 +92,7 @@ function CreateForum() {
                       <div style={{ width: "85%" }} className="px-2">
                         <div className="py-3">
                           <Input
+                            labelname="Forum Name"
                             type="text"
                             name="name"
                             id="name"
@@ -99,9 +105,8 @@ function CreateForum() {
                         </div>
                         <div className="pt-1">
                           <Button
-                            hoverStyle={primaryButtonHoverStyle}
+                            type={buttonTypes.SECONDARY}
                             size={buttonSize.MEDIUM}
-                            style={primaryButtonStyle}
                             disabled={forumName === ""}
                             onClick={() => setCurrentOpenAccordion(2)}
                           >
@@ -184,11 +189,11 @@ function CreateForum() {
             className="d-flex align-items-start justify-content-center"
           >
             <Button
-              disabled={forumName === "" || forumTheme === ""}
-              hoverStyle={primaryButtonHoverStyle}
-              style={primaryButtonStyle}
+              isLoading={loading}
+              disabled={forumName === "" || forumTheme === "" || loading}
+              type={buttonTypes.PRIMARY}
               size={buttonSize.LARGE}
-              onClick={handleAddNewForum}
+              onClick={handleCreateForum}
             >
               Create Forum
             </Button>

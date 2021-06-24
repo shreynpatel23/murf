@@ -1,8 +1,19 @@
 body {
   margin: 0;
-  font-family: 'Roboto', sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
   font-size: 18px;
   font-stretch: normal;
   font-style: normal;
   letter-spacing: normal;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label {
+  margin: 0;
 }

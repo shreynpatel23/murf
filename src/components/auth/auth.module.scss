@@ -1,31 +1,75 @@
 @import "../../assets/scss/variables.scss";
+
 .background {
   height: 100vh;
   background: $backgroundColor;
 }
-.faceBookLoginButton {
-  width: 300px;
-  height: 40px;
-  border: 2px solid $accentColor;
-  background: $white;
+
+.email_not_found_form_wrapper {
+  width: 500px;
+}
+
+.formWrapper {
+  width: 70%;
+}
+
+.navigationText {
+  font-size: $font-12;
+  text-align: center;
+  color: $secondaryColor;
+}
+
+.navigationLink {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.navigationLink:hover {
   color: $accentColor;
+  transition: 0.3s ease;
+}
+
+.bannerText {
+  position: absolute;
+  top: 10px;
+  width: 70%;
+  background-color: white;
+  border: 1px solid $accentColor;
   border-radius: 5px;
-  font-size: $font-14;
-  font-weight: 500;
-}
-
-.faceBookLoginButton:focus {
-  outline: none;
-}
-
-.faceBookLoginButton:hover {
-  box-shadow: 0 4px 10px 0 rgba($accentColor, 0.15);
-  background: $accentColor;
-  transition: background 0.3s;
-  color: $white;
-}
-
-.loadingText {
-  font-size: 24px;
+  text-align: center;
+  padding: 10px;
   color: $accentColor;
 }
+
+.cancelText {
+  font-size: $font-14;
+  text-align: center;
+  cursor: pointer;
+  color: $secondaryColor;
+}
+
+.cancelText:hover {
+  color: $primaryColor;
+  transition: color 0.3s ease-in;
+}
+// .faceBookLoginButton {
+//   width: 300px;
+//   height: 40px;
+//   border: 2px solid $accentColor;
+//   background: $white;
+//   color: $accentColor;
+//   border-radius: 5px;
+//   font-size: $font-14;
+//   font-weight: 500;
+// }
+
+// .faceBookLoginButton:focus {
+//   outline: none;
+// }
+
+// .faceBookLoginButton:hover {
+//   box-shadow: 0 4px 10px 0 rgba($accentColor, 0.15);
+//   background: $accentColor;
+//   transition: background 0.3s;
+//   color: $white;
+// }

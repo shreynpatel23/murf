@@ -1,25 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import Styles from "./button.module.scss";
 import { buttonSize } from "../../constants/button-size";
+import { buttonTypes } from "../buttonTypes";
 
-function Button({ style, hoverStyle, size, ...props }) {
-  const [buttonStyle, setButtonStyle] = useState(style);
+function Button({ isLoading = false, type, size, ...props }) {
   return (
     <button
       className={`${Styles.button} ${
         size === buttonSize.LARGE ? Styles.largeButton : Styles.mediumButton
+      } ${type === buttonTypes.PRIMARY ? Styles.primaryButtonStyle : ""} ${
+        type === buttonTypes.SECONDARY ? Styles.secondaryButtonStyle : ""
+      } ${
+        type === buttonTypes.CANCEL ? Styles.cancelButtonStyle : ""
       } d-flex align-items-center justify-content-center`}
-      style={buttonStyle}
-      onMouseOver={() => setButtonStyle(hoverStyle)}
-      onMouseOut={() => setButtonStyle(style)}
       {...props}
     >
-      <p
-        className={`mb-0 ${Styles.btnText}`}
-        style={{ color: buttonStyle.color }}
-      >
-        {props.children}
-      </p>
+      {isLoading ? (
+        <p className={`mb-0 ${Styles.btnText}`}>Loading...</p>
+      ) : (
+        <p className={`mb-0 ${Styles.btnText}`}>{props.children}</p>
+      )}
     </button>
   );
 }

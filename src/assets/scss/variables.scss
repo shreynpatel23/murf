@@ -1,16 +1,33 @@
-$backgroundColor: #fafafa;
-$accentColor: #00ca6d;
-$white: #ffffff;
-$accentBackgroundcolor: rgba($accentColor, 0.15);
-$inputBorderColor: #adadad;
-$primaryColor: #4d4848;
-$secondaryColor: #adadad;
-$success: #12eb00;
+:root {
+  --backgroundColor: #fafafa;
+  --accentColor: #2190ff;
+  --white: #ffffff;
+  --primaryColor: #4d4848;
+  --secondaryColor: #adadad;
+  --success: #00ca6d;
+  --error: #d03939;
+  --accentBackGroundColor: 0, 0, 0;
+}
+$backgroundColor: var(--backgroundColor);
+$accentColor: var(--accentColor);
+$white: var(--white);
+$accentBackGroundColor: var(--accentBackGroundColor);
+$primaryColor: var(--primaryColor);
+$secondaryColor: var(--secondaryColor);
+$success: var(--success);
+$error: var(--error);
+$cardHeaderColor: #eaeaea;
 $boxShadow: 0 0 10px rgba(0, 0, 0, 0.15);
+$natoSans: "Noto Sans", sans-serif;
 
+$font-10: 10px;
 $font-12: 12px;
 $font-14: 14px;
 $font-16: 16px;
 $font-18: 18px;
 $font-20: 20px;
 $font-24: 24px;
+
+div {
+  background-color: var();
+}

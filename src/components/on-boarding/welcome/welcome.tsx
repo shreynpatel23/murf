@@ -1,36 +1,26 @@
 import React, { useEffect, useState } from "react";
 import Styles from "./welcome.module.scss";
-import getForumById from "../../../api/getForumById";
 import welcomeIllustration from "../../../assets/images/welcome-illustration.svg";
 import Button from "../../../shared/button/button";
-import {
-  primaryButtonStyle,
-  primaryButtonHoverStyle,
-} from "../../../shared/buttonStyles";
 import { useHistory, useLocation } from "react-router-dom";
 import { buttonSize } from "../../../constants/button-size";
+import { callGetApi } from "../../../api/axios";
+import { buttonTypes } from "../../../shared/buttonTypes";
 
 function Welcome() {
   const {
     state: { forumId },
   }: any = useLocation();
   let history = useHistory();
-  const [forum, setForum] = useState({
-    forumName: "",
-    createdAt: new Date(),
-  });
+  const [forum, setForum] = useState<any>();
   const [loading, setLoading] = React.useState(false);
   useEffect(() => {
     // get forum by id API will come here
     async function getForumDetails() {
       setLoading(true);
       try {
-        const { data }: any = await getForumById(forumId);
-        setForum((forum) => ({
-          ...forum,
-          forumName: data.forumName,
-          createdAt: new Date(data.createdAt),
-        }));
+        const { data }: any = await callGetApi(`/forums/${forumId}`);
+        setForum(data);
         setLoading(false);
       } catch (err) {
         setLoading(false);
@@ -39,7 +29,7 @@ function Welcome() {
     }
 
     getForumDetails();
-  }, []);
+  }, [forumId]);
   return (
     <div className={`${Styles.background}`}>
       <div
@@ -62,22 +52,21 @@ function Welcome() {
                 </p>
                 <p className={`mb-0 ${Styles.body_text} py-2`}>
                   You have successfully created your forum{" "}
-                  <span className={Styles.forum_name}>{forum.forumName}</span>{" "}
+                  <span className={Styles.forum_name}>{forum?.forum_name}</span>{" "}
                   <br /> on{" "}
-                  <span
-                    className={Styles.created_by}
-                  >{`${forum.createdAt.getDate()}/${
-                    forum.createdAt.getMonth() + 1
-                  }/${forum.createdAt.getFullYear()}`}</span>
+                  <span className={Styles.created_by}>{`${new Date(
+                    forum?.createdAt
+                  ).getDate()}/${
+                    new Date(forum?.createdAt).getMonth() + 1
+                  }/${new Date(forum?.createdAt).getFullYear()}`}</span>
                   . Go ahead and create your first post in the forum
                 </p>
               </div>
               <div className="pt-4 d-flex justify-content-center">
                 <Button
-                  hoverStyle={primaryButtonHoverStyle}
+                  type={buttonTypes.PRIMARY}
                   size={buttonSize.LARGE}
-                  style={primaryButtonStyle}
-                  onClick={() => history.push(`/forum/${forumId}`)}
+                  onClick={() => history.replace(`/forum/${forumId}/posts`)}
                 >
                   Manage your forum
                 </Button>
