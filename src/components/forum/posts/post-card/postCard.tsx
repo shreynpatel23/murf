@@ -111,32 +111,27 @@ export default function PostCard({
                   <SaveSvg classes={Styles.save} width="13" />
                 </div>
               )}
-              <div className="px-3">
-                <Dropdown
-                  header={
-                    <img
-                      src={moreOptionSvg}
-                      alt="option"
-                      width="4px"
-                      style={{ cursor: "pointer" }}
-                    />
-                  }
-                  body_classes="dropdown-menu-right"
-                  click={(value) => {
-                    if (
-                      value === dropdownLinks.PIN ||
-                      value === dropdownLinks.PINNED
-                    )
-                      return handlePinPost();
-                    if (
-                      value === dropdownLinks.SAVE ||
-                      value === dropdownLinks.SAVED
-                    )
-                      return handleSavePost();
-                  }}
-                  options={dropdownOptions}
-                />
-              </div>
+              <Dropdown
+                header={
+                  <div className="px-3" style={{ cursor: "pointer" }}>
+                    <img src={moreOptionSvg} alt="option" width="4px" />
+                  </div>
+                }
+                body_classes="dropdown-menu-right"
+                click={(value) => {
+                  if (
+                    value === dropdownLinks.PIN ||
+                    value === dropdownLinks.PINNED
+                  )
+                    return handlePinPost();
+                  if (
+                    value === dropdownLinks.SAVE ||
+                    value === dropdownLinks.SAVED
+                  )
+                    return handleSavePost();
+                }}
+                options={dropdownOptions}
+              />
             </div>
           </div>
         </div>

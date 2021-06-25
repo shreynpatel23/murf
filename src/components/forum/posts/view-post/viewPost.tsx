@@ -20,6 +20,7 @@ export default function ViewPost() {
   const location = useLocation();
   const forum_id = location.pathname.split("/")[2];
   const { id }: any = useParams();
+  const forumId = location.pathname.split("/")[2];
   const history = useHistory();
   const [post, setPost] = useState<any>();
   const [loading, setLoading] = React.useState(true);
@@ -101,9 +102,12 @@ export default function ViewPost() {
     }
   }
   async function handleEditPost() {
-    history.push(`/forum/${id}/add-post`, {
+    history.push(`/forum/${forumId}/add-post`, {
       headingRef: post.headerHTML,
       bodyRef: post.bodyHTML,
+      post_id: post._id,
+      channel_id: post.channelId,
+      tags: post.tags,
     });
   }
   async function handleDeletePost() {}
@@ -189,36 +193,30 @@ export default function ViewPost() {
                     </div>
                   </div>
                   {/* <div className="px-3"></div> */}
-                  <div className="px-2">
-                    <Dropdown
-                      header={
-                        <img
-                          src={moreOptionSvg}
-                          alt="option"
-                          width="4px"
-                          style={{ cursor: "pointer" }}
-                        />
-                      }
-                      body_classes="dropdown-menu-right"
-                      click={(value) => {
-                        if (
-                          value === dropdownLinks.PIN ||
-                          value === dropdownLinks.PINNED
-                        )
-                          return handlePinPost();
-                        if (
-                          value === dropdownLinks.SAVE ||
-                          value === dropdownLinks.SAVED
-                        )
-                          return handleSavePost();
-                        if (value === dropdownLinks.EDIT)
-                          return handleEditPost();
-                        if (value === dropdownLinks.DELETE)
-                          return handleDeletePost();
-                      }}
-                      options={dropdownOptions}
-                    />
-                  </div>
+                  <Dropdown
+                    header={
+                      <div className="px-2" style={{ cursor: "pointer" }}>
+                        <img src={moreOptionSvg} alt="option" width="4px" />
+                      </div>
+                    }
+                    body_classes="dropdown-menu-right"
+                    click={(value) => {
+                      if (
+                        value === dropdownLinks.PIN ||
+                        value === dropdownLinks.PINNED
+                      )
+                        return handlePinPost();
+                      if (
+                        value === dropdownLinks.SAVE ||
+                        value === dropdownLinks.SAVED
+                      )
+                        return handleSavePost();
+                      if (value === dropdownLinks.EDIT) return handleEditPost();
+                      if (value === dropdownLinks.DELETE)
+                        return handleDeletePost();
+                    }}
+                    options={dropdownOptions}
+                  />
                 </div>
               </div>
             </div>
