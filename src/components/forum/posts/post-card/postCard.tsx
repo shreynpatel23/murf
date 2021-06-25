@@ -2,11 +2,38 @@ import React from "react";
 import Styles from "./postCard.module.scss";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
-import pinnedSvg from "../../../../assets/images/pin.svg";
-import savedSvg from "../../../../assets/images/save.svg";
 import moreOptionSvg from "../../../../assets/images/more-option.svg";
+import PinSvg from "../../../../shared/svg/pin";
+import SaveSvg from "../../../../shared/svg/save";
+import Dropdown from "../../../../shared/dropdown/dropdown";
+import { callPutApi } from "../../../../api/axios";
 
-export default function PostCard({ post, forum_id }) {
+export default function PostCard({
+  post,
+  forum_id,
+  pinAPost,
+  saveAPost,
+  setLoading,
+}) {
+  const dropdownLinks = {
+    PINNED: "Pinned",
+    SAVED: "Saved",
+    PIN: "Pin",
+    SAVE: "Save",
+    EDIT: "Edit",
+    DELETE: "Delete",
+  };
+  const dropdownOptions = [
+    {
+      img: <PinSvg classes={Styles.svg} />,
+      value: `${post?.pinned ? dropdownLinks.PINNED : dropdownLinks.PIN}`,
+    },
+    {
+      img: <SaveSvg classes={Styles.svg} />,
+      value: `${post?.saved ? dropdownLinks.SAVED : dropdownLinks.SAVE}`,
+    },
+  ];
+
   const history = useHistory();
   const headerText =
     post.headerText.length > 200
@@ -16,6 +43,33 @@ export default function PostCard({ post, forum_id }) {
     post.bodyText.length > 400
       ? post.bodyText.substr(0, 400) + "..."
       : post.bodyText;
+
+  async function handlePinPost() {
+    setLoading(true);
+    try {
+      const { data }: any = await callPutApi(`/posts/${post._id}/pin-post`, {
+        pin: post.pinned ? "false" : "true",
+      });
+      pinAPost({ pin_value: data.data, post_id: post._id });
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+    }
+  }
+  async function handleSavePost() {
+    setLoading(true);
+    try {
+      const { data }: any = await callPutApi(`/posts/${post._id}/save-post`, {
+        save: post.saved ? "false" : "true",
+      });
+      saveAPost({ save_value: data.data, post_id: post._id });
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+    }
+  }
   return (
     <div className="py-2">
       <div className={Styles.post_card_back}>
@@ -49,20 +103,38 @@ export default function PostCard({ post, forum_id }) {
             <div className="d-flex align-items-center">
               {post?.pinned && (
                 <div className="px-3">
-                  <img src={pinnedSvg} alt="pin" width="20px" />
+                  <PinSvg classes={Styles.pin} width="18" />
                 </div>
               )}
               {post?.saved && (
                 <div className="px-3">
-                  <img src={savedSvg} alt="save" width="15px" />
+                  <SaveSvg classes={Styles.save} width="13" />
                 </div>
               )}
               <div className="px-3">
-                <img
-                  src={moreOptionSvg}
-                  alt="option"
-                  width="4px"
-                  style={{ cursor: "pointer" }}
+                <Dropdown
+                  header={
+                    <img
+                      src={moreOptionSvg}
+                      alt="option"
+                      width="4px"
+                      style={{ cursor: "pointer" }}
+                    />
+                  }
+                  body_classes="dropdown-menu-right"
+                  click={(value) => {
+                    if (
+                      value === dropdownLinks.PIN ||
+                      value === dropdownLinks.PINNED
+                    )
+                      return handlePinPost();
+                    if (
+                      value === dropdownLinks.SAVE ||
+                      value === dropdownLinks.SAVED
+                    )
+                      return handleSavePost();
+                  }}
+                  options={dropdownOptions}
                 />
               </div>
             </div>

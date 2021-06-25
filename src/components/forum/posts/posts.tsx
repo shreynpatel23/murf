@@ -8,14 +8,41 @@ import AddPostBanner from "./add-post-banner/addPostBanner";
 import filterSvg from "../../../assets/images/filter.svg";
 import ArrowDown from "../../../shared/svg/arrowDown";
 import { Colors } from "../../../shared/colors";
+import Dropdown from "../../../shared/dropdown/dropdown";
+import PinSvg from "../../../shared/svg/pin";
+import SaveSvg from "../../../shared/svg/save";
+import AllFilterSvg from "../../../shared/svg/allFilter";
 
 export default function Posts({ currentSelectedChannel }) {
+  const postFilterDropdownLinks = {
+    ALL: "All",
+    PINNED: "Pinned",
+    SAVED: "Saved",
+  };
+  const postFilterOptions = [
+    {
+      img: <AllFilterSvg width="16" classes={Styles.svg} />,
+      value: postFilterDropdownLinks.ALL,
+    },
+    {
+      img: <PinSvg classes={Styles.svg} />,
+      value: postFilterDropdownLinks.PINNED,
+    },
+    {
+      img: <SaveSvg classes={Styles.svg} />,
+      value: postFilterDropdownLinks.SAVED,
+    },
+  ];
   const { id }: any = useParams();
+  const [allPosts, setAllPosts] = useState([]);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedDropdownFilter, setSelectedDropdownFilter] = React.useState(
+    postFilterDropdownLinks.ALL
+  );
   useEffect(() => {
-    //     setPosts(response.data.sort(compare));
     async function getAllPostOfChannel() {
+      if (!currentSelectedChannel) return;
       setLoading(true);
       try {
         const { data }: any = await callGetApi(
@@ -23,6 +50,8 @@ export default function Posts({ currentSelectedChannel }) {
         );
         setLoading(false);
         setPosts(data);
+        setAllPosts(data);
+        setSelectedDropdownFilter(postFilterDropdownLinks.ALL);
       } catch (err) {
         setLoading(false);
         console.log(err.message);
@@ -31,16 +60,6 @@ export default function Posts({ currentSelectedChannel }) {
 
     getAllPostOfChannel();
   }, [currentSelectedChannel]);
-  // function compare(a) {
-  //   //  we are using this variable to enter number so that we can sort based upon the number
-  //   let comparison = 0;
-  //   if (a.pinned) {
-  //     comparison = -1;
-  //   } else {
-  //     comparison = 1;
-  //   }
-  //   return comparison;
-  // }
   return (
     <div className="py-4">
       {loading ? (
@@ -50,7 +69,7 @@ export default function Posts({ currentSelectedChannel }) {
         >
           <p>Loading...</p>
         </div>
-      ) : posts.length > 0 ? (
+      ) : allPosts.length > 0 ? (
         <div className="p-3">
           <AddPostBanner
             forum_id={id}
@@ -68,24 +87,81 @@ export default function Posts({ currentSelectedChannel }) {
                 <div className="pr-2">
                   <img src={filterSvg} alt="filter" width="15" />
                 </div>
-                <p
-                  className={`mb-0 ${Styles.label}`}
-                  style={{ cursor: "pointer" }}
-                >
-                  Filter Based on <span className={Styles.value}>All</span>{" "}
-                  <span>
-                    <ArrowDown color={Colors.secondaryColor} />
-                  </span>
-                </p>
+                <Dropdown
+                  header={
+                    <p
+                      className={`mb-0 ${Styles.label}`}
+                      style={{ cursor: "pointer" }}
+                    >
+                      Filter Based on{" "}
+                      <span className={Styles.value}>
+                        {selectedDropdownFilter}
+                      </span>{" "}
+                      <span>
+                        <ArrowDown color={Colors.secondaryColor} />
+                      </span>
+                    </p>
+                  }
+                  body_classes="dropdown-menu-right"
+                  click={(value) => {
+                    if (value === postFilterDropdownLinks.ALL) {
+                      setSelectedDropdownFilter(postFilterDropdownLinks.ALL);
+                      return setPosts(allPosts);
+                    }
+                    if (value === postFilterDropdownLinks.PINNED) {
+                      setSelectedDropdownFilter(postFilterDropdownLinks.PINNED);
+                      return setPosts(() =>
+                        allPosts.filter((post) => post.pinned)
+                      );
+                    }
+                    if (value === postFilterDropdownLinks.SAVED) {
+                      setSelectedDropdownFilter(postFilterDropdownLinks.SAVED);
+                      return setPosts(() =>
+                        allPosts.filter((post) => post.saved)
+                      );
+                    }
+                  }}
+                  options={postFilterOptions}
+                />
               </div>
             </div>
-            {posts.map((post: any, index) => {
-              return (
-                <div className="py-3" key={index}>
-                  <PostCard forum_id={id} post={post} />
-                </div>
-              );
-            })}
+            {posts.length > 0 ? (
+              posts.map((post: any, index) => {
+                return (
+                  <div className="py-3" key={index}>
+                    <PostCard
+                      forum_id={id}
+                      post={post}
+                      pinAPost={(value: any) => {
+                        const updatedPosts = allPosts.map((post) => {
+                          if (post._id === value.post_id)
+                            return { ...post, pinned: value.pin_value };
+                          return post;
+                        });
+                        setPosts(updatedPosts);
+                        setAllPosts(updatedPosts);
+                        setSelectedDropdownFilter(postFilterDropdownLinks.ALL);
+                      }}
+                      saveAPost={(value: any) => {
+                        const updatedPosts = allPosts.map((post) => {
+                          if (post._id === value.post_id)
+                            return { ...post, saved: value.save_value };
+                          return post;
+                        });
+                        setPosts(updatedPosts);
+                        setAllPosts(updatedPosts);
+                        setSelectedDropdownFilter(postFilterDropdownLinks.ALL);
+                      }}
+                      setLoading={(value: boolean) => setLoading(value)}
+                    />
+                  </div>
+                );
+              })
+            ) : (
+              <div className={`py-3 ${Styles.post_empty_state}`}>
+                <p className="mb-0">No post {selectedDropdownFilter} yet </p>
+              </div>
+            )}
           </div>
         </div>
       ) : (
