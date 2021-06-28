@@ -19,9 +19,9 @@ export default function AddPost() {
     state: {
       headingRef: postHeaderRef,
       bodyRef: postBodyRef,
-      tags: tags,
+      tags,
       channel_id: channelId,
-      post_id: post_id,
+      post_id,
     },
   }: any = useLocation();
   const [loading, setLoading] = React.useState(false);

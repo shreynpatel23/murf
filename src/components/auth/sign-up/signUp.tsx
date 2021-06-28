@@ -1,7 +1,7 @@
 import React from "react";
 import GoogleLogin from "react-google-login";
 import { useHistory } from "react-router";
-import { callGetApi, callPostApi } from "../../../api/axios";
+import { callPostApi } from "../../../api/axios";
 import { buttonSize } from "../../../constants/button-size";
 import Button from "../../../shared/button/button";
 import { buttonTypes } from "../../../shared/buttonTypes";
