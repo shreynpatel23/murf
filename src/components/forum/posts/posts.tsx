@@ -59,6 +59,7 @@ export default function Posts({ currentSelectedChannel }) {
     }
 
     getAllPostOfChannel();
+    // eslint-disable-next-line
   }, [currentSelectedChannel]);
   return (
     <div className="py-4">

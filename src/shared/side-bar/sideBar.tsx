@@ -9,6 +9,7 @@ function SideBar({ forum_channels, currentSelectedChannel }) {
   const { id }: any = useParams();
 
   const strArr = location.pathname.split("/");
+  // eslint-disable-next-line
   const [channels, setChannels] = useState(forum_channels);
   const [currentActiveChannel, setCurrentActiveChannel] = React.useState("");
 
