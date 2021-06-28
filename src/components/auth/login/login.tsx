@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import Styles from "../auth.module.scss";
 import GoogleLogin from "react-google-login";
-// import FacebookLogin from "react-facebook-login";
-import { GOOGLE_CLIENT_ID } from "../../../config";
 import Button from "../../../shared/button/button";
 import { useHistory, useLocation } from "react-router-dom";
 import { buttonSize } from "../../../constants/button-size";
@@ -14,6 +12,7 @@ import { isInputEmpty, isValidEmail } from "../../../utils/validation";
 import ErrorMessage from "../../../shared/error-message/errorMessage";
 
 function Login() {
+  const google_client_id = process.env.REACT_APP_BASE_URL_GOOGLE_CLIENT_ID;
   let history = useHistory();
   const params = useLocation();
   const [googleLoginLoading, setGoogleLoginLoading] = React.useState(false);
@@ -116,19 +115,6 @@ function Login() {
     history.replace(`/forum/${forumId}/posts`);
   }
 
-  // use this function for sign in using facebook
-  // function handleFaceBookSignIn(response) {
-  //   if (response.status !== "unknown") {
-  //     const {
-  //       name,
-  //       email,
-  //       picture: { data },
-  //     } = response;
-  //     let imageUrl = data.url;
-  //     registerNewUser(name, email, imageUrl);
-  //   }
-  // }
-
   function handleError() {}
   return (
     <div className={`${Styles.background} p-3 d-flex justify-content-end`}>
@@ -211,7 +197,7 @@ function Login() {
               <div className="py-3 d-flex justify-content-center">
                 <div className="text-center">
                   <GoogleLogin
-                    clientId={GOOGLE_CLIENT_ID}
+                    clientId={google_client_id}
                     render={(renderProps) => (
                       <Button
                         isLoading={googleLoginLoading}
@@ -246,15 +232,6 @@ function Login() {
               </div>
             </div>
           </form>
-          {/* <hr className="my-2" />
-            <div className="py-3">
-              <FacebookLogin
-                appId={FACEBOOK_APP_ID}
-                fields="name,email,picture"
-                callback={handleFaceBookSignIn}
-                cssClass={`${Styles.faceBookLoginButton} d-flex align-items-center justify-content-center`}
-              />
-            </div> */}
         </div>
       </OnBoardingCard>
     </div>

@@ -2,7 +2,6 @@ import React from "react";
 import GoogleLogin from "react-google-login";
 import { useHistory } from "react-router";
 import { callPostApi } from "../../../api/axios";
-import { GOOGLE_CLIENT_ID } from "../../../config";
 import { buttonSize } from "../../../constants/button-size";
 import Button from "../../../shared/button/button";
 import { buttonTypes } from "../../../shared/buttonTypes";
@@ -17,6 +16,7 @@ import Styles from "../auth.module.scss";
 import OnBoardingCard from "../on-boarding-card/onBoardingCard";
 
 function SignUp() {
+  const google_client_id = process.env.REACT_APP_BASE_URL_GOOGLE_CLIENT_ID;
   const history = useHistory();
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -121,6 +121,19 @@ function SignUp() {
       console.log(error);
     }
   }
+
+  // async function handleSignUpWithGithub() {
+  //   setSignInUsingGithubLoading(true);
+  //   try {
+  //     const data = await callGetApi(
+
+  //     );
+  //     console.log(data);
+  //     setSignInUsingGithubLoading(false);
+  //   } catch (err) {
+  //     setSignInUsingGithubLoading(false);
+  //   }
+  // }
 
   function handleNavigation(user) {
     const { data }: any = user.data;
@@ -236,7 +249,7 @@ function SignUp() {
               <div className="py-3 d-flex justify-content-center">
                 <div className="text-center">
                   <GoogleLogin
-                    clientId={GOOGLE_CLIENT_ID}
+                    clientId={google_client_id}
                     render={(renderProps) => (
                       <Button
                         isLoading={signInUsingGoogleLoading}

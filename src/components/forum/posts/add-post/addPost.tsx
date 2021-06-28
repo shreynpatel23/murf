@@ -12,14 +12,16 @@ import UnorderList from "../../../../shared/svg/unorderList";
 import OrderList from "../../../../shared/svg/orderList";
 import Toast from "../../../../shared/toast/toast";
 import { buttonTypes } from "../../../../shared/buttonTypes";
-import { callPostApi } from "../../../../api/axios";
+import { callPostApi, callPutApi } from "../../../../api/axios";
 export default function AddPost() {
   const user = JSON.parse(localStorage.getItem("@user") || "{}");
   const {
     state: {
       headingRef: postHeaderRef,
       bodyRef: postBodyRef,
+      tags,
       channel_id: channelId,
+      post_id,
     },
   }: any = useLocation();
   const [loading, setLoading] = React.useState(false);
@@ -32,12 +34,17 @@ export default function AddPost() {
   const [viewOnlyPost, setViewOnlyPost] = React.useState(false);
   let formatType = "";
   useEffect(() => {
-    if (postHeaderRef !== null && postBodyRef !== null) {
+    if (
+      postHeaderRef !== null &&
+      postBodyRef !== null &&
+      post_id !== null &&
+      channelId !== null
+    ) {
       setViewOnlyPost(true);
       headingRef.current.innerHTML = postHeaderRef;
       bodyRef.current.innerHTML = postBodyRef;
     }
-  }, [postHeaderRef, postBodyRef]);
+  }, [postHeaderRef, postBodyRef, post_id, channelId]);
   // use this function for creating a new post
   const handleAddPost = async () => {
     const headingTextRef = headingRef?.current;
@@ -88,18 +95,32 @@ export default function AddPost() {
     }
   };
 
-  const handleUpdatePost = async () => {
+  async function handleUpdatePost() {
     const headingTextRef = headingRef?.current;
     const bodyTextRef = bodyRef?.current;
     const headerText = headingTextRef.innerText;
     const bodyText = bodyTextRef.innerText;
-    // const headerHTML = headingTextRef.innerHTML;
-    // const bodyHTML = bodyTextRef.innerHTML;
-    console.log(headerText);
-    console.log(bodyText);
-    // console.log();
-    // console.log();
-  };
+    const headerHTML = headingTextRef.innerHTML;
+    const bodyHTML = bodyTextRef.innerHTML;
+    setLoading(true);
+    try {
+      const { data }: any = await callPutApi(`/posts/${post_id}/update-post`, {
+        headerText: headerText,
+        bodyText: bodyText,
+        headerHTML: headerHTML,
+        bodyHTML: bodyHTML,
+        tags: tags,
+      });
+      setLoading(false);
+      // console.log(data);
+      history.push(`/forum/${id}/posts/${post_id}`, {
+        post: data,
+      });
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+    }
+  }
 
   // use this function to create a list ordered as well as unordered.
   const addListStyle = (value: string) => {
@@ -264,6 +285,7 @@ export default function AddPost() {
               </div>
               <div className="pl-3 ml-auto">
                 <Button
+                  isLoading={loading}
                   type={buttonTypes.PRIMARY}
                   size={buttonSize.MEDIUM}
                   onClick={() => handleUpdatePost()}
