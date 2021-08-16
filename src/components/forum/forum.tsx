@@ -44,7 +44,7 @@ function Forum() {
   }, [id]);
   return (
     <div className={Styles.background}>
-      <TopNav forum_name={forum?.forum_name} user={forum?.userId} />
+      <TopNav forum_name={forum?.forum_name} user={forum?.createdBy} />
       {loading ? (
         <div
           style={{ height: "calc(100vh - 72px)" }}

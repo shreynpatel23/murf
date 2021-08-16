@@ -88,12 +88,12 @@ function SignUp() {
     const { email, name, imageUrl } = response.profileObj;
     setSignInUsingGoogleLoading(true);
     try {
-      const user: any = await callPostApi("/sign-in-using-google", {
+      const { data }: any = await callPostApi("/sign-in-using-google", {
         user_email: email,
         user_name: name,
         imageUrl,
       });
-      handleNavigation(user);
+      handleNavigation(data);
     } catch (err) {
       setSignInUsingGoogleLoading(false);
       const { error } = err.response.data;
@@ -109,12 +109,12 @@ function SignUp() {
     if (!allCheckPassed) return;
     setSignInLoading(true);
     try {
-      const user: any = await callPostApi("/sign-up", {
+      const { data }: any = await callPostApi("/sign-up", {
         user_name: name,
         user_email: email,
         password: password,
       });
-      handleNavigation(user);
+      handleNavigation(data);
     } catch (err) {
       setSignInLoading(false);
       const { error } = err.response.data;
@@ -135,8 +135,7 @@ function SignUp() {
   //   }
   // }
 
-  function handleNavigation(user) {
-    const { data }: any = user.data;
+  function handleNavigation(data) {
     const { token, isEmailVerified } = data;
     localStorage.setItem("@user", JSON.stringify(data));
     localStorage.setItem("token", token);

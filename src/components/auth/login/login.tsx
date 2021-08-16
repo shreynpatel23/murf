@@ -73,11 +73,12 @@ function Login() {
     const { email } = response.profileObj;
     setGoogleLoginLoading(true);
     try {
-      const user: any = await callPostApi("/login-using-google", {
+      const { data }: any = await callPostApi("/login-using-google", {
         user_email: email,
       });
-      handleNavigation(user);
+      handleNavigation(data);
     } catch (err) {
+      console.log(err);
       setGoogleLoginLoading(false);
       const { error } = err.response.data;
       console.log(error);
@@ -91,20 +92,20 @@ function Login() {
     if (!allChecksPassed) return;
     setLoginLoading(true);
     try {
-      const user: any = await callPostApi("/login", {
+      const { data }: any = await callPostApi("/login", {
         user_email: email,
         password,
       });
-      handleNavigation(user);
+      handleNavigation(data);
     } catch (err) {
+      console.log(err);
       setLoginLoading(false);
       const { error } = err.response.data;
       console.log(error);
     }
   }
 
-  function handleNavigation(user) {
-    const { data }: any = user.data;
+  function handleNavigation(data) {
     const { token, isEmailVerified, forumId } = data;
     localStorage.setItem("@user", JSON.stringify(data));
     localStorage.setItem("token", token);
