@@ -69,7 +69,7 @@ function Forum() {
               style={{ minHeight: "calc(100vh - 72px)", height: "100%" }}
             >
               <Switch location={location}>
-                <AuthState>
+                <AuthState users={forum?.users}>
                   <Route
                     path={`/forum/:id/posts/:id`}
                     render={() => {

@@ -12,6 +12,8 @@ export const Colors = {
   accentBackGroundColor: "rgba(this.accentColor, 0.15)",
   secondaryColor: "#adadad",
   primaryColor: "#4d4848",
+  success: "#5dac30",
+  error: "#e94b4b",
 };
 
 export function generateTheme(themeColor: string) {

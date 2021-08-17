@@ -4,12 +4,15 @@ import { useHistory } from "react-router";
 export default function AuthState(props: any) {
   const user = JSON.parse(localStorage.getItem("@user") || null);
   const history = useHistory();
-  const forumId = history.location.pathname.split("/")[2];
+  const { children, users } = props;
   useEffect(() => {
-    if (user.forumId !== forumId) {
+    const isUserAddedInForum = users?.findIndex(
+      (addedUser) => addedUser.Id === user._id
+    );
+    if (isUserAddedInForum < 0) {
       localStorage.removeItem("theme");
       history.replace("/login");
     }
-  }, [history, user, forumId]);
-  return <div>{props.children}</div>;
+  }, [user, history, users]);
+  return <div>{children}</div>;
 }

@@ -1,7 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import Styles from "./topNav.module.scss";
-function TopNav({ forum_name, user = {} }: any) {
+function TopNav({ forum_name }: any) {
+  const user = JSON.parse(localStorage.getItem("@user") || null);
   const history = useHistory();
   return (
     <div
@@ -24,22 +25,18 @@ function TopNav({ forum_name, user = {} }: any) {
       >
         Logout
       </div>
-      {Object.keys(user).length > 0 ? (
-        user.imageUrl !== "" ? (
-          <img
-            src={user.imageUrl}
-            alt="url"
-            className={`mx-2 ${Styles.profilePicture}`}
-          />
-        ) : (
-          <div
-            className={`${Styles.profilePicture} d-flex align-items-center justify-content-center`}
-          >
-            <p className="text-white mb-0">{user.name[0].toUpperCase()}</p>
-          </div>
-        )
+      {user.imageUrl !== "" ? (
+        <img
+          src={user.imageUrl}
+          alt="url"
+          className={`mx-2 ${Styles.profilePicture}`}
+        />
       ) : (
-        "Loading ..."
+        <div
+          className={`${Styles.profilePicture} d-flex align-items-center justify-content-center`}
+        >
+          <p className="text-white mb-0">{user.name[0].toUpperCase()}</p>
+        </div>
       )}
     </div>
   );

@@ -1,5 +1,5 @@
 // import React, { useState, useRef, useEffect } from "react";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import Styles from "./addPost.module.scss";
 import Button from "../../../../shared/button/button";
 import { useHistory, useLocation, useParams } from "react-router-dom";
@@ -10,9 +10,10 @@ import Underline from "../../../../shared/svg/underline";
 import StrikeThrough from "../../../../shared/svg/strikeThrough";
 import UnorderList from "../../../../shared/svg/unorderList";
 import OrderList from "../../../../shared/svg/orderList";
-import Toast from "../../../../shared/toast/toast";
 import { buttonTypes } from "../../../../shared/buttonTypes";
 import { callPostApi, callPutApi } from "../../../../api/axios";
+import { ToastContext } from "../../../../context/toastContext";
+import { ADD_TOAST, ERROR } from "../../../../types/toastTypes";
 export default function AddPost() {
   const user = JSON.parse(localStorage.getItem("@user") || "{}");
   const {
@@ -24,14 +25,13 @@ export default function AddPost() {
       post_id,
     },
   }: any = useLocation();
-  const [loading, setLoading] = React.useState(false);
+  const dispatch = useContext(ToastContext);
+  const [loading, setLoading] = useState(false);
   const { id }: any = useParams();
   const history = useHistory();
   const headingRef: any = useRef(null);
   const bodyRef: any = useRef(null);
-  const [error, setError] = useState("");
-  // const [selectedCategory, setSelectedCategory] = React.useState("");
-  const [viewOnlyPost, setViewOnlyPost] = React.useState(false);
+  const [viewOnlyPost, setViewOnlyPost] = useState(false);
   let formatType = "";
   useEffect(() => {
     if (
@@ -50,11 +50,25 @@ export default function AddPost() {
     const headingTextRef = headingRef?.current;
     const bodyTextRef = bodyRef?.current;
     if (headingTextRef.innerText === "") {
-      setError("Please provide a valid header for the post");
+      dispatch({
+        type: ADD_TOAST,
+        payload: {
+          id: Math.floor(Math.random() * 100),
+          type: ERROR,
+          message: "Please provide a valid header for the post",
+        },
+      });
       return;
     }
     if (bodyTextRef.innerText === "") {
-      setError("Please provide a valid description for the post");
+      dispatch({
+        type: ADD_TOAST,
+        payload: {
+          id: Math.floor(Math.random() * 100),
+          type: ERROR,
+          message: "Please provide a valid description for the post",
+        },
+      });
       return;
     }
     setLoading(true);
@@ -157,7 +171,6 @@ export default function AddPost() {
 
   return (
     <div className={`${Styles.background} p-4`}>
-      {error && <Toast>{error}</Toast>}
       <div className={`${Styles.writing_container}`}>
         <div className={Styles.header_wrapper}>
           <div

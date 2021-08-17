@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import Styles from "../auth.module.scss";
 import GoogleLogin from "react-google-login";
 import Button from "../../../shared/button/button";
@@ -10,6 +10,8 @@ import { callPostApi } from "../../../api/axios";
 import { buttonTypes } from "../../../shared/buttonTypes";
 import { isInputEmpty, isValidEmail } from "../../../utils/validation";
 import ErrorMessage from "../../../shared/error-message/errorMessage";
+import { ADD_TOAST, ERROR } from "../../../types/toastTypes";
+import { ToastContext } from "../../../context/toastContext";
 
 function Login() {
   const google_client_id = process.env.REACT_APP_BASE_URL_GOOGLE_CLIENT_ID;
@@ -27,6 +29,7 @@ function Login() {
     toggle: false,
     message: "",
   });
+  const dispatch = useContext(ToastContext);
 
   useEffect(() => {
     if (params.search) {
@@ -80,7 +83,13 @@ function Login() {
     } catch (error) {
       setGoogleLoginLoading(false);
       const { err } = error.response.data;
-      console.log(err);
+      dispatch({
+        type: ADD_TOAST,
+        payload: {
+          type: ERROR,
+          message: err,
+        },
+      });
     }
   }
 
@@ -99,7 +108,14 @@ function Login() {
     } catch (error) {
       setLoginLoading(false);
       const { err } = error.response.data;
-      console.log(err);
+      dispatch({
+        type: ADD_TOAST,
+        payload: {
+          id: Math.floor(Math.random() * 100),
+          type: ERROR,
+          message: err,
+        },
+      });
     }
   }
 
@@ -108,10 +124,10 @@ function Login() {
     localStorage.setItem("@user", JSON.stringify(data));
     localStorage.setItem("token", token);
     if (!isEmailVerified) return history.replace("/email-not-verified");
-    if (!forumId) return history.replace("/create-forum");
+    if (forumId.length <= 0) return history.replace("/create-forum");
     loginLoading && setLoginLoading(false);
     googleLoginLoading && setGoogleLoginLoading(false);
-    history.replace(`/forum/${forumId}/posts`);
+    history.replace(`/forum/${forumId[0]}/posts`);
   }
 
   function handleError() {}
