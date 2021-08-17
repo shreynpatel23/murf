@@ -1,10 +1,8 @@
-import React from 'react';
-import MurfRouter from './murfRouter';
+import React from "react";
+import MurfRouter from "./murfRouter";
 
 function App() {
-  return (
-    <MurfRouter />
-  );
+  return <MurfRouter />;
 }
 
 export default App;

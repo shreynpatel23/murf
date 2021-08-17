@@ -49,9 +49,10 @@ function EmailNotVerified() {
       });
       setSuccessMessage(true);
       setLoading(false);
-    } catch (err) {
+    } catch (error) {
       setLoading(false);
-      console.log(err.response.data);
+      const { err } = error.response.data;
+      console.log(err);
     }
   }
 

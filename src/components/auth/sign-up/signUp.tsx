@@ -94,10 +94,10 @@ function SignUp() {
         imageUrl,
       });
       handleNavigation(data);
-    } catch (err) {
+    } catch (error) {
       setSignInUsingGoogleLoading(false);
-      const { error } = err.response.data;
-      console.log(error);
+      const { err } = error.response.data;
+      console.log(err);
     }
   }
 
@@ -115,10 +115,10 @@ function SignUp() {
         password: password,
       });
       handleNavigation(data);
-    } catch (err) {
+    } catch (error) {
       setSignInLoading(false);
-      const { error } = err.response.data;
-      console.log(error);
+      const { err } = error.response.data;
+      console.log(err);
     }
   }
 

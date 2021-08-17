@@ -77,11 +77,10 @@ function Login() {
         user_email: email,
       });
       handleNavigation(data);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
       setGoogleLoginLoading(false);
-      const { error } = err.response.data;
-      console.log(error);
+      const { err } = error.response.data;
+      console.log(err);
     }
   }
 
@@ -97,11 +96,10 @@ function Login() {
         password,
       });
       handleNavigation(data);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
       setLoginLoading(false);
-      const { error } = err.response.data;
-      console.log(error);
+      const { err } = error.response.data;
+      console.log(err);
     }
   }
 
