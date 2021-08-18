@@ -39,7 +39,7 @@ function Members() {
       }
     }
     getAllMembersOfForum();
-  }, [dispatch]);
+  }, [id, dispatch]);
   return (
     <div className={Styles.member_wrapper}>
       {loading ? (
