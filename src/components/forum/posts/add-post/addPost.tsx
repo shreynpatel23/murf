@@ -13,7 +13,7 @@ import OrderList from "../../../../shared/svg/orderList";
 import { buttonTypes } from "../../../../shared/buttonTypes";
 import { callPostApi, callPutApi } from "../../../../api/axios";
 import { ToastContext } from "../../../../context/toastContext";
-import { ADD_TOAST, ERROR } from "../../../../types/toastTypes";
+import { ADD_TOAST, ERROR } from "../../../../types/toast";
 export default function AddPost() {
   const user = JSON.parse(localStorage.getItem("@user") || "{}");
   const {

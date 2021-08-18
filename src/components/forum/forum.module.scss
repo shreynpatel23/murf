@@ -6,3 +6,13 @@
   height: 100%;
   background: $backgroundColor;
 }
+
+.form_list_wrapper {
+  padding: 30px 40px;
+}
+.header {
+  font-family: $natoSans;
+  font-size: $font-18;
+  text-align: left;
+  color: $primaryColor;
+}

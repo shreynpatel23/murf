@@ -15,6 +15,7 @@ import SignUp from "./components/auth/sign-up/signUp";
 import PageNotFound from "./shared/page-not-found/pageNotFound";
 import EmailNotVerified from "./components/auth/email-not-verified/emailNotVerified";
 import ThemeState from "./themeState";
+import ForumList from "./components/forum/list-of-forum/forumList";
 
 class MurfRouter extends React.Component {
   render() {
@@ -43,6 +44,9 @@ class MurfRouter extends React.Component {
             </ProtectedRoutes>
             <ProtectedRoutes path={"/forum/:id"}>
               <Forum />
+            </ProtectedRoutes>
+            <ProtectedRoutes path={"/forum"}>
+              <ForumList />
             </ProtectedRoutes>
             <Route path="/page-not-found" component={PageNotFound} />
             <Route

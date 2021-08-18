@@ -10,7 +10,7 @@ import { callPostApi } from "../../../api/axios";
 import { buttonTypes } from "../../../shared/buttonTypes";
 import { isInputEmpty, isValidEmail } from "../../../utils/validation";
 import ErrorMessage from "../../../shared/error-message/errorMessage";
-import { ADD_TOAST, ERROR } from "../../../types/toastTypes";
+import { ADD_TOAST, ERROR } from "../../../types/toast";
 import { ToastContext } from "../../../context/toastContext";
 
 function Login() {
@@ -86,6 +86,7 @@ function Login() {
       dispatch({
         type: ADD_TOAST,
         payload: {
+          id: Math.floor(Math.random() * 100),
           type: ERROR,
           message: err,
         },
@@ -127,7 +128,8 @@ function Login() {
     if (forumId.length <= 0) return history.replace("/create-forum");
     loginLoading && setLoginLoading(false);
     googleLoginLoading && setGoogleLoginLoading(false);
-    history.replace(`/forum/${forumId[0]}/posts`);
+    if (forumId.length > 1) return history.replace("/forum");
+    return history.replace(`/forum/${forumId[0]}/posts`);
   }
 
   function handleError() {}

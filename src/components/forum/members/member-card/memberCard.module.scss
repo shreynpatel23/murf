@@ -1,0 +1,42 @@
+@import "../../../../assets/scss/variables.scss";
+
+.card_back {
+  min-width: 200px;
+  max-width: 400px;
+  background: $white;
+  box-shadow: $boxShadow;
+  padding: 15px 20px;
+  border-radius: 8px;
+}
+
+.profile_picture_placement {
+  display: flex;
+  justify-content: center;
+}
+
+.profile_picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: $primaryColor;
+}
+
+.user_initial {
+  margin: 0;
+  font-size: $font-16;
+  color: $white;
+}
+
+.user_name {
+  margin: 0;
+  font-size: $font-18;
+  text-align: center;
+  color: $primaryColor;
+}
+
+.user_email {
+  margin: 0;
+  font-size: $font-14;
+  text-align: center;
+  color: $secondaryColor;
+}

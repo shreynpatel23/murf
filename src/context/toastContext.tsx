@@ -1,6 +1,6 @@
 import React, { createContext, useReducer } from "react";
 import RenderToast from "../shared/toast/toast";
-import { ADD_TOAST, REMOVE_TOAST, Toast } from "../types/toastTypes";
+import { ADD_TOAST, REMOVE_TOAST, IToast } from "../types/toast";
 
 export const ToastContext = createContext<any>([]);
 
@@ -12,7 +12,7 @@ export default function ToastProvider({ ...props }: any) {
         return [...state, action.payload];
       }
       case REMOVE_TOAST: {
-        return state.filter((toast: Toast) => toast.id !== action.id);
+        return state.filter((toast: IToast) => toast.id !== action.id);
       }
       default:
         return state;
@@ -41,7 +41,7 @@ export default function ToastProvider({ ...props }: any) {
           <div
             style={{ height: "90vh", overflowY: "auto", overflowX: "hidden" }}
           >
-            {state.map((toast: Toast) => {
+            {state.map((toast: IToast) => {
               return (
                 <div className="p-2" key={toast.id}>
                   <RenderToast

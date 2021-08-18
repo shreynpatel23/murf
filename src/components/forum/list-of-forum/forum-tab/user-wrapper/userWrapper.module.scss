@@ -1,0 +1,30 @@
+@import "../../../../../assets/scss/variables.scss";
+
+.user_wrapper {
+  display: flex;
+  align-items: center;
+  border-radius: 50px;
+  border: 1px solid $secondaryColor;
+}
+
+.profile_picture {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: $primaryColor;
+}
+
+.user_initial {
+  margin: 0;
+  font-size: $font-12;
+  text-align: center;
+  color: $white;
+}
+
+.user_name {
+  margin: 0;
+  padding: 0 5px;
+  font-size: $font-14;
+  text-align: left;
+  color: $primaryColor;
+}

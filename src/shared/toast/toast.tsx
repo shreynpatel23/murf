@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SUCCESS } from "../../types/toastTypes";
+import { SUCCESS } from "../../types/toast";
 import { Colors } from "../colors";
 import Close from "../svg/close";
 import Styles from "./toast.module.scss";

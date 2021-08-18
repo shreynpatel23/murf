@@ -1,0 +1,41 @@
+@import "../../../assets/scss/variables.scss";
+
+.member_wrapper {
+  min-height: calc(100vh - 72px);
+  height: 100%;
+  width: 100%;
+  background: $backgroundColor;
+}
+
+.add_member {
+  width: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.add_svg {
+  fill: $accentColor;
+}
+
+.add_member_icon {
+  width: 50px;
+  height: 50px;
+  background: $white;
+  border: 1px solid $accentColor;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.add_member_icon:hover {
+  box-shadow: $boxShadow;
+  background-color: $accentColor;
+  transition: background-color 0.3s;
+
+  .add_svg {
+    fill: $white;
+    transition: fill 0.3s;
+  }
+}
