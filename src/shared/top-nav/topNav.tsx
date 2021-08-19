@@ -7,7 +7,7 @@ function TopNav({ forum_name }: any) {
   return (
     <div
       className={`py-3 px-2 d-flex align-items-center sticky-top ${Styles.background}`}
-      style={{ zIndex: 2 }}
+      style={{ zIndex: 1 }}
     >
       <div className="px-2">
         <p className={`mb-0 ${Styles.communityName}`}>

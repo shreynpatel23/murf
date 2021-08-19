@@ -87,7 +87,7 @@ function Forum() {
                   <Route
                     path={`/forum/:id/members`}
                     render={() => {
-                      return <Members />;
+                      return <Members forum={forum} />;
                     }}
                   />
                   <Route
