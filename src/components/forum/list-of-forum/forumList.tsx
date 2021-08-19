@@ -39,7 +39,7 @@ export default function ForumList() {
       <TopNav />
       {loading ? (
         <div
-          style={{ height: "100%" }}
+          style={{ height: "calc(100vh - 72px)" }}
           className="d-flex align-items-center justify-content-center"
         >
           <p>Loading...</p>

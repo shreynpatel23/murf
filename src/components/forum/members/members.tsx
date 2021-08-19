@@ -46,7 +46,7 @@ function Members(props) {
       <div className={Styles.member_wrapper}>
         {loading ? (
           <div
-            style={{ height: "100%" }}
+            style={{ height: "calc(100vh - 72px)" }}
             className="d-flex align-items-center justify-content-center"
           >
             <p>Loading...</p>
