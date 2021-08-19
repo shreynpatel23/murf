@@ -45,7 +45,7 @@ function Forum() {
   }, [id]);
   return (
     <div className={Styles.background}>
-      <TopNav forum_name={forum?.forum_name} user={forum?.createdBy} />
+      <TopNav forum_name={forum?.forum_name} />
       {loading ? (
         <div
           style={{ height: "calc(100vh - 72px)" }}
@@ -72,12 +72,14 @@ function Forum() {
                 <AuthState users={forum?.users}>
                   <Route
                     path={`/forum/:id/posts/:id`}
+                    exact
                     render={() => {
                       return <ViewPost />;
                     }}
                   />
                   <Route
                     path={`/forum/:id/posts`}
+                    exact
                     render={() => {
                       return (
                         <Posts currentSelectedChannel={currentActiveChannel} />

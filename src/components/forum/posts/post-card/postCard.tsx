@@ -15,6 +15,7 @@ export default function PostCard({
   saveAPost,
   setLoading,
 }) {
+  const user = JSON.parse(localStorage.getItem("@user") || "{}");
   const dropdownLinks = {
     PINNED: "Pinned",
     SAVED: "Saved",
@@ -48,9 +49,9 @@ export default function PostCard({
     setLoading(true);
     try {
       const { data }: any = await callPutApi(`/posts/${post._id}/pin-post`, {
-        pin: post.pinned ? "false" : "true",
+        pin: post.pinned ? false : true,
       });
-      pinAPost({ pin_value: data.data, post_id: post._id });
+      pinAPost(data);
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -61,9 +62,9 @@ export default function PostCard({
     setLoading(true);
     try {
       const { data }: any = await callPutApi(`/posts/${post._id}/save-post`, {
-        save: post.saved ? "false" : "true",
+        save: post.saved ? false : true,
       });
-      saveAPost({ save_value: data.data, post_id: post._id });
+      saveAPost(data);
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -111,27 +112,29 @@ export default function PostCard({
                   <SaveSvg classes={Styles.save} width="13" />
                 </div>
               )}
-              <Dropdown
-                header={
-                  <div className="px-3" style={{ cursor: "pointer" }}>
-                    <img src={moreOptionSvg} alt="option" width="4px" />
-                  </div>
-                }
-                body_classes="dropdown-menu-right"
-                click={(value) => {
-                  if (
-                    value === dropdownLinks.PIN ||
-                    value === dropdownLinks.PINNED
-                  )
-                    return handlePinPost();
-                  if (
-                    value === dropdownLinks.SAVE ||
-                    value === dropdownLinks.SAVED
-                  )
-                    return handleSavePost();
-                }}
-                options={dropdownOptions}
-              />
+              {post.userId._id === user._id && (
+                <Dropdown
+                  header={
+                    <div className="px-3" style={{ cursor: "pointer" }}>
+                      <img src={moreOptionSvg} alt="option" width="4px" />
+                    </div>
+                  }
+                  body_classes="dropdown-menu-right"
+                  click={(value) => {
+                    if (
+                      value === dropdownLinks.PIN ||
+                      value === dropdownLinks.PINNED
+                    )
+                      return handlePinPost();
+                    if (
+                      value === dropdownLinks.SAVE ||
+                      value === dropdownLinks.SAVED
+                    )
+                      return handleSavePost();
+                  }}
+                  options={dropdownOptions}
+                />
+              )}
             </div>
           </div>
         </div>

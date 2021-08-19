@@ -5,9 +5,6 @@ import PostCardStyles from "../post-card/postCard.module.scss";
 import arrowSvg from "../../../../assets/images/arrow.svg";
 import commentSvg from "../../../../assets/images/comment.svg";
 import moreOptionSvg from "../../../../assets/images/more-option.svg";
-// import { buttonSize } from "../../../../constants/button-size";
-// import Button from "../../../../shared/button/button";
-// import { buttonTypes } from "../../../../shared/buttonTypes";
 import moment from "moment";
 import { callGetApi, callPutApi } from "../../../../api/axios";
 import Dropdown from "../../../../shared/dropdown/dropdown";
@@ -17,6 +14,7 @@ import EditSvg from "../../../../shared/svg/edit";
 import DeleteSvg from "../../../../shared/svg/delete";
 
 export default function ViewPost() {
+  const user = JSON.parse(localStorage.getItem("@user") || "{}");
   const location = useLocation();
   const forum_id = location.pathname.split("/")[2];
   const { id }: any = useParams();
@@ -73,11 +71,11 @@ export default function ViewPost() {
     setLoading(true);
     try {
       const { data }: any = await callPutApi(`/posts/${post._id}/pin-post`, {
-        pin: post.pinned ? "false" : "true",
+        pin: post.pinned ? false : true,
       });
       setPost((post) => ({
         ...post,
-        pinned: data.data,
+        pinned: data.pinned,
       }));
       setLoading(false);
     } catch (err) {
@@ -89,11 +87,11 @@ export default function ViewPost() {
     setLoading(true);
     try {
       const { data }: any = await callPutApi(`/posts/${post._id}/save-post`, {
-        save: post.saved ? "false" : "true",
+        save: post.saved ? false : true,
       });
       setPost((post) => ({
         ...post,
-        saved: data.data,
+        saved: data.saved,
       }));
       setLoading(false);
     } catch (err) {
@@ -192,31 +190,33 @@ export default function ViewPost() {
                       </p>
                     </div>
                   </div>
-                  {/* <div className="px-3"></div> */}
-                  <Dropdown
-                    header={
-                      <div className="px-2" style={{ cursor: "pointer" }}>
-                        <img src={moreOptionSvg} alt="option" width="4px" />
-                      </div>
-                    }
-                    body_classes="dropdown-menu-right"
-                    click={(value) => {
-                      if (
-                        value === dropdownLinks.PIN ||
-                        value === dropdownLinks.PINNED
-                      )
-                        return handlePinPost();
-                      if (
-                        value === dropdownLinks.SAVE ||
-                        value === dropdownLinks.SAVED
-                      )
-                        return handleSavePost();
-                      if (value === dropdownLinks.EDIT) return handleEditPost();
-                      if (value === dropdownLinks.DELETE)
-                        return handleDeletePost();
-                    }}
-                    options={dropdownOptions}
-                  />
+                  {post.userId._id === user._id && (
+                    <Dropdown
+                      header={
+                        <div className="px-2" style={{ cursor: "pointer" }}>
+                          <img src={moreOptionSvg} alt="option" width="4px" />
+                        </div>
+                      }
+                      body_classes="dropdown-menu-right"
+                      click={(value) => {
+                        if (
+                          value === dropdownLinks.PIN ||
+                          value === dropdownLinks.PINNED
+                        )
+                          return handlePinPost();
+                        if (
+                          value === dropdownLinks.SAVE ||
+                          value === dropdownLinks.SAVED
+                        )
+                          return handleSavePost();
+                        if (value === dropdownLinks.EDIT)
+                          return handleEditPost();
+                        if (value === dropdownLinks.DELETE)
+                          return handleDeletePost();
+                      }}
+                      options={dropdownOptions}
+                    />
+                  )}
                 </div>
               </div>
             </div>

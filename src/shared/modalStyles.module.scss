@@ -21,6 +21,7 @@
   background: $white;
   border-radius: 10px;
   box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.15);
+  animation: slide 0.3s ease-in-out;
 }
 
 .modal_header {
@@ -44,5 +45,14 @@
 
   to {
     opacity: 1;
+  }
+}
+
+@keyframes slide {
+  from {
+    top: -400px;
+  }
+  to {
+    top: 40px;
   }
 }

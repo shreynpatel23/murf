@@ -5,6 +5,7 @@ import { ToastContext } from "../../../context/toastContext";
 import { ADD_TOAST, ERROR } from "../../../types/toast";
 import { callGetApi } from "../../../api/axios";
 import ForumTab from "./forum-tab/forumTab";
+import TopNav from "../../../shared/top-nav/topNav";
 
 export default function ForumList() {
   const user = JSON.parse(localStorage.getItem("@user") || null);
@@ -17,7 +18,6 @@ export default function ForumList() {
       try {
         const { data }: any = await callGetApi(`user/${user._id}/forums`);
         setForums(data);
-        console.log(data);
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -36,6 +36,7 @@ export default function ForumList() {
   }, [user._id, dispatch]);
   return (
     <div className={Styles.background}>
+      <TopNav />
       {loading ? (
         <div
           style={{ height: "100%" }}

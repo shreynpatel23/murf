@@ -135,8 +135,8 @@ export default function Posts({ currentSelectedChannel }) {
                       post={post}
                       pinAPost={(value: any) => {
                         const updatedPosts = allPosts.map((post) => {
-                          if (post._id === value.post_id)
-                            return { ...post, pinned: value.pin_value };
+                          if (post._id === value._id)
+                            return { ...post, pinned: value.pinned };
                           return post;
                         });
                         setPosts(updatedPosts);
@@ -145,8 +145,8 @@ export default function Posts({ currentSelectedChannel }) {
                       }}
                       saveAPost={(value: any) => {
                         const updatedPosts = allPosts.map((post) => {
-                          if (post._id === value.post_id)
-                            return { ...post, saved: value.save_value };
+                          if (post._id === value._id)
+                            return { ...post, saved: value.saved };
                           return post;
                         });
                         setPosts(updatedPosts);

@@ -24,7 +24,7 @@ function SideBar({ forum_channels, currentSelectedChannel }) {
     history.push(`/forum/${id}/${value.toLowerCase()}`);
   }
   return (
-    <div className="py-2 px-4 sticky-top" style={{ top: "80px", zIndex: 2 }}>
+    <div className="py-2 px-4 sticky-top" style={{ top: "80px", zIndex: 1 }}>
       {sideBarItems.map((sideBarItem) => {
         return (
           <div key={sideBarItem}>
