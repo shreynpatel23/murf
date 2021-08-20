@@ -1,3 +1,4 @@
+import moment from "moment";
 import React from "react";
 import { useHistory } from "react-router";
 import { ICreatedBy } from "../../../../types/forum";
@@ -15,7 +16,9 @@ export default function ForumTab(props) {
       <div className={`px-2 ${Styles.name_column}`}>
         <p className={`mb-0 ${Styles.forum_name}`}>{forum.forum_name}</p>
         <p className={`mb-0 ${Styles.create_at}`}>
-          Created by {forum.createdBy.name}
+          Created by{" "}
+          <span className={Styles.created_by}>{forum.createdBy.name}</span>{" "}
+          {moment(forum.createdAt).fromNow()}
         </p>
       </div>
       <div className={`px-2 ${Styles.theme_column}`}>

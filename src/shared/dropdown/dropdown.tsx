@@ -1,7 +1,7 @@
 import React from "react";
 import Styles from "./dropdown.module.scss";
 
-function Dropdown({ header, body_classes, options, click }: any) {
+function Dropdown({ header, body, body_classes, options, click }: any) {
   return (
     <div className="dropdown">
       <div
@@ -24,6 +24,7 @@ function Dropdown({ header, body_classes, options, click }: any) {
         }}
         aria-labelledby="dropdownMenuButton"
       >
+        {body}
         {options.map((option: any) => {
           return (
             <div
