@@ -17,7 +17,6 @@ export default function AddMemberModal(props) {
   const { width, height, onCancel, onProceed } = props;
   const user = JSON.parse(localStorage.getItem("@user") || null);
   const { id }: any = useParams();
-  console.log(id);
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);

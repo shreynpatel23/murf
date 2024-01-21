@@ -1,5 +1,5 @@
 import React from "react";
-import GoogleLogin from "react-google-login";
+// import GoogleLogin from "react-google-login";
 import { useHistory } from "react-router";
 import { callPostApi } from "../../../api/axios";
 import { buttonSize } from "../../../constants/button-size";
@@ -16,7 +16,7 @@ import Styles from "../auth.module.scss";
 import OnBoardingCard from "../on-boarding-card/onBoardingCard";
 
 function SignUp() {
-  const google_client_id = process.env.REACT_APP_BASE_URL_GOOGLE_CLIENT_ID;
+  // const google_client_id = process.env.REACT_APP_BASE_URL_GOOGLE_CLIENT_ID;
   const history = useHistory();
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -84,22 +84,22 @@ function SignUp() {
     return true;
   }
 
-  async function handleSignInUsingGoogle(response) {
-    const { email, name, imageUrl } = response.profileObj;
-    setSignInUsingGoogleLoading(true);
-    try {
-      const { data }: any = await callPostApi("/sign-in-using-google", {
-        user_email: email,
-        user_name: name,
-        imageUrl,
-      });
-      handleNavigation(data);
-    } catch (error) {
-      setSignInUsingGoogleLoading(false);
-      const { err } = error.response.data;
-      console.log(err);
-    }
-  }
+  // async function handleSignInUsingGoogle(response) {
+  //   const { email, name, imageUrl } = response.profileObj;
+  //   setSignInUsingGoogleLoading(true);
+  //   try {
+  //     const { data }: any = await callPostApi("/sign-in-using-google", {
+  //       user_email: email,
+  //       user_name: name,
+  //       imageUrl,
+  //     });
+  //     handleNavigation(data);
+  //   } catch (error) {
+  //     setSignInUsingGoogleLoading(false);
+  //     const { err } = error.response.data;
+  //     console.log(err);
+  //   }
+  // }
 
   async function handleSignUp(event) {
     event.preventDefault();
@@ -136,16 +136,16 @@ function SignUp() {
   // }
 
   function handleNavigation(data) {
-    const { token, isEmailVerified } = data;
+    const { token } = data;
     localStorage.setItem("@user", JSON.stringify(data));
     localStorage.setItem("token", token);
-    if (!isEmailVerified) return history.replace("/email-not-verified");
+    // if (!isEmailVerified) return history.replace("/email-not-verified");
     signInLoading && setSignInLoading(false);
     signInUsingGoogleLoading && setSignInUsingGoogleLoading(false);
     history.replace("/create-forum");
   }
 
-  function handleError() {}
+  // function handleError() {}
   return (
     <div className={`${Styles.background} p-3 d-flex justify-content-end`}>
       <OnBoardingCard
@@ -247,7 +247,7 @@ function SignUp() {
               <hr className="my-2" />
               <div className="py-3 d-flex justify-content-center">
                 <div className="text-center">
-                  <GoogleLogin
+                  {/* <GoogleLogin
                     clientId={google_client_id}
                     render={(renderProps) => (
                       <Button
@@ -267,7 +267,7 @@ function SignUp() {
                     onSuccess={handleSignInUsingGoogle}
                     onFailure={handleError}
                     cookiePolicy={"single_host_origin"}
-                  />
+                  /> */}
                   <div className="py-2">
                     <p className={Styles.navigationText}>
                       Already have an account{" "}

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import Styles from "../auth.module.scss";
-import GoogleLogin from "react-google-login";
+// import GoogleLogin from "react-google-login";
 import Button from "../../../shared/button/button";
 import { useHistory, useLocation } from "react-router-dom";
 import { buttonSize } from "../../../constants/button-size";
@@ -14,7 +14,7 @@ import { ADD_TOAST, ERROR } from "../../../types/toast";
 import { ToastContext } from "../../../context/toastContext";
 
 function Login() {
-  const google_client_id = process.env.REACT_APP_BASE_URL_GOOGLE_CLIENT_ID;
+  // const google_client_id = process.env.REACT_APP_BASE_URL_GOOGLE_CLIENT_ID;
   let history = useHistory();
   const params = useLocation();
   const [googleLoginLoading, setGoogleLoginLoading] = React.useState(false);
@@ -72,27 +72,27 @@ function Login() {
   }
 
   // use this function to login with google
-  async function handleLoginUsingGoogle(response) {
-    const { email } = response.profileObj;
-    setGoogleLoginLoading(true);
-    try {
-      const { data }: any = await callPostApi("/login-using-google", {
-        user_email: email,
-      });
-      handleNavigation(data);
-    } catch (error) {
-      setGoogleLoginLoading(false);
-      const { err } = error.response.data;
-      dispatch({
-        type: ADD_TOAST,
-        payload: {
-          id: Math.floor(Math.random() * 100),
-          type: ERROR,
-          message: err,
-        },
-      });
-    }
-  }
+  // async function handleLoginUsingGoogle(response) {
+  //   const { email } = response.profileObj;
+  //   setGoogleLoginLoading(true);
+  //   try {
+  //     const { data }: any = await callPostApi("/login-using-google", {
+  //       user_email: email,
+  //     });
+  //     handleNavigation(data);
+  //   } catch (error) {
+  //     setGoogleLoginLoading(false);
+  //     const { err } = error.response.data;
+  //     dispatch({
+  //       type: ADD_TOAST,
+  //       payload: {
+  //         id: Math.floor(Math.random() * 100),
+  //         type: ERROR,
+  //         message: err,
+  //       },
+  //     });
+  //   }
+  // }
 
   // use this function to login with email and password
   async function handleLogin(event) {
@@ -121,10 +121,10 @@ function Login() {
   }
 
   function handleNavigation(data) {
-    const { token, isEmailVerified, forumId } = data;
+    const { token, forumId } = data;
     localStorage.setItem("@user", JSON.stringify(data));
     localStorage.setItem("token", token);
-    if (!isEmailVerified) return history.replace("/email-not-verified");
+    // if (!isEmailVerified) return history.replace("/email-not-verified");
     if (forumId.length <= 0) return history.replace("/create-forum");
     loginLoading && setLoginLoading(false);
     googleLoginLoading && setGoogleLoginLoading(false);
@@ -132,7 +132,7 @@ function Login() {
     return history.replace(`/forum/${forumId[0]}/posts`);
   }
 
-  function handleError() {}
+  // function handleError() {}
   return (
     <div className={`${Styles.background} p-3 d-flex justify-content-end`}>
       <OnBoardingCard
@@ -213,7 +213,7 @@ function Login() {
               <hr className="my-2" />
               <div className="py-3 d-flex justify-content-center">
                 <div className="text-center">
-                  <GoogleLogin
+                  {/* <GoogleLogin
                     clientId={google_client_id}
                     render={(renderProps) => (
                       <Button
@@ -233,7 +233,7 @@ function Login() {
                     onSuccess={handleLoginUsingGoogle}
                     onFailure={handleError}
                     cookiePolicy={"single_host_origin"}
-                  />
+                  /> */}
                   <div className="py-2">
                     <p className={Styles.navigationText}>
                       Do not have an account?{" "}
